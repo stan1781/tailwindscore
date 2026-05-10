@@ -14,6 +14,7 @@ require_once TAILWINDSCORE_PATH . 'inc/helpers/component.php';
 require_once TAILWINDSCORE_PATH . 'inc/helpers/icon.php';
 require_once TAILWINDSCORE_PATH . 'inc/helpers/kses.php';
 require_once TAILWINDSCORE_PATH . 'inc/configuration/governance.php';
+require_once TAILWINDSCORE_PATH . 'inc/configuration/kirki/bootstrap.php';
 require_once TAILWINDSCORE_PATH . 'inc/content-moods/registry.php';
 require_once TAILWINDSCORE_PATH . 'inc/content-surfaces/sanitizers.php';
 require_once TAILWINDSCORE_PATH . 'inc/content-surfaces/registry.php';

@@ -123,6 +123,10 @@ const HIGH_RISK_PATTERNS = [
 ];
 
 const REGISTRY_SOURCES = ['inc/content-surfaces/registry.php', 'inc/content-moods/registry.php'];
+const CONFIGURATION_ALLOWED_KIRKI_ROOT = 'inc/configuration/kirki/';
+const CONFIGURATION_APPROVED_INLINE_STYLE_FILES = new Set(['inc/presets/loader.php']);
+const CONFIGURATION_SCAN_ROOTS = ['functions.php', 'inc'];
+const CONFIGURATION_TRANSPORT_ROOTS = ['inc/configuration', 'inc/presets'];
 
 function normalizeWhitespace(value) {
 	return value.replace(/\s+/g, ' ').trim();
@@ -322,6 +326,11 @@ function lineAt(content, literal) {
 	}
 
 	return content.slice(0, index).split('\n').length;
+}
+
+function lineAtRegex(content, regex) {
+	const match = content.match(regex);
+	return match ? lineAt(content, match[0]) : 1;
 }
 
 function inferCoverage(surface, files, findings) {
@@ -530,10 +539,153 @@ function collectFindings() {
 	};
 }
 
+function collectConfigurationFindings() {
+	const kirkiUsagePaths = unique(
+		CONFIGURATION_SCAN_ROOTS.flatMap((root) => {
+			if (!existsSync(path.join(ROOT, root))) {
+				return [];
+			}
+			return walk(root);
+		}),
+	);
+	const transportPaths = unique(
+		CONFIGURATION_TRANSPORT_ROOTS.flatMap((root) => {
+			if (!existsSync(path.join(ROOT, root))) {
+				return [];
+			}
+			return walk(root);
+		}),
+	);
+	const findings = [];
+	const scannedFiles = [];
+
+	for (const relativePath of unique([...kirkiUsagePaths, ...transportPaths])) {
+		if (!relativePath.endsWith('.php') && !relativePath.endsWith('.ts')) {
+			continue;
+		}
+
+		const content = read(relativePath);
+		scannedFiles.push({
+			path: relativePath,
+			surface: 'configuration',
+			usesRegistry: relativePath.startsWith(CONFIGURATION_ALLOWED_KIRKI_ROOT),
+			usesGovernedEmptyState: false,
+			usesRuntimeDatasetBridge: false,
+		});
+
+		const directKirkiPattern = /\bKirki::add_(?:config|panel|section|field)\b|new\s+\\?Kirki\\Field/;
+		if (!relativePath.startsWith(CONFIGURATION_ALLOWED_KIRKI_ROOT) && directKirkiPattern.test(content)) {
+			findings.push({
+				severity: 'critical',
+				surface: 'configuration',
+				governanceOwner: 'Theme configuration governance',
+				trustCritical: false,
+				runtimeInline: false,
+				duplicateFallback: false,
+				value: 'Direct Kirki usage outside foundation layer',
+				file: relativePath,
+				line: lineAtRegex(content, directKirkiPattern),
+			});
+		}
+
+		const inlineCssPattern = /wp_add_inline_style\s*\(|:root\s*\{/;
+		if (transportPaths.includes(relativePath) && !CONFIGURATION_APPROVED_INLINE_STYLE_FILES.has(relativePath) && inlineCssPattern.test(content)) {
+			findings.push({
+				severity: 'warning',
+				surface: 'configuration',
+				governanceOwner: 'Theme configuration governance',
+				trustCritical: false,
+				runtimeInline: true,
+				duplicateFallback: false,
+				value: 'Arbitrary CSS output outside governed preset transport',
+				file: relativePath,
+				line: lineAtRegex(content, inlineCssPattern),
+			});
+		}
+
+		const inlineStyleLeakagePattern = /style\s*=\s*["']/;
+		if (transportPaths.includes(relativePath) && relativePath.endsWith('.php') && inlineStyleLeakagePattern.test(content)) {
+			findings.push({
+				severity: 'warning',
+				surface: 'configuration',
+				governanceOwner: 'Theme configuration governance',
+				trustCritical: false,
+				runtimeInline: true,
+				duplicateFallback: false,
+				value: 'Inline style leakage detected in PHP template output',
+				file: relativePath,
+				line: lineAtRegex(content, inlineStyleLeakagePattern),
+			});
+		}
+	}
+
+	const transportPath = 'inc/configuration/kirki/fields/api.php';
+	const transportContent = existsSync(path.join(ROOT, transportPath))
+		? read(transportPath)
+		: '';
+	if (transportContent && /'transport'\s*=>\s*'(?!refresh)[^']+'/.test(transportContent)) {
+		findings.push({
+			severity: 'critical',
+			surface: 'configuration',
+			governanceOwner: 'Theme configuration governance',
+			trustCritical: false,
+			runtimeInline: true,
+			duplicateFallback: false,
+			value: 'Invalid non-SSR transport detected in governed Kirki registration',
+			file: transportPath,
+			line: lineAtRegex(transportContent, /'transport'\s*=>\s*'(?!refresh)[^']+'/),
+		});
+	}
+
+	const presetRegistryPath = 'inc/presets/registry.php';
+	if (existsSync(path.join(ROOT, presetRegistryPath))) {
+		const presetContent = read(presetRegistryPath);
+		const presetBoundaryPattern = /'(?:template|templates|bundle|bundles|layout|layouts|markup|markup_structure|stylesheet|stylesheets)'\s*=>/;
+		if (presetBoundaryPattern.test(presetContent)) {
+			findings.push({
+				severity: 'critical',
+				surface: 'configuration',
+				governanceOwner: 'Preset governance',
+				trustCritical: false,
+				runtimeInline: false,
+				duplicateFallback: false,
+				value: 'Preset boundary violation detected in preset registry',
+				file: presetRegistryPath,
+				line: lineAtRegex(presetContent, presetBoundaryPattern),
+			});
+		}
+	}
+
+	return {
+		findings: findings.sort((left, right) => compareSeverity(left.severity, right.severity) || left.file.localeCompare(right.file) || left.line - right.line),
+		coverage: [
+			{
+				surface: 'configuration',
+				owner: 'Theme configuration governance',
+				trustCritical: false,
+				scannedFiles: scannedFiles.length,
+				governedFiles: scannedFiles.filter(
+					(file) => file.path.startsWith(CONFIGURATION_ALLOWED_KIRKI_ROOT) || CONFIGURATION_APPROVED_INLINE_STYLE_FILES.has(file.path),
+				).length,
+				mixedFiles: 0,
+				unguardedFiles: findings.length > 0 ? 1 : 0,
+				duplicateFallbackFindings: 0,
+				runtimeFindings: findings.filter((finding) => finding.runtimeInline).length,
+				status: findings.length > 0 ? 'unguarded' : 'governed',
+			},
+		],
+		scannedFiles,
+	};
+}
+
 function buildReport() {
 	const collected = collectFindings();
+	const configuration = collectConfigurationFindings();
+	const combinedFindings = [...collected.findings, ...configuration.findings].sort(
+		(left, right) => compareSeverity(left.severity, right.severity) || left.file.localeCompare(right.file) || left.line - right.line,
+	);
 	const baseline = loadBaseline();
-	const baselineResult = applyBaselineToFindings(collected.findings, baseline.entries);
+	const baselineResult = applyBaselineToFindings(combinedFindings, baseline.entries);
 
 	return {
 		report: {
@@ -547,12 +699,12 @@ function buildReport() {
 		deltaSeveritySummary: summarizeSeverity(baselineResult.deltaFindings),
 		deltaSummary: summarizeDelta(baselineResult.deltaFindings),
 		baselineSummary: summarizeBaseline(baselineResult.matchedBaseline, baseline.entries, baselineResult.unmatchedBaselineEntries),
-		coverage: collected.coverage,
+		coverage: [...collected.coverage, ...configuration.coverage],
 		findings: baselineResult.deltaFindings,
 		rawFindings: baselineResult.rawFindings,
 		matchedBaselineFindings: baselineResult.matchedBaseline,
 		unmatchedBaselineEntries: baselineResult.unmatchedBaselineEntries,
-		scannedFiles: collected.scannedFiles,
+		scannedFiles: [...collected.scannedFiles, ...configuration.scannedFiles],
 	};
 }
 
