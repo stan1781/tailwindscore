@@ -1,69 +1,138 @@
-# Cursor / AI 协作规范（Cursor Rules）
+# Cursor Governance Protocol
 
-适用于在本仓库使用 Cursor（或其他 AI）生成、重构与审查代码时的 **强制约束**。
+Applies to Cursor and any AI-assisted implementation inside TailwindScore.
 
-## 1. 代码生成总则
+The goal is governance-native generation, not post-hoc governance cleanup.
 
-1. **架构**：PHP SSR 为主；TS 为局部增强；**禁止**引入 SPA 框架作为默认。
-2. **范围**：只改任务相关文件；拒绝「顺手全局格式化」除非明确要求。
-3. **设计**：颜色/间距/圆角/阴影来自 Token；禁止魔法数字与随机 z-index。
-4. **组件**：按钮、表单、卡片、modal、drawer、product-card、gallery、price-block 不得页面复制。
-5. **WooCommerce**：优先 Hook 与最小模板覆盖；禁止删除未知 WC Hook。
-6. **安全**：sanitize、escape、nonce；不信任 `$_POST` 裸用。
+## Core Rule
 
-## 2. 禁止事项（Hard No）
+Before generating a new surface or modifying a trust-adjacent surface, define:
 
-- Vue/React SPA、Nuxt、Next、Headless-first、全 API 驱动页面渲染。
-- jQuery 核心架构、巨型全局 JS/CSS。
-- Bootstrap 组件体系、Elementor-first。
-- 任意 `eval`、拼接 SQL、暴露敏感调试。
-- 结账流程「前端自定总价」。
+1. surface ownership
+2. trust classification
+3. registry usage
+4. runtime copy strategy
+5. fallback behavior
+6. localization path
+7. SSR/runtime alignment
 
-## 3. 文件结构规则
+If these are not clear, generation should stop and resolve them first.
 
-- PHP 功能 → `inc/`；片段 → `template-parts/`；WC 覆盖 → `woocommerce/`。
-- TS → `resources/ts/modules/{feature}/`。
-- CSS/Tailwind → `resources/css/`。
-- 构建产物不手改；enqueue 使用 manifest 或哈希策略。
+## Required Implementation Contract
 
-## 4. AI 输出风格
+Every generated surface must declare:
 
-### 4.1 回答结构
+- `surface owner`
+- `governed | mixed | unguarded`
+- `trust-critical: yes | no`
+- `registry-backed: yes | no`
+- `runtime messaging path`
+- `fallback path`
+- `localization-safe: yes | no`
+- `SSR/runtime alignment notes`
 
-- **先结论** → **变更清单** → **关键代码引用**（路径明确）。
-- 避免冗长前言；避免无路径的模糊代码块。
+## Hard Prohibitions
 
-### 4.2 代码块
+Do not generate:
 
-- 使用仓库真实路径作为 fence 标记（若引用现有文件）。
-- 新增代码需标注插入位置（文件 + 锚点函数）。
+- arbitrary inline reassurance
+- duplicated helper copy already represented by a governed surface
+- runtime hardcoded trust or support language
+- client-only governance bypass
+- local fallback branching that duplicates registry fallback logic
 
-### 4.3 不确定性
+## Registry-first Rules
 
-- WC Blocks vs Classic 冲突、第三方插件 DOM：**标注假设** 并给出回退方案。
+When the surface includes customer-facing messaging:
 
-## 5. 与仓库文档关系
+- prefer an existing content surface key first
+- if no key exists, define the governed surface contract before implementation
+- SSR should consume governed values directly
+- runtime should consume SSR-provided governed values, not invent parallel copy
 
-生成代码前应 mentally check：
+## Trust-critical Rules
 
-- `architecture/system-architecture.md`
-- `development/tailwind-rules.md`
-- `development/typescript-rules.md`
-- `components/component-rules.md`
-- `woocommerce/woocommerce-architecture.md`
+Treat these as trust-critical by default:
 
-建议在 Cursor 规则（若配置）中链接上述路径。
+- checkout
+- cart mutation feedback
+- payment guidance
+- account recovery and password flows
+- validation summary and inline validation
+- order confidence messaging
 
-## 6. Commit / PR 期望（AI 辅助）
+For trust-critical work:
 
-- Commit message：英文或中文一致即可，但必须 **说明意图**。
-- PR 描述：截图仅限 UI 任务；架构任务附 **测试步骤**（手动）。
+- never add inline reassurance casually
+- never split trust tone between SSR and runtime
+- never introduce a local helper paragraph when a governed path exists
 
-## 7. 反模式示例（AI 常见）
+## Runtime Governance Contract
 
-| 反模式 | 修复 |
-|--------|------|
-| 一页 40 个 Tailwind utility | 提取组件类 + template part |
-| `document.querySelector` 全局滥用的 TS | `root` 限定 + data 属性 |
-| `functions.php` 两千行 | 拆分 `inc` |
-| 覆盖整个 `woocommerce` 目录 | 最小覆盖 |
+Toast, validation, loading, feedback, and aria messaging must be registry-aware.
+
+That means:
+
+- runtime copy should come from SSR dataset bridges, governed helpers, or registered surface values
+- runtime fallback literals are temporary migration debt, not the preferred implementation
+- if runtime fallback is unavoidable, it must be documented as governance debt or baseline debt
+
+## Surface Checklist
+
+Before finalizing generated code, confirm:
+
+- surface classification is named
+- trust-critical status is named
+- registry integration is defined
+- mood compatibility is considered
+- runtime messaging strategy is explicit
+- accessibility implications are checked
+- governance scan is part of the closeout
+
+## SSR / Runtime Alignment Rules
+
+Avoid:
+
+- runtime tone drift
+- duplicated fallback logic
+- inconsistent reassurance language
+- runtime-only helper copy with no SSR equivalent
+
+Preferred path:
+
+`registry -> SSR helper -> template output -> runtime dataset consumption`
+
+## Feature Flow
+
+Cursor should follow this order:
+
+1. define surface
+2. define governance classification
+3. define registry consumption
+4. define runtime messaging
+5. define fallback behavior
+6. implement SSR
+7. implement runtime
+8. run governance scan
+9. evaluate delta against baseline
+
+## Required References
+
+Before generating governed commerce work, mentally check:
+
+- `docs/governance-audit/development-workflow.md`
+- `docs/governance-audit/trust-critical-surfaces.md`
+- `docs/content-surfaces/content-surface-rules.md`
+- `docs/feedback-system/feedback-rules.md`
+- `docs/governance-audit/baseline-system.md`
+
+## Future Direction
+
+AI-assisted generation should eventually default to loading:
+
+- governance workflow rules
+- trust-critical rules
+- registry rules
+- runtime governance contract
+
+This document establishes the workflow expectation now, without adding a new subsystem.

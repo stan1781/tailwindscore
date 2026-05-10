@@ -27,3 +27,27 @@ TailwindScore feedback should read as commerce guidance, not as app notification
 - gamified confirmation language
 - oversized success motion
 - loud warning palettes detached from the theme token system
+
+## Governance Contract
+
+Feedback surfaces must be registry-aware when they carry customer-facing messaging.
+
+This applies to:
+
+- toast
+- validation
+- loading
+- inline feedback
+- aria/live-region messaging
+
+Preferred path:
+
+- SSR resolves governed copy
+- template exposes it to runtime
+- runtime consumes that governed value
+
+Avoid:
+
+- runtime-only reassurance wording
+- duplicate fallback strings in multiple layers
+- tone drift between visible feedback and aria announcements

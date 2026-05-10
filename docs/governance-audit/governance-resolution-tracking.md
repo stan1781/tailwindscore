@@ -52,6 +52,15 @@ Use when:
 
 Accepted exceptions must be reviewed again if the surface family later enters normalization work.
 
+## Baseline Mapping
+
+For baseline governance, lifecycle states map like this:
+
+- `active issue`: scan finding outside baseline coverage
+- `accepted debt`: baseline entry with `accepted` status
+- `deferred debt`: baseline entry with `deferred` status
+- `resolved issue`: previously tracked debt removed after verification
+
 ## Governance Owner Rules
 
 Owners should be named by surface family rather than by individual file:

@@ -1,5 +1,5 @@
 @layer components {
-	.products {
+	ul.products {
 		display: grid;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 		column-gap: clamp(0.875rem, 2vw, 1.5rem);
@@ -9,28 +9,28 @@
 		list-style: none;
 	}
 
-	.products > .product {
+	ul.products > .product {
 		margin: 0;
 		width: auto;
 	}
 
 	@media (min-width: 48rem) {
-		.products {
+		ul.products {
 			grid-template-columns: repeat(3, minmax(0, 1fr));
 		}
 	}
 
 	@media (min-width: 80rem) {
-		.products {
+		ul.products {
 			grid-template-columns: repeat(4, minmax(0, 1fr));
 		}
 	}
 
-	.products.is-touch .ts-product-card__footer {
+	ul.products.is-touch .ts-product-card__footer {
 		padding-bottom: var(--ts-space-4);
 	}
 
-	.products.is-pointer-fine .ts-product-card__swatches-row {
+	ul.products.is-pointer-fine .ts-product-card__swatches-row {
 		padding-bottom: var(--ts-space-3);
 	}
 }

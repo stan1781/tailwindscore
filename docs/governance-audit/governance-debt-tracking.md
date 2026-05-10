@@ -2,6 +2,8 @@
 
 Governance debt is tracked when a finding is known, bounded, and intentionally left outside the current enforcement pass.
 
+With the baseline system in place, debt should live in `governance-baseline.json` as well as in narrative docs.
+
 ## Debt Classes
 
 ### Tone leakage debt
@@ -98,3 +100,14 @@ Debt is allowed only when:
 - the deferral does not leave a critical trust leak open
 - a removal strategy exists
 - the next review point is named
+
+## Visibility Rule
+
+Debt must be distinguishable from active delta findings.
+
+Use these working meanings:
+
+- `active issue`: not present in baseline, must surface in delta output
+- `accepted debt`: present in baseline with `accepted` status
+- `deferred debt`: present in baseline with `deferred` status
+- `resolved issue`: baseline candidate no longer appearing in scan output and ready for removal

@@ -88,6 +88,8 @@ add_filter( 'tailwindscore/vite/origin', fn () => 'http://localhost:5173' );
 npm run dev
 npm run build
 npm run typecheck
+npm run governance:scan
+npm run governance:scan:all
 ```
 
 ## Philosophy

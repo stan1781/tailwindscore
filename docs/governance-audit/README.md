@@ -10,6 +10,8 @@ The current documentation set covers:
 - severity and trust classification
 - language philosophy
 - closure and debt lifecycle
+- automation preparation and detection architecture
+- governance-native development workflow
 
 ## Documents
 
@@ -25,3 +27,6 @@ The current documentation set covers:
 - `language-philosophy-enforcement.md`
 - `trust-critical-surfaces.md`
 - `tone-leakage-prevention.md`
+- `automation-foundation.md`
+- `baseline-system.md`
+- `development-workflow.md`
