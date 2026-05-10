@@ -1,0 +1,40 @@
+@layer components {
+	@media (max-width: 63.99rem) {
+		.ts-checkout-shell {
+			padding-block-end: calc(var(--ts-space-8) + env(safe-area-inset-bottom, 0px));
+		}
+
+		.ts-checkout-shell__header {
+			gap: var(--ts-space-2);
+		}
+
+		.ts-checkout-shell__title,
+		.woocommerce-checkout #order_review_heading {
+			font-size: clamp(1.75rem, 8vw, 2.5rem);
+		}
+
+		.ts-checkout-summary,
+		.ts-checkout-payment,
+		.woocommerce-checkout .col-1,
+		.woocommerce-checkout .col-2 {
+			padding: var(--ts-space-4);
+		}
+
+		.ts-checkout-payment .place-order {
+			position: sticky;
+			bottom: 0;
+			margin-inline: calc(var(--ts-space-4) * -1);
+			margin-bottom: calc(var(--ts-space-4) * -1);
+			padding: var(--ts-space-4);
+			padding-bottom: calc(var(--ts-space-4) + env(safe-area-inset-bottom, 0px));
+			border-top: 1px solid var(--ts-color-border-subtle);
+			background: color-mix(in oklch, var(--ts-color-surface) 94%, var(--ts-color-canvas));
+			backdrop-filter: blur(16px);
+		}
+
+		.ts-checkout-payment .place-order .button,
+		.ts-checkout-payment .place-order #place_order {
+			margin: 0;
+		}
+	}
+}

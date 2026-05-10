@@ -1,0 +1,52 @@
+@layer components {
+	.ts-price-block {
+		display: inline-flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: var(--ts-space-2);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.ts-price-block__current {
+		font-family: var(--ts-font-display);
+		font-size: var(--ts-text-product-price);
+		font-weight: 700;
+		line-height: var(--ts-leading-tight);
+		color: var(--ts-color-price);
+	}
+
+	.ts-price-block__compare {
+		font-size: var(--ts-text-meta);
+		font-weight: 500;
+		color: var(--ts-color-price-alt);
+		text-decoration: line-through;
+		text-decoration-thickness: 1px;
+	}
+
+	.ts-price-block__suffix {
+		font-size: var(--ts-text-caption);
+		font-weight: 500;
+		color: var(--ts-color-text-muted);
+	}
+
+	/**
+	 * WooCommerce renders price HTML — wrap/filter outputs with `.ts-price-block`.
+	 */
+	.ts-price-block .woocommerce-Price-amount {
+		font-weight: inherit;
+		color: inherit;
+	}
+
+	.ts-price-block del {
+		font-size: var(--ts-text-meta);
+		font-weight: 500;
+		color: var(--ts-color-price-alt);
+		text-decoration: line-through;
+	}
+
+	.ts-price-block ins {
+		text-decoration: none;
+		font-weight: 700;
+		color: var(--ts-color-price);
+	}
+}

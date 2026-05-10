@@ -1,0 +1,30 @@
+@layer components {
+	.ts-stack {
+		display: flex;
+		flex-direction: column;
+		gap: var(--ts-stack-gap-md);
+	}
+
+	.ts-stack--sm {
+		gap: var(--ts-stack-gap-sm);
+	}
+
+	.ts-stack--lg {
+		gap: var(--ts-stack-gap-lg);
+	}
+
+	.ts-stack--none {
+		gap: 0;
+	}
+
+	.ts-inline {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--ts-stack-gap-sm);
+	}
+
+	.ts-inline--md {
+		gap: var(--ts-stack-gap-md);
+	}
+}

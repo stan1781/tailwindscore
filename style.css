@@ -1,0 +1,17 @@
+/*
+Theme Name: TailwindScore
+Theme URI: https://example.com/tailwindscore
+Author: TailwindScore
+Author URI: https://example.com
+Description: Modern WooCommerce starter framework — PHP SSR first, Tailwind tokens, Vite + TypeScript modules.
+Version: 0.1.0
+Requires at least: 6.5
+Tested up to: 6.8
+Requires PHP: 8.1
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: tailwindscore
+Tags: e-commerce, woocommerce, custom-menu, featured-images, translation-ready
+
+TailwindScore bundles compiled CSS/JS under dist/ via Vite. Run `npm install && npm run build` before activating on production environments without dev middleware.
+*/

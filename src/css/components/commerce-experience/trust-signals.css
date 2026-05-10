@@ -1,0 +1,59 @@
+/**
+ * Trust-adjacent rhythm — stock, meta labels, optional `.ts-trust-row` / `.ts-trust-label`.
+ */
+@layer components {
+	.ts-commerce-summary__lead {
+		display: flex;
+		flex-direction: column;
+		gap: var(--ts-space-3);
+	}
+
+	@media (min-width: 48rem) {
+		.ts-commerce-summary__lead {
+			gap: var(--ts-space-4);
+		}
+	}
+
+	/* Title emphasis inside lead */
+	.ts-commerce-summary__lead .ts-product-summary__title {
+		font-size: var(--ts-text-h1);
+		line-height: var(--ts-leading-heading);
+		letter-spacing: var(--ts-tracking-tight);
+		color: var(--ts-color-text-primary);
+	}
+
+	/* Rating — breathing room from title / price */
+	.ts-commerce-summary__lead .ts-product-summary__rating {
+		margin-top: calc(var(--ts-space-1) * -1);
+	}
+
+	/* Price block — conversion focal */
+	.ts-commerce-summary__lead .ts-product-summary__price {
+		padding-block: var(--ts-space-1);
+	}
+
+	.ts-commerce-summary__lead .ts-price-block__current {
+		font-size: clamp(1.25rem, 1.5vw + 1rem, 1.75rem);
+	}
+
+	/* Stock inside purchase region — urgency / clarity */
+	.ts-purchase-region > .stock {
+		margin: 0 0 var(--ts-space-3);
+		font-size: var(--ts-text-ui);
+		font-weight: 600;
+		line-height: var(--ts-leading-snug);
+	}
+
+	.ts-purchase-region > .stock.in-stock {
+		color: var(--ts-color-success);
+	}
+
+	.ts-purchase-region > .stock.out-of-stock {
+		color: var(--ts-color-danger);
+	}
+
+	/* Optional merchant row: wrap `ts-trust-label` items */
+	.ts-commerce-summary .ts-trust-row {
+		margin-top: var(--ts-space-1);
+	}
+}

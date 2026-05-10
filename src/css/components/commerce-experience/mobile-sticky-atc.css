@@ -1,0 +1,50 @@
+/**
+ * Mobile purchase “dock” — CSS `position: sticky` only (same form, no clone).
+ * Safe-area aware; disabled when user prefers reduced motion (see below).
+ */
+@layer components {
+	@media (max-width: 47.99rem) {
+		.ts-purchase-region {
+			position: sticky;
+			bottom: max(var(--ts-space-2), env(safe-area-inset-bottom, 0px));
+			z-index: var(--ts-z-sticky);
+			padding-inline: max(var(--ts-space-3), env(safe-area-inset-left, 0px));
+			padding-inline-end: max(var(--ts-space-3), env(safe-area-inset-right, 0px));
+			padding-top: var(--ts-space-4);
+			padding-bottom: max(var(--ts-space-3), env(safe-area-inset-bottom, 0px));
+			border-radius: var(--ts-radius-card) var(--ts-radius-card) 0 0;
+			background: linear-gradient(
+				180deg,
+				color-mix(in oklch, var(--ts-color-surface) 0%, transparent) 0%,
+				color-mix(in oklch, var(--ts-color-surface) 90%, var(--ts-color-canvas)) 28%,
+				var(--ts-color-surface) 100%
+			);
+			box-shadow: var(--ts-shadow-overlay);
+			border: 1px solid var(--ts-color-border-subtle);
+			border-bottom: none;
+		}
+
+		/* Reserve scroll space so last lines of excerpt aren’t hidden behind dock */
+		.single-product .ts-commerce-summary {
+			padding-bottom: max(5rem, calc(env(safe-area-inset-bottom, 0px) + 4rem));
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.ts-purchase-region {
+			position: static;
+			margin-inline: 0;
+			padding-inline: 0;
+			padding-top: 0;
+			padding-bottom: 0;
+			border-radius: 0;
+			background: transparent;
+			box-shadow: none;
+			border: none;
+		}
+
+		.single-product .ts-commerce-summary {
+			padding-bottom: 0;
+		}
+	}
+}

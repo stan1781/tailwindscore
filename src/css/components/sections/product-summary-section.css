@@ -1,0 +1,6 @@
+@layer components {
+	.ts-product-summary-section__inner {
+		width: 100%;
+		min-width: 0;
+	}
+}

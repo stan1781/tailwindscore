@@ -1,0 +1,72 @@
+@layer components {
+	.ts-icon {
+		display: inline-block;
+		width: var(--ts-icon-size-md);
+		height: var(--ts-icon-size-md);
+		flex-shrink: 0;
+		vertical-align: middle;
+		color: currentColor;
+	}
+
+	.ts-icon path,
+	.ts-icon circle,
+	.ts-icon rect,
+	.ts-icon line,
+	.ts-icon polyline,
+	.ts-icon polygon {
+		vector-effect: non-scaling-stroke;
+	}
+
+	.ts-icon--inline {
+		width: 1em;
+		height: 1em;
+		vertical-align: -0.12em;
+	}
+
+	.ts-icon--nav {
+		width: var(--ts-icon-size-sm);
+		height: var(--ts-icon-size-sm);
+	}
+
+	.ts-icon--utility {
+		width: var(--ts-icon-size-sm);
+		height: var(--ts-icon-size-sm);
+	}
+
+	.ts-icon--xs {
+		width: var(--ts-icon-size-xs);
+		height: var(--ts-icon-size-xs);
+	}
+
+	.ts-icon--sm {
+		width: var(--ts-icon-size-sm);
+		height: var(--ts-icon-size-sm);
+	}
+
+	.ts-icon--md {
+		width: var(--ts-icon-size-md);
+		height: var(--ts-icon-size-md);
+	}
+
+	.ts-icon--lg {
+		width: var(--ts-icon-size-lg);
+		height: var(--ts-icon-size-lg);
+	}
+
+	.ts-btn__icon .ts-icon,
+	.ts-site-header__utility-icon .ts-icon,
+	.ts-nav__submenu-icon .ts-icon,
+	.ts-gallery__nav-icon .ts-icon {
+		width: 100%;
+		height: 100%;
+	}
+
+	.ts-btn__icon,
+	.ts-site-header__utility-icon,
+	.ts-nav__submenu-icon,
+	.ts-gallery__nav-icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+	}
+}

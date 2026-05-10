@@ -1,0 +1,120 @@
+/* Product gallery — Embla viewports + WC-compatible hooks (.images, .flex-control-nav). */
+
+@layer components {
+	.ts-gallery {
+		@apply w-full;
+	}
+
+	.ts-gallery__layout {
+		@apply flex flex-col gap-4 md:flex-row md:gap-6 md:items-start;
+	}
+
+	.ts-gallery__col--thumbs {
+		@apply order-2 md:order-none md:w-[4.5rem] md:shrink-0;
+	}
+
+	.ts-gallery__col--main {
+		@apply relative min-w-0 flex-1 md:sticky;
+		top: var(--ts-pdp-sticky-top);
+	}
+
+	.ts-gallery__main-wrapper {
+		@apply relative overflow-hidden bg-neutral-50 ring-1 ring-black/5 dark:bg-neutral-900 dark:ring-white/10;
+		border-radius: var(--ts-radius-media);
+		box-shadow: var(--ts-shadow-surface);
+	}
+
+	.ts-gallery__main-viewport {
+		@apply overflow-hidden;
+	}
+
+	.ts-gallery__main-track {
+		@apply flex;
+	}
+
+	.ts-gallery__main-track > .woocommerce-product-gallery__image {
+		@apply min-w-0 shrink-0 grow-0 basis-full;
+	}
+
+	.ts-gallery__main-track .woocommerce-product-gallery__image img {
+		@apply mx-auto block h-auto max-h-[min(85vh,820px)] w-full max-w-full object-contain;
+	}
+
+	.ts-gallery__controls {
+		@apply pointer-events-none absolute inset-y-0 left-0 right-0 flex items-center justify-between px-3;
+	}
+
+	.ts-gallery__nav {
+		@apply pointer-events-auto inline-flex h-10 w-10 items-center justify-center bg-white/92 text-lg text-neutral-900 ring-1 ring-black/10 dark:bg-neutral-900/92 dark:text-white dark:ring-white/10;
+		border-radius: var(--ts-radius-control);
+		box-shadow: var(--ts-shadow-surface);
+		transition:
+			background-color var(--ts-motion-button-duration) var(--ts-motion-button-ease),
+			box-shadow var(--ts-motion-button-duration) var(--ts-motion-button-ease),
+			border-color var(--ts-motion-button-duration) var(--ts-motion-button-ease),
+			opacity var(--ts-motion-button-duration) var(--ts-motion-button-ease);
+	}
+
+	.ts-gallery__nav:hover {
+		@apply bg-white;
+		box-shadow: var(--ts-shadow-hover);
+	}
+
+	.ts-gallery__nav-icon {
+		@apply inline-flex items-center justify-center;
+		width: var(--ts-icon-size-sm);
+		height: var(--ts-icon-size-sm);
+	}
+
+	.ts-gallery__nav-icon-svg--prev {
+		transform: rotate(180deg);
+	}
+
+	.ts-gallery__thumbs-shell {
+		@apply w-full md:w-auto;
+	}
+
+	.ts-gallery__thumbs-viewport {
+		@apply overflow-hidden md:h-[min(70vh,520px)];
+	}
+
+	.ts-gallery__thumbs-viewport .flex-control-nav {
+		@apply m-0 flex list-none gap-2.5 p-0 md:flex-col md:gap-3;
+	}
+
+	.ts-gallery__thumb-btn {
+		@apply block overflow-hidden ring-1 ring-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 dark:focus-visible:ring-white;
+		border-radius: var(--ts-radius-control);
+		background-color: var(--ts-color-surface);
+		transition:
+			ring-color var(--ts-motion-hover-duration) var(--ts-motion-hover-ease),
+			border-color var(--ts-motion-hover-duration) var(--ts-motion-hover-ease),
+			opacity var(--ts-motion-hover-duration) var(--ts-motion-hover-ease),
+			box-shadow var(--ts-motion-hover-duration) var(--ts-motion-hover-ease);
+	}
+
+	.ts-gallery__thumb-btn:hover {
+		@apply ring-black/15 dark:ring-white/20;
+		box-shadow: var(--ts-shadow-surface);
+	}
+
+	.ts-gallery__thumb-btn.is-active {
+		@apply ring-neutral-900 dark:ring-white;
+		box-shadow: var(--ts-shadow-surface);
+	}
+
+	.ts-gallery__thumb-btn img {
+		@apply block aspect-square h-14 w-14 object-cover md:h-16 md:w-16;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.ts-gallery__nav,
+		.ts-gallery__thumb-btn {
+			transition: none;
+		}
+	}
+
+	.ts-gallery__json {
+		@apply hidden;
+	}
+}

@@ -1,0 +1,29 @@
+@layer components {
+	.ts-section {
+		padding-block: var(--ts-section-y-md);
+	}
+
+	.ts-section--sm {
+		padding-block: var(--ts-section-y-sm);
+	}
+
+	.ts-section--lg {
+		padding-block: var(--ts-section-y-lg);
+	}
+
+	.ts-section--surface {
+		background-color: var(--ts-color-surface);
+		border-block: 1px solid var(--ts-color-border-subtle);
+	}
+
+	.ts-section--canvas {
+		background-color: var(--ts-color-canvas);
+	}
+
+	/**
+	 * Legacy alias — same rhythm as default section padding token.
+	 */
+	.ts-stack-section {
+		padding-block: var(--ts-space-section-y);
+	}
+}

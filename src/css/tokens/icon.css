@@ -1,0 +1,11 @@
+:root {
+	--ts-icon-size-xs: 0.875rem;
+	--ts-icon-size-sm: 1rem;
+	--ts-icon-size-md: 1.25rem;
+	--ts-icon-size-lg: 1.5rem;
+
+	--ts-icon-stroke-width: 1.5;
+
+	--ts-icon-gap-inline: var(--ts-space-2);
+	--ts-icon-gap-button: var(--ts-space-2);
+}

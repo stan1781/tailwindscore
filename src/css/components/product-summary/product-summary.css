@@ -1,0 +1,37 @@
+@layer components {
+	.ts-product-summary__title-wrap {
+		margin: 0;
+		padding: 0;
+		border: 0;
+	}
+
+	.ts-commerce-summary {
+		gap: var(--ts-space-6);
+	}
+
+	.ts-product-summary__title {
+		letter-spacing: 0;
+		line-height: var(--ts-leading-tight);
+	}
+
+	.ts-product-summary__rating {
+		color: var(--ts-color-text-secondary);
+	}
+
+	.ts-product-summary__price {
+		padding-bottom: var(--ts-space-2);
+		border-bottom: 1px solid var(--ts-color-border-subtle);
+	}
+
+	.ts-product-summary__price .ts-price-block {
+		font-size: inherit;
+	}
+
+	.ts-product-summary__excerpt > *:first-child {
+		margin-top: 0;
+	}
+
+	.ts-product-summary__excerpt > *:last-child {
+		margin-bottom: 0;
+	}
+}

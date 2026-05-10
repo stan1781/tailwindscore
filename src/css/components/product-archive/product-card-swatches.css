@@ -1,0 +1,77 @@
+@layer components {
+	.ts-product-card__swatches-row {
+		display: flex;
+		align-items: center;
+		gap: var(--ts-space-2);
+		padding-inline: var(--ts-space-4);
+		padding-bottom: var(--ts-space-2);
+		min-block-size: 1.75rem;
+	}
+
+	.ts-archive-swatch {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		inline-size: 1.25rem;
+		block-size: 1.25rem;
+		padding: 0;
+		border: 1px solid color-mix(in oklch, var(--ts-color-border-subtle) 82%, transparent);
+		border-radius: var(--ts-radius-swatch);
+		background: var(--ts-color-surface);
+		flex: 0 0 auto;
+		overflow: hidden;
+		transition:
+			border-color var(--ts-motion-hover-duration) var(--ts-motion-hover-ease),
+			box-shadow var(--ts-motion-hover-duration) var(--ts-motion-hover-ease),
+			background-color var(--ts-motion-hover-duration) var(--ts-motion-hover-ease);
+	}
+
+	.ts-archive-swatch.is-selected {
+		border-color: var(--ts-color-text-primary);
+		box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--ts-color-text-primary) 35%, transparent);
+	}
+
+	.ts-archive-swatch:hover {
+		border-color: color-mix(in oklch, var(--ts-color-border-strong) 56%, var(--ts-color-accent));
+	}
+
+	.ts-archive-swatch__chip {
+		display: inline-flex;
+		inline-size: 0.9375rem;
+		block-size: 0.9375rem;
+		border-radius: calc(var(--ts-radius-swatch) - 1px);
+		overflow: hidden;
+		align-items: center;
+		justify-content: center;
+		font-size: 0.625rem;
+		line-height: 1;
+	}
+
+	.ts-archive-swatch__chip--image img {
+		inline-size: 100%;
+		block-size: 100%;
+		object-fit: cover;
+		display: block;
+	}
+
+	.ts-archive-swatch__chip--color {
+		background:
+			linear-gradient(
+				135deg,
+				var(--ts-swatch-color-primary, transparent) 0 50%,
+				var(--ts-swatch-color-secondary, var(--ts-swatch-color-primary, transparent)) 50% 100%
+			);
+	}
+
+	.ts-archive-swatch__chip--text {
+		background: color-mix(in oklch, var(--ts-color-surface-raised) 88%, white);
+		color: var(--ts-color-text-secondary);
+	}
+
+	.ts-product-card__swatches-more {
+		font-size: 0.75rem;
+		line-height: 1;
+		color: var(--ts-color-text-secondary);
+		flex: 0 0 auto;
+	}
+}

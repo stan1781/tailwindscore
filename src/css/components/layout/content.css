@@ -1,0 +1,20 @@
+@layer components {
+	/**
+	 * Readable column for policies, editorial, long-form next to commerce grids.
+	 */
+	.ts-content {
+		max-width: var(--ts-prose-max);
+	}
+
+	.ts-content--wide {
+		max-width: min(100%, 48rem);
+	}
+
+	.ts-content--full {
+		max-width: none;
+	}
+
+	.ts-measure {
+		max-width: var(--ts-prose-max);
+	}
+}

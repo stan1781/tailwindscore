@@ -1,0 +1,106 @@
+@layer components {
+	.ts-cart-drawer {
+		position: fixed;
+		inset: 0;
+		z-index: var(--ts-z-modal);
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity var(--ts-motion-fade-duration) var(--ts-motion-fade-ease);
+	}
+
+	.ts-cart-drawer.is-open {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	.ts-cart-drawer__backdrop {
+		position: absolute;
+		inset: 0;
+		background: color-mix(in oklab, var(--ts-color-text-primary) 16%, transparent);
+	}
+
+	.ts-cart-drawer__panel {
+		position: relative;
+		z-index: 1;
+		display: grid;
+		grid-template-rows: auto minmax(0, 1fr);
+		width: min(30rem, calc(100vw - var(--ts-space-4)));
+		height: 100vh;
+		margin-left: auto;
+		background: color-mix(in oklab, var(--ts-color-surface) 97%, white 3%);
+		border-left: 1px solid var(--ts-color-border-subtle);
+		box-shadow: var(--ts-shadow-overlay);
+		transform: translateX(100%);
+		transition: transform var(--ts-motion-gallery-duration) var(--ts-motion-gallery-ease);
+	}
+
+	.ts-cart-drawer.is-open .ts-cart-drawer__panel {
+		transform: translateX(0);
+	}
+
+	.ts-cart-drawer__header {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: var(--ts-space-4);
+		padding: var(--ts-space-5);
+		border-bottom: 1px solid var(--ts-color-border-subtle);
+	}
+
+	.ts-cart-drawer__heading {
+		display: grid;
+		gap: var(--ts-space-2);
+	}
+
+	.ts-cart-drawer__eyebrow {
+		margin: 0;
+		font-size: var(--ts-text-caption);
+		line-height: 1;
+		letter-spacing: var(--ts-tracking-ui);
+		text-transform: uppercase;
+		color: var(--ts-color-text-secondary);
+	}
+
+	.ts-cart-drawer__title {
+		margin: 0;
+		font-size: var(--ts-text-h4);
+		line-height: var(--ts-leading-heading);
+	}
+
+	.ts-cart-drawer__body {
+		display: grid;
+		grid-template-rows: minmax(0, 1fr) auto;
+		min-height: 0;
+	}
+
+	.ts-cart-drawer__items {
+		overflow-y: auto;
+		padding: var(--ts-space-4);
+		display: grid;
+		gap: var(--ts-space-4);
+	}
+
+	.ts-cart-drawer__summary {
+		padding: var(--ts-space-4);
+		border-top: 1px solid var(--ts-color-border-subtle);
+		background: color-mix(in oklab, var(--ts-color-surface-raised) 90%, white 10%);
+	}
+
+	html.ts-has-cart-open,
+	body.ts-has-cart-open {
+		overflow: hidden;
+	}
+
+	@media (max-width: 47.9375rem) {
+		.ts-cart-drawer__panel {
+			width: 100%;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.ts-cart-drawer,
+		.ts-cart-drawer__panel {
+			transition: none;
+		}
+	}
+}

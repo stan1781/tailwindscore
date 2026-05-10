@@ -1,0 +1,93 @@
+@layer components {
+	.ts-product-card {
+		--ts-product-card-ratio: 4 / 5;
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		border-radius: var(--ts-radius-card);
+		background-color: var(--ts-color-surface);
+		border: 1px solid color-mix(in oklch, var(--ts-color-border-subtle) 78%, transparent);
+		overflow: clip;
+		transition:
+			border-color var(--ts-motion-hover-duration) var(--ts-motion-hover-ease),
+			background-color var(--ts-motion-hover-duration) var(--ts-motion-hover-ease),
+			box-shadow var(--ts-motion-hover-duration) var(--ts-motion-hover-ease);
+		box-shadow: var(--ts-shadow-surface);
+	}
+
+	.ts-product-card__shell {
+		display: flex;
+		flex: 1 1 auto;
+		flex-direction: column;
+		min-height: 0;
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.ts-product-card__shell:focus-visible {
+		outline: 2px solid var(--ts-color-accent);
+		outline-offset: 3px;
+		border-radius: var(--ts-radius-card);
+	}
+
+	.ts-product-card__badges {
+		position: absolute;
+		inset: var(--ts-space-3) var(--ts-space-3) auto auto;
+		z-index: 2;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+		gap: var(--ts-space-2);
+		max-width: calc(100% - var(--ts-space-6));
+		pointer-events: none;
+	}
+
+	.ts-product-card__badges .ts-badge {
+		pointer-events: auto;
+	}
+
+	.ts-product-card__body {
+		display: flex;
+		flex: 1 1 auto;
+		flex-direction: column;
+		gap: var(--ts-space-1);
+		padding: var(--ts-space-4) var(--ts-space-4) var(--ts-space-2);
+	}
+
+	.ts-product-card__title {
+		font-family: var(--ts-font-display);
+		font-size: var(--ts-text-product-title);
+		line-height: var(--ts-leading-snug);
+		font-weight: 600;
+		color: var(--ts-color-text-primary);
+		text-decoration: none;
+		letter-spacing: 0;
+	}
+
+	.ts-product-card__title:hover {
+		color: color-mix(in oklch, var(--ts-color-text-primary) 82%, var(--ts-color-accent));
+	}
+
+	.ts-product-card__footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--ts-space-3);
+		padding: var(--ts-space-2) var(--ts-space-4) var(--ts-space-4);
+	}
+
+	.ts-product-card__footer .ts-price-block {
+		flex: 1 1 auto;
+		min-width: 0;
+	}
+
+	@media (hover: hover) and (pointer: fine) {
+		.ts-product-card:hover,
+		.ts-product-card:focus-within {
+			border-color: color-mix(in oklch, var(--ts-color-border-strong) 64%, var(--ts-color-accent));
+			background-color: color-mix(in oklch, var(--ts-color-surface) 98%, white);
+			box-shadow: var(--ts-shadow-surface);
+		}
+	}
+}

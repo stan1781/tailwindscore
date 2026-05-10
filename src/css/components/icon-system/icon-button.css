@@ -1,0 +1,51 @@
+@layer components {
+	.ts-icon-button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.75rem;
+		height: 2.75rem;
+		padding: 0;
+		border: 1px solid transparent;
+		border-radius: var(--ts-radius-control);
+		background: transparent;
+		color: var(--ts-color-text-primary);
+		transition:
+			background-color var(--ts-motion-button-duration) var(--ts-motion-button-ease),
+			border-color var(--ts-motion-button-duration) var(--ts-motion-button-ease),
+			color var(--ts-motion-button-duration) var(--ts-motion-button-ease),
+			box-shadow var(--ts-motion-button-duration) var(--ts-motion-button-ease);
+	}
+
+	.ts-icon-button:hover,
+	.ts-icon-button:focus-visible {
+		border-color: var(--ts-color-border-subtle);
+		background: color-mix(in oklab, var(--ts-color-surface-raised) 84%, white 16%);
+		outline: none;
+	}
+
+	.ts-icon-button:focus-visible {
+		box-shadow: 0 0 0 2px color-mix(in oklab, var(--ts-color-accent) 16%, transparent);
+	}
+
+	.ts-icon-button--sm {
+		width: 2.25rem;
+		height: 2.25rem;
+	}
+
+	.ts-icon-button--nav,
+	.ts-icon-button--utility {
+		border-radius: var(--ts-radius-control);
+	}
+
+	.ts-icon-button .ts-icon {
+		width: var(--ts-icon-size-sm);
+		height: var(--ts-icon-size-sm);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.ts-icon-button {
+			transition: none;
+		}
+	}
+}

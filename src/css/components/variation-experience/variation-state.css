@@ -1,0 +1,51 @@
+/**
+ * Runtime + WC attribute table — selection shell states.
+ */
+@layer components {
+	.ts-variation-runtime {
+		width: 100%;
+		min-width: 0;
+	}
+
+	.ts-variation-runtime--found .single_variation_wrap {
+		opacity: 1;
+	}
+
+	.ts-variation-runtime--hidden .single_variation_wrap,
+	.ts-variation-runtime--reset .single_variation_wrap {
+		opacity: 0.92;
+	}
+
+	.ts-variation-wrap--inactive {
+		transition: opacity var(--ts-motion-fade-duration) var(--ts-motion-fade-ease);
+	}
+
+	.ts-variation-wrap--active {
+		transition: opacity var(--ts-motion-fade-duration) var(--ts-motion-fade-ease);
+	}
+
+	.ts-variation-runtime table.variations tr {
+		transition: background-color var(--ts-motion-hover-duration) var(--ts-motion-hover-ease);
+	}
+
+	.ts-variation-runtime table.variations tr.ts-variation-row--selected td.value {
+		border-radius: var(--ts-radius-md);
+	}
+
+	.ts-variation-runtime table.variations select {
+		min-height: 2.75rem;
+	}
+
+	.ts-variation-runtime table.variations select:focus-visible {
+		outline: 2px solid var(--ts-color-accent);
+		outline-offset: 2px;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.ts-variation-wrap--inactive,
+		.ts-variation-wrap--active,
+		.ts-variation-runtime table.variations tr {
+			transition: none;
+		}
+	}
+}

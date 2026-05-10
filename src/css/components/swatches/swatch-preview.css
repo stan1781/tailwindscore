@@ -1,0 +1,26 @@
+/**
+ * Hover 大图预览 — 轻边框，无阴影堆叠。
+ */
+@layer components {
+	.ts-swatch-preview {
+		pointer-events: none;
+		border-radius: var(--ts-radius-media);
+		border: 1px solid var(--ts-color-border-subtle);
+		background-color: var(--ts-color-surface);
+		overflow: hidden;
+		box-sizing: border-box;
+		box-shadow: var(--ts-shadow-overlay);
+	}
+
+	.ts-swatch-preview[hidden] {
+		display: none !important;
+	}
+
+	.ts-swatch-preview__img {
+		display: block;
+		width: 100%;
+		height: auto;
+		aspect-ratio: 1;
+		object-fit: cover;
+	}
+}

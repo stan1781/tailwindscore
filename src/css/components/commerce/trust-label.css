@@ -1,0 +1,33 @@
+@layer components {
+	.ts-trust-label {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--ts-space-2);
+		padding-inline: var(--ts-space-3);
+		padding-block: var(--ts-space-2);
+		border-radius: var(--ts-radius-lg);
+		border: 1px solid var(--ts-color-border-subtle);
+		background-color: color-mix(in oklch, var(--ts-color-surface-raised) 75%, var(--ts-color-surface));
+		color: var(--ts-color-text-secondary);
+		font-size: var(--ts-text-meta);
+		line-height: var(--ts-leading-snug);
+		font-weight: 600;
+		letter-spacing: var(--ts-tracking-ui);
+		text-transform: uppercase;
+	}
+
+	.ts-trust-label__icon {
+		display: inline-flex;
+		width: 1rem;
+		height: 1rem;
+		flex-shrink: 0;
+		color: color-mix(in oklch, var(--ts-color-accent) 85%, black);
+	}
+
+	.ts-trust-row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--ts-space-3);
+	}
+}

@@ -1,0 +1,37 @@
+/**
+ * Stock hint + WC availability block rhythm inside variation wrap.
+ */
+@layer components {
+	.ts-variation-feedback {
+		display: grid;
+		gap: var(--ts-space-3);
+	}
+
+	.ts-variation-stock-hint {
+		margin-bottom: var(--ts-space-3);
+	}
+
+	.ts-variation-runtime .woocommerce-variation-availability,
+	.ts-variation-runtime .woocommerce-variation-availability.ts-feedback-notice {
+		margin: 0;
+	}
+
+	.ts-variation-runtime .woocommerce-variation-availability .stock {
+		margin: 0;
+		font-size: var(--ts-text-body-sm);
+		font-weight: 500;
+		line-height: var(--ts-leading-body);
+		color: var(--ts-color-text-secondary);
+	}
+
+	.ts-variation-runtime .woocommerce-variation-availability.ts-feedback-notice {
+		grid-template-columns: 1fr;
+	}
+
+	.ts-variation-runtime .woocommerce-variation-availability .stock.in-stock,
+	.ts-variation-runtime .woocommerce-variation-availability .stock.out-of-stock,
+	.ts-variation-runtime .woocommerce-variation-availability .stock.available-on-backorder,
+	.ts-variation-runtime .woocommerce-variation-availability .stock.onbackorder {
+		color: inherit;
+	}
+}

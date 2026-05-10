@@ -1,0 +1,45 @@
+@layer components {
+	@media (max-width: 63.9375rem) {
+		.ts-account-shell__body,
+		.ts-account-auth__grid,
+		.ts-account-form__grid--two-up,
+		.ts-account-order-card__summary,
+		.ts-account-download-card {
+			grid-template-columns: 1fr;
+		}
+
+		.ts-account-panel,
+		.ts-account-order-card,
+		.ts-account-download-card,
+		.ts-address-card {
+			padding: var(--ts-space-5);
+		}
+
+		.ts-account-nav__panel[hidden] {
+			display: none;
+		}
+
+		.ts-account-nav__panel {
+			padding: var(--ts-space-2);
+			border: 1px solid var(--ts-color-border-subtle);
+			border-radius: min(var(--ts-radius-card), 0.5rem);
+			background: var(--ts-color-surface);
+		}
+
+		.ts-account-form__actions .ts-btn,
+		.ts-account-order-card__actions .ts-btn,
+		.ts-account-download-card__actions .ts-btn {
+			width: 100%;
+			justify-content: center;
+		}
+
+		.ts-account-order-card__actions,
+		.ts-account-form__actions {
+			align-items: stretch;
+		}
+
+		.ts-account-auth__remember {
+			align-items: flex-start;
+		}
+	}
+}

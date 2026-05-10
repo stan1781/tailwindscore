@@ -1,0 +1,10 @@
+@layer components {
+	.ts-swatch.is-unavailable {
+		opacity: 0.4;
+		cursor: not-allowed;
+	}
+
+	.ts-swatch[aria-disabled='true'] {
+		pointer-events: none;
+	}
+}

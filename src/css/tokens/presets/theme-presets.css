@@ -1,0 +1,11 @@
+/**
+ * Governed preset layer.
+ *
+ * TailwindScore presets are registry-driven mood variations applied via SSR inline
+ * `--ts-*` variable overrides. This file remains intentionally thin: presets do not
+ * ship alternate bundles, duplicate component CSS, or redefine layout structure.
+ *
+ * See:
+ * - inc/presets/registry.php
+ * - inc/presets/loader.php
+ */

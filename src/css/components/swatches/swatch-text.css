@@ -1,0 +1,40 @@
+@layer components {
+	.ts-swatch--text {
+		min-height: 2.75rem;
+		min-width: 2.75rem;
+		padding-inline: var(--ts-space-3);
+		padding-block: var(--ts-space-2);
+		border-radius: var(--ts-swatch-shell-radius);
+		border: 1px solid var(--ts-swatch-shell-border);
+		background-color: var(--ts-swatch-shell-bg);
+		color: var(--ts-color-text-primary);
+		font-size: var(--ts-text-meta);
+		font-weight: 600;
+		line-height: var(--ts-leading-snug);
+		cursor: pointer;
+		transition:
+			border-color var(--ts-motion-hover-duration) var(--ts-motion-hover-ease),
+			color var(--ts-motion-hover-duration) var(--ts-motion-hover-ease),
+			background-color var(--ts-motion-hover-duration) var(--ts-motion-hover-ease);
+	}
+
+	.ts-swatch--text .ts-swatch__label {
+		pointer-events: none;
+	}
+
+	.ts-swatch--text:focus-visible {
+		outline: 2px solid var(--ts-color-accent);
+		outline-offset: 2px;
+	}
+
+	.ts-swatch--text.is-selected {
+		border-color: var(--ts-color-text-primary);
+	}
+
+	@media (hover: hover) and (pointer: fine) {
+		.ts-swatch--text:hover {
+			border-color: color-mix(in oklch, var(--ts-color-border-strong) 56%, var(--ts-color-accent));
+			background-color: color-mix(in oklch, var(--ts-color-surface) 94%, white);
+		}
+	}
+}

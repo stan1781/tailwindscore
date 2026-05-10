@@ -1,0 +1,108 @@
+@layer components {
+	.ts-mobile-drawer {
+		position: fixed;
+		inset: 0;
+		z-index: var(--ts-z-drawer);
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity var(--ts-motion-fade-duration) var(--ts-motion-fade-ease);
+	}
+
+	.ts-mobile-drawer.is-open {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	.ts-mobile-drawer__backdrop {
+		position: absolute;
+		inset: 0;
+		background: color-mix(in oklab, var(--ts-color-text-primary) 18%, transparent);
+	}
+
+	.ts-mobile-drawer__panel {
+		position: relative;
+		z-index: 1;
+		display: grid;
+		grid-template-rows: auto minmax(0, 1fr) auto;
+		width: min(32rem, calc(100vw - var(--ts-space-4)));
+		height: 100vh;
+		margin-left: auto;
+		padding: var(--ts-space-4);
+		border-left: 1px solid var(--ts-color-border-subtle);
+		background: color-mix(in oklab, var(--ts-color-surface) 96%, white 4%);
+		box-shadow: var(--ts-shadow-overlay);
+		transform: translateX(100%);
+		transition: transform var(--ts-motion-gallery-duration) var(--ts-motion-gallery-ease);
+	}
+
+	.ts-mobile-drawer.is-open .ts-mobile-drawer__panel {
+		transform: translateX(0);
+	}
+
+	.ts-mobile-drawer__header,
+	.ts-mobile-drawer__footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--ts-space-3);
+	}
+
+	.ts-mobile-drawer__header {
+		padding-bottom: var(--ts-space-4);
+		border-bottom: 1px solid var(--ts-color-border-subtle);
+	}
+
+	.ts-mobile-drawer__body {
+		overflow-y: auto;
+		padding-block: var(--ts-space-4);
+	}
+
+	.ts-mobile-drawer__footer {
+		padding-top: var(--ts-space-4);
+		border-top: 1px solid var(--ts-color-border-subtle);
+	}
+
+	.ts-mobile-drawer__brand {
+		color: inherit;
+		text-decoration: none;
+		font-size: var(--ts-text-h6);
+		font-weight: 600;
+	}
+
+	.ts-mobile-drawer__close {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.75rem;
+		height: 2.75rem;
+		padding: 0;
+		border: 1px solid var(--ts-color-border-subtle);
+		border-radius: var(--ts-radius-control);
+		background: transparent;
+	}
+
+	.ts-mobile-drawer__close svg {
+		width: 1.125rem;
+		height: 1.125rem;
+	}
+
+	html.ts-has-drawer-open,
+	body.ts-has-drawer-open {
+		overflow: hidden;
+	}
+
+	@media (min-width: 64rem) {
+		.ts-mobile-drawer {
+			display: none;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.ts-mobile-drawer,
+		.ts-mobile-drawer__panel {
+			transition: none;
+		}
+	}
+}

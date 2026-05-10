@@ -1,0 +1,205 @@
+/**
+ * Typography system — headings, body roles, commerce roles, prose.
+ * Token-driven only (--ts-*). No Bootstrap / legacy WP visual tropes.
+ */
+@layer base {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-family: var(--ts-font-display);
+		color: var(--ts-color-text-primary);
+		font-weight: 600;
+		letter-spacing: var(--ts-tracking-tight);
+		line-height: var(--ts-leading-heading);
+		text-wrap: balance;
+	}
+
+	h1 {
+		font-size: var(--ts-text-h1);
+	}
+	h2 {
+		font-size: var(--ts-text-h2);
+	}
+	h3 {
+		font-size: var(--ts-text-h3);
+	}
+	h4 {
+		font-size: var(--ts-text-h4);
+	}
+	h5 {
+		font-size: var(--ts-text-h5);
+	}
+	h6 {
+		font-size: var(--ts-text-h6);
+	}
+
+	p {
+		text-wrap: pretty;
+	}
+
+	small {
+		font-size: var(--ts-text-caption);
+		line-height: var(--ts-leading-snug);
+		color: var(--ts-color-text-secondary);
+	}
+
+	a {
+		color: var(--ts-color-accent);
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.18em;
+		transition:
+			color var(--ts-duration-fast) var(--ts-ease-standard),
+			text-decoration-color var(--ts-duration-fast) var(--ts-ease-standard);
+	}
+
+	a:hover {
+		color: color-mix(in oklch, var(--ts-color-accent) 88%, var(--ts-color-text-primary));
+	}
+
+	a:focus-visible {
+		border-radius: var(--ts-radius-sm);
+	}
+}
+
+@layer components {
+	.ts-display {
+		font-family: var(--ts-font-display);
+		font-size: var(--ts-text-display);
+		line-height: var(--ts-leading-tight);
+		letter-spacing: var(--ts-tracking-tight);
+		font-weight: 600;
+		color: var(--ts-color-text-primary);
+		text-wrap: balance;
+	}
+
+	.ts-heading-1 {
+		font-family: var(--ts-font-display);
+		font-size: var(--ts-text-h1);
+		line-height: var(--ts-leading-heading);
+		letter-spacing: var(--ts-tracking-tight);
+		font-weight: 600;
+		color: var(--ts-color-text-primary);
+	}
+
+	.ts-heading-2 {
+		font-family: var(--ts-font-display);
+		font-size: var(--ts-text-h2);
+		line-height: var(--ts-leading-heading);
+		letter-spacing: var(--ts-tracking-tight);
+		font-weight: 600;
+		color: var(--ts-color-text-primary);
+	}
+
+	.ts-heading-3 {
+		font-family: var(--ts-font-display);
+		font-size: var(--ts-text-h3);
+		line-height: var(--ts-leading-snug);
+		font-weight: 600;
+		color: var(--ts-color-text-primary);
+	}
+
+	.ts-heading-4 {
+		font-family: var(--ts-font-display);
+		font-size: var(--ts-text-h4);
+		line-height: var(--ts-leading-snug);
+		font-weight: 600;
+		color: var(--ts-color-text-primary);
+	}
+
+	.ts-body {
+		font-size: var(--ts-text-body);
+		line-height: var(--ts-leading-body);
+		color: var(--ts-color-text-primary);
+	}
+
+	.ts-body-sm {
+		font-size: var(--ts-text-body-sm);
+		line-height: var(--ts-leading-relaxed);
+		color: var(--ts-color-text-secondary);
+	}
+
+	.ts-meta {
+		font-size: var(--ts-text-meta);
+		line-height: var(--ts-leading-snug);
+		color: var(--ts-color-text-muted);
+		letter-spacing: var(--ts-tracking-ui);
+		text-transform: uppercase;
+		font-weight: 500;
+	}
+
+	.ts-caption {
+		font-size: var(--ts-text-caption);
+		line-height: var(--ts-leading-snug);
+		color: var(--ts-color-text-muted);
+	}
+
+	.ts-product-title {
+		font-family: var(--ts-font-display);
+		font-size: var(--ts-text-product-title);
+		line-height: var(--ts-leading-snug);
+		font-weight: 600;
+		color: var(--ts-color-text-primary);
+		letter-spacing: var(--ts-tracking-tight);
+	}
+
+	.ts-product-text {
+		font-size: var(--ts-text-product-meta);
+		line-height: var(--ts-leading-snug);
+		color: var(--ts-color-text-secondary);
+	}
+
+	.ts-product-price {
+		font-family: var(--ts-font-display);
+		font-size: var(--ts-text-product-price);
+		line-height: var(--ts-leading-tight);
+		font-weight: 600;
+		font-variant-numeric: tabular-nums;
+		color: var(--ts-color-price);
+	}
+
+	.ts-prose {
+		font-size: var(--ts-text-body);
+		line-height: var(--ts-leading-relaxed);
+		color: var(--ts-color-text-primary);
+		max-width: var(--ts-prose-max);
+	}
+
+	.ts-prose > * + * {
+		margin-top: var(--ts-space-4);
+	}
+
+	.ts-prose :where(h2, h3, h4) {
+		margin-top: var(--ts-space-8);
+		margin-bottom: var(--ts-space-3);
+		color: var(--ts-color-text-primary);
+	}
+
+	.ts-prose :where(ul, ol) {
+		padding-inline-start: var(--ts-space-6);
+	}
+
+	.ts-prose :where(li + li) {
+		margin-top: var(--ts-space-2);
+	}
+
+	.ts-prose :where(blockquote) {
+		border-inline-start: 3px solid var(--ts-color-border-strong);
+		padding-inline-start: var(--ts-space-4);
+		color: var(--ts-color-text-secondary);
+	}
+
+	.ts-prose :where(code) {
+		font-size: 0.95em;
+		background: var(--ts-color-surface-raised);
+		border: 1px solid var(--ts-color-border-subtle);
+		border-radius: var(--ts-radius-sm);
+		padding: 0.1em 0.35em;
+	}
+
+	.ts-align-center {
+		text-align: center;
+	}
+}

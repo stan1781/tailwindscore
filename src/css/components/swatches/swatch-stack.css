@@ -1,0 +1,86 @@
+/**
+ * image_stack — 图片优先，可选色条辅助。
+ */
+@layer components {
+	.ts-swatch--image-stack {
+		display: inline-flex;
+		flex-direction: column;
+		align-items: stretch;
+		gap: var(--ts-space-1);
+		min-width: 4rem;
+		padding: var(--ts-space-2);
+		border-radius: var(--ts-swatch-shell-radius);
+		border: 1px solid var(--ts-swatch-shell-border);
+		background-color: var(--ts-swatch-shell-bg);
+		cursor: pointer;
+		transition:
+			border-color var(--ts-motion-hover-duration) var(--ts-motion-hover-ease),
+			background-color var(--ts-motion-hover-duration) var(--ts-motion-hover-ease);
+	}
+
+	.ts-swatch--image-stack:focus-visible {
+		outline: 2px solid var(--ts-color-accent);
+		outline-offset: 2px;
+	}
+
+	.ts-swatch--image-stack.is-selected {
+		border-color: var(--ts-color-text-primary);
+	}
+
+	.ts-swatch-stack__media {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		align-items: center;
+		gap: var(--ts-space-2);
+		min-height: 2.75rem;
+	}
+
+	.ts-swatch-stack__thumb {
+		display: block;
+		width: 2.75rem;
+		height: 2.75rem;
+		border-radius: calc(var(--ts-radius-sm) - 1px);
+		overflow: hidden;
+		background-color: var(--ts-color-canvas);
+	}
+
+	.ts-swatch-stack__thumb img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.ts-swatch-stack__thumb--empty {
+		border: 1px dashed var(--ts-color-border-subtle);
+	}
+
+	.ts-swatch-stack__chips {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		align-items: flex-end;
+	}
+
+	.ts-swatch-stack__chip {
+		width: 0.625rem;
+		height: 0.625rem;
+		border-radius: 999px;
+		background-color: var(--ts-swatch-chip, transparent);
+		border: 1px solid var(--ts-color-border-subtle);
+		box-sizing: border-box;
+	}
+
+	.ts-swatch-stack__caption {
+		font-size: var(--ts-text-caption);
+		font-weight: 600;
+		color: var(--ts-color-text-secondary);
+		text-align: center;
+		line-height: var(--ts-leading-snug);
+	}
+
+	@media (hover: hover) and (pointer: fine) {
+		.ts-swatch--image-stack:hover {
+			border-color: color-mix(in oklch, var(--ts-color-border-strong) 56%, var(--ts-color-accent));
+		}
+	}
+}

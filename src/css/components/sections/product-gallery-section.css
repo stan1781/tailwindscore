@@ -1,0 +1,11 @@
+@layer components {
+	.ts-product-gallery-section__inner {
+		width: 100%;
+		min-width: 0;
+	}
+
+	/* WC gallery wrapper — spacing only; do not override Flexslider core dimensions aggressively */
+	.ts-product-gallery-section .woocommerce-product-gallery {
+		margin-bottom: 0;
+	}
+}

@@ -1,0 +1,37 @@
+@layer components {
+	.ts-cart-summary {
+		display: grid;
+		gap: var(--ts-space-3);
+	}
+
+	.ts-cart-summary__row {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: var(--ts-space-3);
+	}
+
+	.ts-cart-summary__label {
+		font-size: var(--ts-text-caption);
+		line-height: 1;
+		letter-spacing: var(--ts-tracking-ui);
+		text-transform: uppercase;
+		color: var(--ts-color-text-secondary);
+	}
+
+	.ts-cart-summary__value {
+		font-size: var(--ts-text-body);
+		font-weight: 600;
+	}
+
+	.ts-cart-summary__note {
+		margin: 0;
+		font-size: var(--ts-text-caption);
+		color: var(--ts-color-text-secondary);
+	}
+
+	.ts-cart-summary__actions {
+		display: grid;
+		gap: var(--ts-space-2);
+	}
+}

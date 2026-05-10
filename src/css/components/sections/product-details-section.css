@@ -1,0 +1,10 @@
+/**
+ * Details section shell — WC tabs / panels styled in `commerce-experience/product-information.css`.
+ */
+@layer components {
+	.ts-product-details-section {
+		padding-block: var(--ts-section-y-sm);
+		border-block: 1px solid var(--ts-color-border-subtle);
+		background-color: var(--ts-color-canvas);
+	}
+}

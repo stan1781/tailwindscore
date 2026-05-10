@@ -1,0 +1,17 @@
+@layer components {
+	.ts-container {
+		width: 100%;
+		max-width: var(--ts-container-max);
+		margin-inline: auto;
+		padding-inline: var(--ts-space-gutter-x);
+	}
+
+	.ts-container--narrow {
+		max-width: min(var(--ts-container-max), 56rem);
+	}
+
+	.ts-container--full {
+		max-width: none;
+		padding-inline: var(--ts-space-gutter-x);
+	}
+}

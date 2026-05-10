@@ -1,0 +1,54 @@
+/**
+ * Commerce motion token system.
+ * Semantic motion tokens live here so component CSS can consume intent-level variables.
+ */
+:root {
+	/* Primitive motion tokens */
+	--ts-duration-instant: 80ms;
+	--ts-duration-fast: 140ms;
+	--ts-duration-normal: 220ms;
+	--ts-duration-slow: 320ms;
+
+	--ts-ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+	--ts-ease-smooth: cubic-bezier(0.22, 0.61, 0.36, 1);
+	--ts-ease-emphasis: cubic-bezier(0.16, 1, 0.3, 1);
+	--ts-ease-exit: cubic-bezier(0.4, 0, 1, 1);
+
+	/* Semantic interaction tokens */
+	--ts-motion-hover-duration: var(--ts-duration-fast);
+	--ts-motion-hover-ease: var(--ts-ease-standard);
+
+	--ts-motion-fade-duration: var(--ts-duration-normal);
+	--ts-motion-fade-ease: var(--ts-ease-smooth);
+
+	--ts-motion-reveal-duration: var(--ts-duration-normal);
+	--ts-motion-reveal-ease: var(--ts-ease-smooth);
+
+	--ts-motion-image-duration: var(--ts-duration-normal);
+	--ts-motion-image-ease: var(--ts-ease-smooth);
+
+	--ts-motion-button-duration: var(--ts-duration-fast);
+	--ts-motion-button-ease: var(--ts-ease-standard);
+
+	--ts-motion-gallery-duration: var(--ts-duration-slow);
+	--ts-motion-gallery-ease: var(--ts-ease-smooth);
+
+	--ts-motion-loading-duration: var(--ts-duration-slow);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	:root {
+		--ts-duration-instant: 0.01ms;
+		--ts-duration-fast: 0.01ms;
+		--ts-duration-normal: 0.01ms;
+		--ts-duration-slow: 0.01ms;
+
+		--ts-motion-hover-duration: 0.01ms;
+		--ts-motion-fade-duration: 0.01ms;
+		--ts-motion-reveal-duration: 0.01ms;
+		--ts-motion-image-duration: 0.01ms;
+		--ts-motion-button-duration: 0.01ms;
+		--ts-motion-gallery-duration: 0.01ms;
+		--ts-motion-loading-duration: 0.01ms;
+	}
+}

@@ -1,0 +1,37 @@
+@layer components {
+	.ts-commerce-notices-host {
+		display: grid;
+		gap: var(--ts-space-3);
+	}
+
+	.ts-commerce-notices-host .woocommerce-message,
+	.ts-commerce-notices-host .woocommerce-error,
+	.ts-commerce-notices-host .woocommerce-info {
+		margin: 0;
+		padding: var(--ts-space-4);
+		border-radius: var(--ts-radius-card);
+		border: 1px solid var(--ts-color-border-subtle);
+		background-color: color-mix(in oklch, var(--ts-color-surface) 94%, var(--ts-color-canvas));
+		box-shadow: var(--ts-shadow-surface);
+		font-size: var(--ts-text-body-sm);
+		line-height: var(--ts-leading-body);
+		color: var(--ts-color-text-primary);
+		list-style: none;
+	}
+
+	.ts-commerce-notices-host .woocommerce-message {
+		border-color: color-mix(in oklch, var(--ts-color-success) 24%, var(--ts-color-border-subtle));
+	}
+
+	.ts-commerce-notices-host .woocommerce-error {
+		border-color: color-mix(in oklch, var(--ts-color-danger) 26%, var(--ts-color-border-subtle));
+	}
+
+	.ts-commerce-notices-host .woocommerce-info {
+		border-color: color-mix(in oklch, var(--ts-color-accent) 22%, var(--ts-color-border-subtle));
+	}
+
+	.ts-commerce-notices-host [hidden][data-ts-notice-dismissed='1'] {
+		display: none !important;
+	}
+}

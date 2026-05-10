@@ -1,0 +1,147 @@
+/**
+ * WooCommerce “stars” normally use the WooCommerce.woff icon font from
+ * `woocommerce.css`. Many pages only pull `wc-blocks.css`, whose `.star-rating`
+ * rules are scoped to block wrappers — classic templates then have no working
+ * font or rules. Review `p.stars a::before` has the same dependency.
+ *
+ * These rules use Unicode ★, inherit (no icon font), and stay **unlayered**
+ * so they win over `@layer` Tailwind and match third-party cascade behavior.
+ *
+ * Filled / interactive stars use `--ts-color-rating-star` everywhere (PDP, loops, reviews).
+ */
+
+.ts-rating {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--ts-space-2);
+	font-size: var(--ts-text-meta);
+	color: var(--ts-color-text-muted);
+	line-height: 1;
+}
+
+.ts-rating__stars {
+	position: relative;
+	display: inline-block;
+	width: 5.75rem;
+	height: 1rem;
+	line-height: 1;
+	vertical-align: middle;
+	color: color-mix(in oklch, var(--ts-color-text-muted) 35%, transparent);
+}
+
+.ts-rating__stars::before {
+	content: '★★★★★';
+	letter-spacing: 0.08em;
+	font-size: 0.95rem;
+}
+
+.ts-rating__value {
+	font-weight: 600;
+	color: var(--ts-color-text-secondary);
+	font-variant-numeric: tabular-nums;
+}
+
+/* Aggregate / loop `.star-rating` (SSR from `wc_get_rating_html`). */
+.woocommerce .star-rating,
+.ts-rating .star-rating {
+	position: relative;
+	overflow: hidden;
+	display: inline-block;
+	vertical-align: middle;
+	float: none;
+	margin: 0;
+	width: 5.75rem;
+	height: 1em;
+	line-height: 1;
+	font-family: inherit;
+	font-weight: 400;
+	font-size: 0.95rem;
+	color: transparent;
+}
+
+.ts-commerce-summary__lead .ts-rating .star-rating {
+	font-size: 1rem;
+}
+
+.woocommerce .star-rating::before,
+.ts-rating .star-rating::before {
+	content: '★★★★★';
+	letter-spacing: 0.08em;
+	line-height: 1;
+	position: absolute;
+	left: 0;
+	top: 0;
+	float: none;
+	color: color-mix(in oklch, var(--ts-color-text-muted) 38%, transparent);
+}
+
+.woocommerce .star-rating span,
+.ts-rating .star-rating span {
+	overflow: hidden;
+	float: left;
+	top: 0;
+	left: 0;
+	position: absolute;
+	padding-top: 1.5em;
+	height: 1em;
+	line-height: 1;
+}
+
+.woocommerce .star-rating span::before,
+.ts-rating .star-rating span::before {
+	content: '★★★★★';
+	letter-spacing: 0.08em;
+	line-height: 1;
+	position: absolute;
+	left: 0;
+	top: 0;
+	color: var(--ts-color-rating-star);
+}
+
+/* Review form — `p.stars` interactive links (no WooCommerce font). */
+.woocommerce p.stars a {
+	position: relative;
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	font-size: 1.25rem;
+	line-height: 1;
+	text-decoration: none;
+	text-indent: -999em;
+	overflow: hidden;
+	font-family: inherit;
+}
+
+.woocommerce p.stars a::before {
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 1em;
+	height: 1em;
+	line-height: 1;
+	text-indent: 0;
+	font-family: inherit;
+	content: '★';
+	color: color-mix(in oklch, var(--ts-color-text-muted) 45%, transparent);
+}
+
+.woocommerce p.stars:hover a::before {
+	color: var(--ts-color-rating-star);
+}
+
+.woocommerce p.stars a:hover ~ a::before {
+	color: color-mix(in oklch, var(--ts-color-text-muted) 45%, transparent);
+}
+
+.woocommerce p.stars.selected a.active::before {
+	color: var(--ts-color-rating-star);
+}
+
+.woocommerce p.stars.selected a.active ~ a::before {
+	color: color-mix(in oklch, var(--ts-color-text-muted) 45%, transparent);
+}
+
+.woocommerce p.stars.selected a:not(.active)::before {
+	color: var(--ts-color-rating-star);
+}

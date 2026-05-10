@@ -1,0 +1,191 @@
+/**
+ * Purchase stack — quantity, ATC, variations; does not replace WC form markup.
+ */
+@layer components {
+	.ts-commerce-summary .ts-product-summary__excerpt {
+		margin-top: var(--ts-space-2);
+		padding-top: var(--ts-space-5, 1.25rem);
+		border-top: 1px solid var(--ts-color-border-subtle);
+		max-width: var(--ts-prose-max);
+	}
+
+	.ts-purchase-region {
+		display: flex;
+		flex-direction: column;
+		gap: var(--ts-space-4);
+		margin-top: var(--ts-space-3);
+	}
+
+	/* Variable attributes */
+	.ts-purchase-region .variations_form table.variations {
+		width: 100%;
+		margin: 0;
+		border-collapse: separate;
+		border-spacing: 0;
+	}
+
+	.ts-purchase-region .variations_form table.variations th,
+	.ts-purchase-region .variations_form table.variations td {
+		padding: var(--ts-space-2) 0;
+		vertical-align: middle;
+	}
+
+	.ts-purchase-region .variations_form table.variations th.label {
+		width: 38%;
+		max-width: 12rem;
+		font-size: var(--ts-text-ui);
+		font-weight: 600;
+		color: var(--ts-color-text-secondary);
+		text-align: start;
+	}
+
+	.ts-purchase-region .variations_form table.variations td.value {
+		padding-inline-start: var(--ts-space-3);
+	}
+
+	.ts-purchase-region .variations_form select {
+		width: 100%;
+		max-width: 100%;
+		min-height: 2.75rem;
+		padding: var(--ts-space-2) var(--ts-space-3);
+		border-radius: var(--ts-radius-control);
+		border: 1px solid var(--ts-color-border-subtle);
+		background-color: var(--ts-color-surface);
+		color: var(--ts-color-text-primary);
+		font-size: var(--ts-text-ui);
+	}
+
+	.ts-purchase-region .reset_variations {
+		display: inline-block;
+		margin-top: var(--ts-space-2);
+		font-size: var(--ts-text-meta);
+		font-weight: 600;
+		color: var(--ts-color-text-secondary);
+		text-decoration: underline;
+		text-underline-offset: 2px;
+	}
+
+	.ts-purchase-region .single_variation_wrap {
+		margin-top: var(--ts-space-3);
+	}
+
+	/* Quantity + button row (simple + variation button area) */
+	.ts-purchase-region form.cart {
+		display: flex;
+		flex-direction: column;
+		gap: var(--ts-space-4);
+	}
+
+	.ts-purchase-region form.cart .quantity {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--ts-space-2);
+	}
+
+	.ts-purchase-region form.cart .quantity .qty {
+		min-height: 3rem;
+		width: 4.5rem;
+		text-align: center;
+		border-radius: var(--ts-radius-control);
+		border: 1px solid var(--ts-color-border-subtle);
+		background-color: var(--ts-color-surface);
+		font-size: var(--ts-text-ui);
+		font-weight: 600;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.ts-purchase-region button.single_add_to_cart_button,
+	.ts-purchase-region .single_add_to_cart_button {
+		width: 100%;
+		min-height: 3.25rem;
+		padding-inline: var(--ts-space-6);
+		border-radius: var(--ts-radius-control);
+		font-size: var(--ts-text-ui);
+		font-weight: 700;
+		letter-spacing: var(--ts-tracking-ui);
+		text-transform: none;
+		box-shadow: var(--ts-shadow-surface);
+		transition:
+			box-shadow var(--ts-motion-button-duration) var(--ts-motion-button-ease),
+			background-color var(--ts-motion-button-duration) var(--ts-motion-button-ease),
+			border-color var(--ts-motion-button-duration) var(--ts-motion-button-ease),
+			color var(--ts-motion-button-duration) var(--ts-motion-button-ease);
+	}
+
+	@media (hover: hover) {
+		.ts-purchase-region button.single_add_to_cart_button:hover,
+		.ts-purchase-region .single_add_to_cart_button:hover {
+			box-shadow: var(--ts-shadow-hover);
+		}
+	}
+
+	.ts-purchase-region button.single_add_to_cart_button:disabled,
+	.ts-purchase-region .single_add_to_cart_button:disabled {
+		opacity: 0.65;
+		cursor: not-allowed;
+		box-shadow: none;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.ts-purchase-region button.single_add_to_cart_button,
+		.ts-purchase-region .single_add_to_cart_button {
+			transition: none;
+		}
+	}
+
+	@media (min-width: 40rem) {
+		.ts-purchase-region form.cart:not(.variations_form) {
+			flex-direction: row;
+			flex-wrap: wrap;
+			align-items: stretch;
+		}
+
+		.ts-purchase-region form.cart:not(.variations_form) .quantity {
+			flex: 0 0 auto;
+		}
+
+		.ts-purchase-region form.cart:not(.variations_form) button.single_add_to_cart_button,
+		.ts-purchase-region form.cart:not(.variations_form) .single_add_to_cart_button {
+			flex: 1 1 12rem;
+			width: auto;
+			min-width: 12rem;
+		}
+	}
+
+	/* Variation ATC: keep full-width CTA under selectors */
+	.ts-purchase-region .woocommerce-variation-add-to-cart {
+		display: flex;
+		flex-direction: column;
+		gap: var(--ts-space-3);
+	}
+
+	@media (min-width: 40rem) {
+		.ts-purchase-region .woocommerce-variation-add-to-cart {
+			flex-direction: row;
+			flex-wrap: wrap;
+			align-items: flex-end;
+		}
+
+		.ts-purchase-region .woocommerce-variation-add-to-cart .quantity {
+			flex: 0 0 auto;
+		}
+
+		.ts-purchase-region .woocommerce-variation-add-to-cart .single_add_to_cart_button {
+			flex: 1 1 12rem;
+			width: auto;
+		}
+	}
+}
+
+/* Tablet — slightly tighter summary column rhythm next to gallery */
+@layer components {
+	@media (min-width: 48rem) and (max-width: 63.99rem) {
+		.ts-pdp__grid--split {
+			column-gap: var(--ts-space-6);
+		}
+
+		.ts-commerce-summary {
+			max-width: 36rem;
+		}
+	}
+}

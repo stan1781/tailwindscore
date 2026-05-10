@@ -1,0 +1,108 @@
+@layer components {
+	.ts-search-default {
+		display: grid;
+		gap: var(--ts-space-8);
+	}
+
+	.ts-search-default__intro {
+		display: grid;
+		gap: var(--ts-space-3);
+		max-width: 40rem;
+		padding-bottom: var(--ts-space-5);
+		border-bottom: 1px solid color-mix(in oklab, var(--ts-color-border-subtle) 76%, transparent);
+	}
+
+	.ts-search-default__eyebrow,
+	.ts-search-default__heading {
+		margin: 0;
+		font-size: var(--ts-text-caption);
+		line-height: 1;
+		letter-spacing: var(--ts-tracking-ui);
+		text-transform: uppercase;
+		color: var(--ts-color-text-secondary);
+	}
+
+	.ts-search-default__title {
+		margin: 0;
+		font-size: var(--ts-text-h4);
+		line-height: var(--ts-leading-heading);
+	}
+
+	.ts-search-default__message {
+		margin: 0;
+		color: var(--ts-color-text-secondary);
+	}
+
+	.ts-search-default__grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: var(--ts-space-6);
+	}
+
+	.ts-search-default__group {
+		display: grid;
+		align-content: start;
+		gap: var(--ts-space-3);
+		min-width: 0;
+	}
+
+	.ts-search-default__group--recent {
+		grid-column: 1 / -1;
+		padding-top: var(--ts-space-2);
+		border-top: 1px solid color-mix(in oklab, var(--ts-color-border-subtle) 72%, transparent);
+	}
+
+	.ts-search-default__chips {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--ts-space-2);
+	}
+
+	.ts-search-default__chip {
+		display: inline-flex;
+		align-items: center;
+		min-height: 2.5rem;
+		padding-inline: var(--ts-space-3);
+		border: 1px solid var(--ts-color-border-subtle);
+		border-radius: 999px;
+		background: var(--ts-color-surface);
+		color: var(--ts-color-text-primary);
+		text-decoration: none;
+		transition:
+			background-color var(--ts-motion-hover-duration) var(--ts-motion-hover-ease),
+			border-color var(--ts-motion-hover-duration) var(--ts-motion-hover-ease);
+	}
+
+	.ts-search-default__chip--secondary {
+		color: var(--ts-color-text-secondary);
+	}
+
+	.ts-search-default__chip:hover,
+	.ts-search-default__chip:focus-visible {
+		border-color: var(--ts-color-border-strong, var(--ts-color-border-subtle));
+		background: color-mix(in oklab, var(--ts-color-surface-raised) 90%, white 10%);
+		outline: none;
+	}
+
+	.ts-search-feedback__retry {
+		padding: 0;
+		border: 0;
+		background: transparent;
+		color: var(--ts-color-text-primary);
+		font: inherit;
+		text-decoration: underline;
+		text-underline-offset: 0.16em;
+		cursor: pointer;
+	}
+
+	@media (max-width: 47.9375rem) {
+		.ts-search-default {
+			gap: var(--ts-space-6);
+		}
+
+		.ts-search-default__grid {
+			grid-template-columns: minmax(0, 1fr);
+			gap: var(--ts-space-5);
+		}
+	}
+}

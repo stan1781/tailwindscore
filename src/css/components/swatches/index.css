@@ -1,0 +1,7 @@
+@import './swatch-base.css';
+@import './swatch-text.css';
+@import './swatch-color.css';
+@import './swatch-image.css';
+@import './swatch-stack.css';
+@import './swatch-preview.css';
+@import './swatch-state.css';

@@ -1,0 +1,79 @@
+/**
+ * Maps `--ts-*` variables into Tailwind @theme so utilities stay token-driven.
+ */
+@theme {
+	/* Colors */
+	--color-canvas: var(--ts-color-canvas);
+	--color-surface: var(--ts-color-surface);
+	--color-surface-raised: var(--ts-color-surface-raised);
+	--color-border-subtle: var(--ts-color-border-subtle);
+	--color-border-strong: var(--ts-color-border-strong);
+	--color-text-primary: var(--ts-color-text-primary);
+	--color-text-secondary: var(--ts-color-text-secondary);
+	--color-text-muted: var(--ts-color-text-muted);
+	--color-accent: var(--ts-color-accent);
+	--color-accent-contrast: var(--ts-color-accent-contrast);
+	--color-danger: var(--ts-color-danger);
+	--color-success: var(--ts-color-success);
+	--color-price: var(--ts-color-price);
+	--color-price-alt: var(--ts-color-price-alt);
+
+	/* Spacing scale → Tailwind spacing keys */
+	--spacing-ts-1: var(--ts-space-1);
+	--spacing-ts-2: var(--ts-space-2);
+	--spacing-ts-3: var(--ts-space-3);
+	--spacing-ts-4: var(--ts-space-4);
+	--spacing-ts-6: var(--ts-space-6);
+	--spacing-ts-8: var(--ts-space-8);
+	--spacing-ts-12: var(--ts-space-12);
+	--spacing-ts-16: var(--ts-space-16);
+	--spacing-section-y: var(--ts-space-section-y);
+	--spacing-gutter-x: var(--ts-space-gutter-x);
+
+	/* Radius */
+	--radius-ts-sm: var(--ts-radius-sm);
+	--radius-ts-md: var(--ts-radius-md);
+	--radius-ts-lg: var(--ts-radius-lg);
+	--radius-ts-xl: var(--ts-radius-xl);
+	--radius-ts-control: var(--ts-radius-control);
+	--radius-ts-card: var(--ts-radius-card);
+	--radius-ts-media: var(--ts-radius-media);
+	--radius-ts-swatch: var(--ts-radius-swatch);
+
+	/* Icon */
+	--icon-size-ts-xs: var(--ts-icon-size-xs);
+	--icon-size-ts-sm: var(--ts-icon-size-sm);
+	--icon-size-ts-md: var(--ts-icon-size-md);
+	--icon-size-ts-lg: var(--ts-icon-size-lg);
+
+	/* Shadow */
+	--shadow-ts-xs: var(--ts-shadow-xs);
+	--shadow-ts-sm: var(--ts-shadow-sm);
+	--shadow-ts-md: var(--ts-shadow-md);
+	--shadow-ts-lg: var(--ts-shadow-lg);
+	--shadow-ts-surface: var(--ts-shadow-surface);
+	--shadow-ts-hover: var(--ts-shadow-hover);
+	--shadow-ts-overlay: var(--ts-shadow-overlay);
+
+	/* Typography */
+	--font-sans: var(--ts-font-body);
+	--font-display: var(--ts-font-display);
+	--text-body: var(--ts-text-body);
+	--text-body-sm: var(--ts-text-body-sm);
+	--text-ui: var(--ts-text-ui);
+	--leading-body: var(--ts-leading-body);
+	--leading-heading: var(--ts-leading-heading);
+	--tracking-ui: var(--ts-tracking-ui);
+
+	/* Z-index */
+	--z-dropdown: var(--ts-z-dropdown);
+	--z-sticky: var(--ts-z-sticky);
+	--z-drawer: var(--ts-z-drawer);
+	--z-modal: var(--ts-z-modal);
+	--z-toast: var(--ts-z-toast);
+
+	/* Easing / duration (for arbitrary transitions later) */
+	--ease-ts-standard: var(--ts-ease-standard);
+	--duration-ts-fast: var(--ts-duration-fast);
+	--duration-ts-normal: var(--ts-duration-normal);
+}

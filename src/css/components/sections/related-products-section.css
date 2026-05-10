@@ -1,0 +1,60 @@
+/**
+ * Related / upsells — grid + heading hierarchy (WC outputs `section.related`, `section.upsells`).
+ */
+@layer components {
+	.ts-related-products-section {
+		padding-block: var(--ts-section-y-md);
+	}
+
+	.ts-commerce-related section.related,
+	.ts-commerce-related section.upsells {
+		margin-bottom: var(--ts-space-12);
+	}
+
+	.ts-commerce-related section.related:last-child,
+	.ts-commerce-related section.upsells:last-child {
+		margin-bottom: 0;
+	}
+
+	.ts-related-products-section section.related > h2,
+	.ts-related-products-section section.upsells > h2,
+	.ts-commerce-related section.related > h2,
+	.ts-commerce-related section.upsells > h2 {
+		font-family: var(--ts-font-display);
+		font-size: var(--ts-text-h2);
+		font-weight: 600;
+		line-height: var(--ts-leading-heading);
+		letter-spacing: var(--ts-tracking-tight);
+		margin: 0 0 var(--ts-space-6);
+		color: var(--ts-color-text-primary);
+	}
+
+	.woocommerce ul.products,
+	.woocommerce-page ul.products,
+	.ts-related-products-section ul.products,
+	.ts-commerce-related ul.products {
+		display: grid;
+		gap: var(--ts-grid-gap);
+		grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--ts-grid-min)), 1fr));
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	@media (min-width: 48rem) and (max-width: 63.99rem) {
+		.woocommerce ul.products,
+		.woocommerce-page ul.products,
+		.ts-commerce-related ul.products {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	@media (min-width: 64rem) {
+		.woocommerce ul.products.columns-4,
+		.woocommerce-page ul.products.columns-4,
+		.ts-related-products-section ul.products.columns-4,
+		.ts-commerce-related ul.products.columns-4 {
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+		}
+	}
+}

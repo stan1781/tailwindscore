@@ -1,0 +1,15 @@
+/**
+ * Kirki bridge — Customizer outputs ONLY overrides for `--ts-*` design tokens.
+ *
+ * Rules:
+ * - No layout widths, grid templates, or template structure here.
+ * - Prefer modifying semantic tokens (e.g. `--ts-color-accent`) over primitives.
+ * - PHP should enqueue inline style AFTER built theme CSS handle `tailwindscore-app`.
+ *
+ * Example Kirki output:
+ *
+ * :root {
+ *   --ts-color-accent: oklch(0.62 0.19 200);
+ *   --ts-radius-lg: 1.25rem;
+ * }
+ */

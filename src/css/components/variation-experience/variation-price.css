@@ -1,0 +1,24 @@
+/**
+ * WC variation price / template area — transition hooks only.
+ */
+@layer components {
+	.single_variation_wrap.is-ts-variation-price-updating .woocommerce-variation-price,
+	.single_variation_wrap.is-ts-variation-price-updating .woocommerce-variation-availability {
+		opacity: 0.55;
+		transition: opacity var(--ts-motion-fade-duration) var(--ts-motion-fade-ease);
+	}
+
+	.single_variation_wrap .woocommerce-variation-price,
+	.single_variation_wrap .woocommerce-variation-availability {
+		transition: opacity var(--ts-motion-fade-duration) var(--ts-motion-fade-ease);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.single_variation_wrap.is-ts-variation-price-updating .woocommerce-variation-price,
+		.single_variation_wrap.is-ts-variation-price-updating .woocommerce-variation-availability,
+		.single_variation_wrap .woocommerce-variation-price,
+		.single_variation_wrap .woocommerce-variation-availability {
+			transition: none;
+		}
+	}
+}

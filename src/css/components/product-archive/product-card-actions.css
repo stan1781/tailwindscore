@@ -1,0 +1,32 @@
+@layer components {
+	.ts-product-card__actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: flex-end;
+		gap: var(--ts-space-2);
+		opacity: 1;
+		transform: none;
+	}
+
+	.ts-product-card__action-slot,
+	.ts-product-card__actions .ts-commerce-atc {
+		flex: 0 0 auto;
+	}
+
+	.ts-product-card__actions .button {
+		white-space: nowrap;
+	}
+
+	@media (hover: hover) and (pointer: fine) {
+		.ts-product-card__actions {
+			opacity: 0;
+			transition: opacity var(--ts-motion-reveal-duration) var(--ts-motion-reveal-ease);
+		}
+
+		.ts-product-card:hover .ts-product-card__actions,
+		.ts-product-card:focus-within .ts-product-card__actions {
+			opacity: 1;
+		}
+	}
+}

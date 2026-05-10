@@ -1,0 +1,28 @@
+@layer components {
+	.ts-commerce-icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		color: currentColor;
+	}
+
+	.ts-commerce-icon--action {
+		width: var(--ts-icon-size-sm);
+		height: var(--ts-icon-size-sm);
+	}
+
+	.ts-commerce-icon--utility {
+		width: var(--ts-icon-size-sm);
+		height: var(--ts-icon-size-sm);
+	}
+
+	.ts-commerce-icon--nav {
+		width: var(--ts-icon-size-sm);
+		height: var(--ts-icon-size-sm);
+	}
+
+	.ts-commerce-icon .ts-icon {
+		width: 100%;
+		height: 100%;
+	}
+}

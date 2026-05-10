@@ -1,0 +1,248 @@
+@layer components {
+	.ts-predictive-results {
+		display: grid;
+		gap: var(--ts-space-6);
+	}
+
+	.ts-predictive-results__grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1.45fr) minmax(16rem, 0.85fr);
+		gap: var(--ts-space-8);
+	}
+
+	.ts-predictive-results__group {
+		display: grid;
+		align-content: start;
+		gap: var(--ts-space-3);
+	}
+
+	.ts-predictive-results__group--editorial {
+		gap: var(--ts-space-6);
+		padding-left: var(--ts-space-2);
+		border-left: 1px solid color-mix(in oklab, var(--ts-color-border-subtle) 72%, transparent);
+	}
+
+	.ts-predictive-results__title {
+		margin: 0;
+		font-size: var(--ts-text-h6);
+	}
+
+	.ts-predictive-results__list,
+	.ts-predictive-results__stack {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: var(--ts-space-3);
+	}
+
+	.ts-predictive-results__editorial-group {
+		display: grid;
+		gap: var(--ts-space-3);
+	}
+
+	.ts-predictive-results__section-label {
+		margin: 0;
+		font-size: var(--ts-text-caption);
+		line-height: 1;
+		letter-spacing: var(--ts-tracking-ui);
+		text-transform: uppercase;
+		color: var(--ts-color-text-secondary);
+	}
+
+	.ts-predictive-results__editorial-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: var(--ts-space-2);
+	}
+
+	.ts-predictive-results__link,
+	.ts-predictive-results__suggestion,
+	.ts-predictive-results__editorial-link {
+		display: grid;
+		align-items: center;
+		gap: var(--ts-space-3);
+		padding: var(--ts-space-3);
+		border-radius: var(--ts-radius-control);
+		border: 1px solid transparent;
+		color: inherit;
+		text-decoration: none;
+		transition:
+			background-color var(--ts-motion-hover-duration) var(--ts-motion-hover-ease),
+			border-color var(--ts-motion-hover-duration) var(--ts-motion-hover-ease);
+	}
+
+	.ts-predictive-results__link {
+		grid-template-columns: auto minmax(0, 1fr);
+		align-items: start;
+	}
+
+	.ts-predictive-results__suggestion {
+		grid-template-columns: minmax(0, 1fr) auto;
+	}
+
+	.ts-predictive-results__editorial-link {
+		grid-template-columns: minmax(0, 1fr) auto;
+		align-items: end;
+		padding: var(--ts-space-3) 0;
+		border-radius: 0;
+		border-top: 1px solid color-mix(in oklab, var(--ts-color-border-subtle) 68%, transparent);
+		background: transparent;
+	}
+
+	.ts-predictive-results__editorial-list li:first-child .ts-predictive-results__editorial-link {
+		border-top: 0;
+		padding-top: 0;
+	}
+
+	.ts-predictive-results__link:hover,
+	.ts-predictive-results__link:focus-visible,
+	.ts-predictive-results__suggestion:hover,
+	.ts-predictive-results__suggestion:focus-visible,
+	.ts-predictive-results__editorial-link:hover,
+	.ts-predictive-results__editorial-link:focus-visible {
+		border-color: var(--ts-color-border-subtle);
+		background: color-mix(in oklab, var(--ts-color-surface-raised) 86%, white 14%);
+		outline: none;
+	}
+
+	.ts-predictive-results__editorial-link:hover,
+	.ts-predictive-results__editorial-link:focus-visible {
+		border-radius: var(--ts-radius-control);
+		padding-inline: var(--ts-space-3);
+	}
+
+	.ts-predictive-results__media {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 4.5rem;
+		aspect-ratio: 4 / 5;
+		border-radius: var(--ts-radius-control);
+		background: var(--ts-color-surface-raised);
+		overflow: hidden;
+		border: 1px solid color-mix(in oklab, var(--ts-color-border-subtle) 76%, transparent);
+	}
+
+	.ts-predictive-results__media img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.ts-predictive-results__placeholder {
+		display: inline-flex;
+		color: var(--ts-color-text-muted);
+	}
+
+	.ts-predictive-results__content {
+		display: grid;
+		gap: var(--ts-space-1);
+		min-width: 0;
+		padding-top: 0.125rem;
+	}
+
+	.ts-predictive-results__eyebrow {
+		font-size: var(--ts-text-caption);
+		line-height: 1;
+		letter-spacing: var(--ts-tracking-ui);
+		text-transform: uppercase;
+		color: var(--ts-color-text-secondary);
+	}
+
+	.ts-predictive-results__name {
+		font-size: var(--ts-text-body);
+		line-height: var(--ts-leading-snug);
+		letter-spacing: 0;
+	}
+
+	.ts-predictive-results__meta {
+		font-size: var(--ts-text-caption);
+		line-height: 1;
+		letter-spacing: var(--ts-tracking-ui);
+		text-transform: uppercase;
+		color: var(--ts-color-text-secondary);
+	}
+
+	.ts-predictive-results__price .ts-price-block {
+		gap: var(--ts-space-1);
+	}
+
+	.ts-predictive-results__price .ts-price-block__current,
+	.ts-predictive-results__price .ts-price-block ins {
+		font-size: var(--ts-text-body-sm);
+		font-weight: 600;
+	}
+
+	.ts-predictive-results__price .ts-price-block__compare,
+	.ts-predictive-results__price .ts-price-block del {
+		font-size: var(--ts-text-caption);
+	}
+
+	.ts-predictive-results__suggestion-copy {
+		display: grid;
+		gap: var(--ts-space-1);
+		min-width: 0;
+	}
+
+	.ts-predictive-results__editorial-copy {
+		display: grid;
+		gap: var(--ts-space-2);
+		min-width: 0;
+	}
+
+	.ts-predictive-results__editorial-title {
+		font-size: var(--ts-text-body);
+		line-height: var(--ts-leading-snug);
+		letter-spacing: 0;
+	}
+
+	.ts-predictive-results__suggestion-title {
+		font-size: var(--ts-text-body-sm);
+		line-height: var(--ts-leading-snug);
+	}
+
+	.ts-predictive-results__count {
+		font-size: var(--ts-text-caption);
+		line-height: 1;
+		letter-spacing: var(--ts-tracking-ui);
+		text-transform: uppercase;
+		color: var(--ts-color-text-muted);
+		white-space: nowrap;
+	}
+
+	.ts-predictive-results__stack--queries {
+		gap: var(--ts-space-2);
+	}
+
+	.ts-predictive-results__empty-state {
+		display: grid;
+		align-content: start;
+		gap: var(--ts-space-3);
+		max-width: 36rem;
+		padding-block: var(--ts-space-2);
+	}
+
+	.ts-predictive-results .ts-feedback-empty-state {
+		max-width: 36rem;
+	}
+
+	.ts-predictive-results__message {
+		margin: 0;
+		color: var(--ts-color-text-secondary);
+	}
+
+	.ts-predictive-results__search-link {
+		color: var(--ts-color-text-primary);
+		text-decoration: none;
+	}
+
+	@media (max-width: 47.9375rem) {
+		.ts-predictive-results__group--editorial {
+			padding-left: 0;
+			border-left: 0;
+		}
+	}
+}

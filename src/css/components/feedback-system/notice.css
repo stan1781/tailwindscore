@@ -1,0 +1,106 @@
+@layer components {
+	.ts-feedback-region--live {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	.ts-feedback-stack,
+	.ts-commerce-notices-host {
+		display: grid;
+		gap: var(--ts-space-3);
+	}
+
+	.ts-feedback-notice,
+	.ts-feedback-stack .woocommerce-message,
+	.ts-feedback-stack .woocommerce-error,
+	.ts-feedback-stack .woocommerce-info,
+	.ts-commerce-notices-host .woocommerce-message,
+	.ts-commerce-notices-host .woocommerce-error,
+	.ts-commerce-notices-host .woocommerce-info {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		gap: var(--ts-space-3);
+		align-items: start;
+		margin: 0;
+		padding: var(--ts-space-4);
+		border: 1px solid var(--ts-color-border-subtle);
+		border-radius: min(var(--ts-radius-card), 0.5rem);
+		background: color-mix(in oklch, var(--ts-color-surface) 96%, var(--ts-color-canvas));
+		box-shadow: var(--ts-shadow-surface);
+		list-style: none;
+		font-size: var(--ts-text-body-sm);
+		line-height: var(--ts-leading-body);
+		color: var(--ts-color-text-primary);
+	}
+
+	.ts-feedback-notice__body,
+	.ts-feedback-stack .woocommerce-message,
+	.ts-feedback-stack .woocommerce-error,
+	.ts-feedback-stack .woocommerce-info,
+	.ts-commerce-notices-host .woocommerce-message,
+	.ts-commerce-notices-host .woocommerce-error,
+	.ts-commerce-notices-host .woocommerce-info {
+		min-width: 0;
+	}
+
+	.ts-feedback-notice__title {
+		margin: 0;
+		font-size: var(--ts-text-ui);
+		font-weight: 600;
+		color: var(--ts-color-text-primary);
+	}
+
+	.ts-feedback-notice__message {
+		margin: 0;
+		color: var(--ts-color-text-secondary);
+	}
+
+	.ts-feedback-notice--success,
+	.ts-feedback-stack .woocommerce-message,
+	.ts-commerce-notices-host .woocommerce-message {
+		border-color: color-mix(in oklch, var(--ts-color-success) 24%, var(--ts-color-border-subtle));
+	}
+
+	.ts-feedback-notice--error,
+	.ts-feedback-stack .woocommerce-error,
+	.ts-commerce-notices-host .woocommerce-error {
+		border-color: color-mix(in oklch, var(--ts-color-danger) 24%, var(--ts-color-border-subtle));
+	}
+
+	.ts-feedback-notice--info,
+	.ts-feedback-stack .woocommerce-info,
+	.ts-commerce-notices-host .woocommerce-info {
+		border-color: color-mix(in oklch, var(--ts-color-accent) 24%, var(--ts-color-border-subtle));
+	}
+
+	.ts-feedback-stack .woocommerce-error::marker,
+	.ts-feedback-stack .woocommerce-info::marker,
+	.ts-feedback-stack .woocommerce-message::marker,
+	.ts-commerce-notices-host .woocommerce-error::marker,
+	.ts-commerce-notices-host .woocommerce-info::marker,
+	.ts-commerce-notices-host .woocommerce-message::marker {
+		content: '';
+	}
+
+	.ts-feedback-stack .woocommerce-error a,
+	.ts-feedback-stack .woocommerce-info a,
+	.ts-feedback-stack .woocommerce-message a,
+	.ts-commerce-notices-host .woocommerce-error a,
+	.ts-commerce-notices-host .woocommerce-info a,
+	.ts-commerce-notices-host .woocommerce-message a {
+		font-weight: 600;
+		text-underline-offset: 0.15em;
+	}
+
+	.ts-feedback-stack [hidden][data-feedback-dismissed='1'],
+	.ts-commerce-notices-host [hidden][data-feedback-dismissed='1'] {
+		display: none !important;
+	}
+}
