@@ -115,7 +115,7 @@ function tailwindscore_search_feedback_copy( string $context ): array {
 		'loading'     => array(
 			'eyebrow' => __( 'Search', 'tailwindscore' ),
 			'title'   => __( 'Looking through the collection', 'tailwindscore' ),
-			'message' => tailwindscore_content_surface_text( 'search-guidance-message', __( 'A concise set of matching pieces and collection paths is being prepared.', 'tailwindscore' ) ),
+			'message' => __( 'A concise set of matching pieces and collection paths is being prepared.', 'tailwindscore' ),
 		),
 		'unavailable' => tailwindscore_feedback_empty_state_copy( 'search-unavailable' ),
 		'empty'       => tailwindscore_feedback_empty_state_copy( 'search-results' ),
@@ -133,7 +133,6 @@ function tailwindscore_search_surface_copy(): array {
 	return array(
 		'eyebrow'                  => __( 'Discover', 'tailwindscore' ),
 		'title'                    => __( 'Search the collection', 'tailwindscore' ),
-		'guidance'                 => tailwindscore_content_surface_text( 'search-guidance-message' ),
 		'recent_searches_guidance' => tailwindscore_content_surface_text( 'search-recent-searches-guidance-message' ),
 		'predictive_empty_message' => tailwindscore_content_surface_text( 'search-predictive-empty-message' ),
 	);

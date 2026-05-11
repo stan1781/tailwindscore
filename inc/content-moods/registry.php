@@ -63,7 +63,6 @@ function tailwindscore_content_mood_registry(): array {
 				'support-message'                       => __( 'Support information should stay concise, reassuring, and close to purchase-critical guidance.', 'tailwindscore' ),
 				'footer-newsletter-copy'                => __( 'Use this surface for a concise editorial newsletter invitation, not a marketing wall of text.', 'tailwindscore' ),
 				'footer-brand-summary'                  => __( 'Editorial commerce foundation for a calm, premium shopping journey.', 'tailwindscore' ),
-				'checkout-reassurance-message'          => __( 'Checkout is designed to feel clear, secure, and quietly reassuring from review to confirmation.', 'tailwindscore' ),
 				'checkout-payment-guidance-message'     => __( 'Choose a payment method and complete the order with one clear confirmation.', 'tailwindscore' ),
 				'checkout-mobile-summary-message'       => __( 'Shipping, taxes, and discounts stay visible before purchase completion.', 'tailwindscore' ),
 				'checkout-validation-summary-message'   => __( 'Please review the highlighted checkout details.', 'tailwindscore' ),
@@ -80,7 +79,6 @@ function tailwindscore_content_mood_registry(): array {
 				'account-reset-support-message'         => __( 'Choose a password that feels easy to remember and hard to guess.', 'tailwindscore' ),
 				'account-address-guidance-message'      => __( 'Use the details below for a smoother return to checkout next time.', 'tailwindscore' ),
 				'account-message'                       => __( 'Account language should feel composed, helpful, and respectful of the customer history it presents.', 'tailwindscore' ),
-				'search-guidance-message'               => __( 'Use direct product language and calm guidance to help customers move through discovery with confidence.', 'tailwindscore' ),
 				'search-recent-searches-guidance-message' => __( 'Recent searches remain nearby so returning to a product path feels immediate and quiet.', 'tailwindscore' ),
 				'search-predictive-empty-message'       => __( 'Try a broader product name or continue through a collection path.', 'tailwindscore' ),
 				'cart-drawer-validation-title'          => __( 'Please review your bag', 'tailwindscore' ),
@@ -126,7 +124,6 @@ function tailwindscore_content_mood_registry(): array {
 				'announcement-bar-message'           => __( 'Considered shipping, careful pacing, and a quieter path through the collection.', 'tailwindscore' ),
 				'footer-newsletter-copy'             => __( 'Receive occasional notes on new arrivals, considered releases, and the evolving edit.', 'tailwindscore' ),
 				'footer-brand-summary'               => __( 'Editorial commerce shaped for a composed, premium browsing rhythm.', 'tailwindscore' ),
-				'search-guidance-message'            => __( 'Search by product name, material, or collection and continue through the wider edit when needed.', 'tailwindscore' ),
 				'search-recent-searches-guidance-message' => __( 'Recent searches quietly preserve a return path into the collection.', 'tailwindscore' ),
 				'search-predictive-empty-message'    => __( 'Try a broader term or continue through a nearby collection path.', 'tailwindscore' ),
 				'empty-state-search-results-title'   => __( 'No matching pieces found', 'tailwindscore' ),
@@ -164,7 +161,6 @@ function tailwindscore_content_mood_registry(): array {
 			'surface_defaults'         => array(
 				'trust-message'                => __( 'Shipping, returns, and purchase guidance should feel steady, warm, and immediately clear.', 'tailwindscore' ),
 				'support-message'              => __( 'Support is available with clear guidance before and after purchase.', 'tailwindscore' ),
-				'checkout-reassurance-message' => __( 'Review, payment, and confirmation should feel calm, secure, and carefully paced.', 'tailwindscore' ),
 				'checkout-payment-guidance-message' => __( 'Choose the payment method that suits you and finish with clear confirmation.', 'tailwindscore' ),
 				'account-login-reassurance-message' => __( 'Sign in to revisit purchases, saved details, and a lasting customer relationship.', 'tailwindscore' ),
 				'account-recovery-message'          => __( 'Enter your account email and we will send a reset link in the same calm rhythm as the rest of the account experience.', 'tailwindscore' ),
@@ -204,8 +200,6 @@ function tailwindscore_content_mood_registry(): array {
 			),
 			'surface_defaults'         => array(
 				'announcement-bar-message'     => __( 'Clear shipping thresholds and quick collection guidance for a confident shopping path.', 'tailwindscore' ),
-				'search-guidance-message'      => __( 'Search by product type, material, or use case, then continue through the collection with broader filters if needed.', 'tailwindscore' ),
-				'checkout-reassurance-message' => __( 'Checkout keeps the final steps direct, secure, and easy to review.', 'tailwindscore' ),
 				'checkout-payment-guidance-message' => __( 'Payment, review, and confirmation stay direct and easy to follow.', 'tailwindscore' ),
 			),
 		),
@@ -239,7 +233,6 @@ function tailwindscore_content_mood_registry(): array {
 			'surface_defaults'         => array(
 				'announcement-bar-message' => __( 'Focused delivery, premium support, and a deliberate path through the collection.', 'tailwindscore' ),
 				'footer-brand-summary'     => __( 'Premium commerce shaped with clear contrast, disciplined pacing, and a steady editorial voice.', 'tailwindscore' ),
-				'search-guidance-message'  => __( 'Use precise product language or continue through the collection to widen the search path.', 'tailwindscore' ),
 				'search-recent-searches-guidance-message' => __( 'Recent searches keep a precise route back into the collection.', 'tailwindscore' ),
 			),
 		),

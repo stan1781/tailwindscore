@@ -24,7 +24,6 @@ if ( ! $checkout instanceof WC_Checkout ) {
 	class="checkout woocommerce-checkout ts-checkout-form"
 	action="<?php echo esc_url( wc_get_checkout_url() ); ?>"
 	enctype="multipart/form-data"
-	aria-describedby="ts-checkout-intro"
 >
 	<section
 		class="ts-checkout-shell"
@@ -36,7 +35,6 @@ if ( ! $checkout instanceof WC_Checkout ) {
 		<header class="ts-checkout-shell__header">
 			<p class="ts-checkout-shell__eyebrow"><?php echo esc_html( (string) ( $copy['eyebrow'] ?? __( 'Secure purchase', 'tailwindscore' ) ) ); ?></p>
 			<h1 class="ts-checkout-shell__title"><?php echo esc_html( (string) ( $copy['title'] ?? __( 'Checkout', 'tailwindscore' ) ) ); ?></h1>
-			<p class="ts-checkout-shell__intro" id="ts-checkout-intro"><?php echo esc_html( (string) ( $copy['intro'] ?? '' ) ); ?></p>
 			<div class="ts-checkout-shell__support" aria-label="<?php esc_attr_e( 'Checkout guidance', 'tailwindscore' ); ?>">
 				<?php foreach ( (array) ( $copy['support_items'] ?? array() ) as $item ) : ?>
 					<?php if ( is_string( $item ) && '' !== trim( $item ) ) : ?>

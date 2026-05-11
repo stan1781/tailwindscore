@@ -27,9 +27,6 @@ $copy       = tailwindscore_search_surface_copy();
 			<div class="ts-search-surface__heading">
 				<p class="ts-search-surface__eyebrow"><?php echo esc_html( $copy['eyebrow'] ?? __( 'Discover', 'tailwindscore' ) ); ?></p>
 				<h2 id="ts-search-surface-title" class="ts-search-surface__title"><?php echo esc_html( $copy['title'] ?? __( 'Search the collection', 'tailwindscore' ) ); ?></h2>
-				<?php if ( '' !== trim( (string) ( $copy['guidance'] ?? '' ) ) ) : ?>
-					<p class="ts-search-surface__intro"><?php echo esc_html( (string) $copy['guidance'] ); ?></p>
-				<?php endif; ?>
 			</div>
 
 			<button class="ts-search-surface__close ts-icon-button ts-icon-button--utility" type="button" data-search-close>

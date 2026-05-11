@@ -35,7 +35,6 @@ function tailwindscore_checkout_surface_copy(): array {
 	return array(
 		'eyebrow'             => __( 'Secure purchase', 'tailwindscore' ),
 		'title'               => __( 'Checkout', 'tailwindscore' ),
-		'intro'               => tailwindscore_content_surface_text( 'checkout-reassurance-message' ),
 		'empty_cta_label'     => tailwindscore_content_surface_text( 'checkout-empty-action-label' ),
 		'summary_heading'     => tailwindscore_content_surface_text( 'checkout-summary-heading' ),
 		'support_items'       => array(

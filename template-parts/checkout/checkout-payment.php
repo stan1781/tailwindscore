@@ -53,7 +53,7 @@ $copy               = tailwindscore_checkout_surface_copy();
 				}
 			} else {
 				echo '<li>';
-				wc_print_notice( apply_filters( 'woocommerce_no_available_payment_methods_message', WC()->customer->get_billing_country() ? esc_html( tailwindscore_content_surface_text( 'support-message', __( 'No payment methods are available for this order. Please review your details or contact us for help.', 'tailwindscore' ) ) ) : esc_html( tailwindscore_content_surface_text( 'checkout-reassurance-message', __( 'Enter your billing details to view available payment methods.', 'tailwindscore' ) ) ) ), 'notice' );
+				wc_print_notice( apply_filters( 'woocommerce_no_available_payment_methods_message', WC()->customer->get_billing_country() ? esc_html( tailwindscore_content_surface_text( 'support-message', __( 'No payment methods are available for this order. Please review your details or contact us for help.', 'tailwindscore' ) ) ) : esc_html( __( 'Enter your billing details to view available payment methods.', 'tailwindscore' ) ) ), 'notice' );
 				echo '</li>';
 			}
 			?>

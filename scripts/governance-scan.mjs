@@ -37,7 +37,7 @@ const SCAN_TARGETS = [
 		trustCritical: false,
 		runtimeCritical: true,
 		roots: ['template-parts/search', 'src/ts/modules/search'],
-		registrySignals: ['search-guidance-message', 'search-predictive-empty-message', 'tailwindscore_feedback_empty_state_copy', 'tailwindscore_content_surface_text'],
+		registrySignals: ['search-predictive-empty-message', 'tailwindscore_feedback_empty_state_copy', 'tailwindscore_content_surface_text'],
 	},
 	{
 		name: 'reviews',

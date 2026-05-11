@@ -23,14 +23,8 @@ function tailwindscore_kirki_configurable_content_surfaces(): array {
 		'support-message'               => array(
 			'section' => 'tailwindscore_site_shell_content',
 		),
-		'checkout-reassurance-message'  => array(
-			'section' => 'tailwindscore_checkout_content',
-		),
 		'account-message'               => array(
 			'section' => 'tailwindscore_account_content',
-		),
-		'search-guidance-message'       => array(
-			'section' => 'tailwindscore_search_content',
 		),
 	);
 }

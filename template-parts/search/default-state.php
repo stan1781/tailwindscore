@@ -19,7 +19,6 @@ $copy       = tailwindscore_search_surface_copy();
 	<div class="ts-search-default__intro">
 		<p class="ts-search-default__eyebrow"><?php esc_html_e( 'Discovery', 'tailwindscore' ); ?></p>
 		<h3 class="ts-search-default__title"><?php esc_html_e( 'Begin with a piece, a material, or a collection', 'tailwindscore' ); ?></h3>
-		<p class="ts-search-default__message"><?php echo esc_html( (string) ( $copy['guidance'] ?? '' ) ); ?></p>
 	</div>
 
 	<div class="ts-search-default__grid">
