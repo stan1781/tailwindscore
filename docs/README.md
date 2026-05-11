@@ -1,35 +1,41 @@
 # TailwindScore Documentation
 
-TailwindScore documentation is now governed by active-context boundaries instead of open-ended topic sprawl.
+TailwindScore is being reduced toward a smaller documentation surface that matches a premium WooCommerce theme rather than a governance framework.
 
 ## Start Here
 
 - `docs/AI-ENTRY.md`
-- `docs/phases/current-phase.md`
-- `docs/ai/system-constitution.md`
-- `docs/governance/workflow.md`
-- `docs/architecture/runtime-boundaries.md`
-- `docs/governance/documentation-rules.md`
+- `docs/architecture.md`
+- `docs/commerce-surfaces.md`
+- `docs/development-rules.md`
+- `docs/components.md`
 
-## Governed Top-Level Structure
+## Canonical Lite Docs
 
-- `docs/core/`: documentation system map and ownership
-- `docs/phases/`: the only active implementation phase
-- `docs/governance/`: documentation rules, workflow, and health
-- `docs/architecture/`: stable architecture boundaries
-- `docs/ai/`: AI-only operating rules
-- `docs/operations/`: lifecycle and archive procedure
-- `docs/reference/`: human-first lookup boundary
-- `docs/archive/`: historical docs excluded from default AI context
+These root-level files are the preferred default reading path:
 
-## Default AI Boundary
+- `AI-ENTRY.md`
+- `architecture.md`
+- `commerce-surfaces.md`
+- `development-rules.md`
+- `components.md`
 
-AI should not recursively read `docs/`.
+## Transitional Structure
 
-AI should enter through `docs/AI-ENTRY.md`, then stay inside the six-file default context stack unless a named escalation is required.
+Existing topical directories under `docs/` still exist during reduction, but they should be treated as transitional or historical reference unless a current task explicitly needs them.
 
-## Transitional Legacy Boundary
+The heaviest legacy areas are:
 
-Existing topical directories under `docs/` remain available as frozen human reference during consolidation.
+- `docs/ai/`
+- `docs/governance/`
+- `docs/governance-audit/`
+- `docs/phases/`
+- `docs/content-moods/`
+- `docs/presets/`
+- `docs/configuration/`
 
-They are not active implementation authority unless a current-phase file explicitly names them.
+## Default Reading Boundary
+
+Do not recursively read `docs/` by default.
+
+Start with the root-level Lite docs, then open older topic trees only when code-level work or WooCommerce compatibility details require them.

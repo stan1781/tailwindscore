@@ -8,6 +8,7 @@
  *
  * @var array<string, mixed> $args {
  *   @type string $inner_html Raw HTML inside wrapper (buttons/forms from WC).
+ *   @type array<string, string> $feedback Optional feedback copy overrides.
  * }
  */
 
@@ -17,23 +18,33 @@ defined( 'ABSPATH' ) || exit;
 
 $defaults = array(
 	'inner_html' => '',
+	'feedback'   => array(),
 );
 
 $args = wp_parse_args( (array) ( $args ?? array() ), $defaults );
 
-$html = is_string( $args['inner_html'] ) ? $args['inner_html'] : '';
+$html     = is_string( $args['inner_html'] ) ? $args['inner_html'] : '';
+$feedback = isset( $args['feedback'] ) && is_array( $args['feedback'] ) ? $args['feedback'] : array();
+
+$feedback_attrs = array(
+	'validation_title' => 'data-feedback-validation-title',
+	'loading_message'  => 'data-feedback-loading-message',
+	'success_message'  => 'data-feedback-success-message',
+	'error_message'    => 'data-feedback-error-message',
+	'selection_message'=> 'data-feedback-selection-message',
+);
 
 ?>
 <div
 	class="ts-commerce-atc"
 	data-ts-module="commerce-add-to-cart"
-	data-feedback-validation-title="<?php echo esc_attr__( 'Please review this selection', 'tailwindscore' ); ?>"
-	data-feedback-loading-message="<?php echo esc_attr__( 'Adding to bag', 'tailwindscore' ); ?>"
-	data-feedback-success-message="<?php echo esc_attr__( 'Added to bag', 'tailwindscore' ); ?>"
-	data-feedback-error-message="<?php echo esc_attr__( 'We could not update the bag just now. Please try again.', 'tailwindscore' ); ?>"
-	data-feedback-selection-message="<?php echo esc_attr__( 'Select an option before adding to bag.', 'tailwindscore' ); ?>"
+	<?php foreach ( $feedback_attrs as $key => $attribute ) : ?>
+		<?php if ( ! empty( $feedback[ $key ] ) && is_string( $feedback[ $key ] ) ) : ?>
+			<?php echo $attribute; ?>="<?php echo esc_attr( $feedback[ $key ] ); ?>"
+		<?php endif; ?>
+	<?php endforeach; ?>
 >
 	<?php tailwindscore_feedback_part( 'validation', array( 'hidden' => true ) ); ?>
-	<?php tailwindscore_feedback_part( 'loading', array( 'hidden' => true, 'message' => __( 'Adding to bag', 'tailwindscore' ) ) ); ?>
+	<?php tailwindscore_feedback_part( 'loading', array( 'hidden' => true, 'message' => is_string( $feedback['loading_message'] ?? null ) ? $feedback['loading_message'] : __( 'Adding to bag', 'tailwindscore' ) ) ); ?>
 	<?php echo tailwindscore_kses_actions_slot( $html ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 </div>

@@ -1,6 +1,6 @@
 <?php
 /**
- * Search surface helpers.
+ * Feature-owned search integration.
  *
  * @package TailwindScore
  */
@@ -31,16 +31,11 @@ function tailwindscore_search_render( string $template, array $args = array() ):
 	return (string) ob_get_clean();
 }
 
-/**
- * Search endpoint URL for predictive discovery.
- */
 function tailwindscore_search_endpoint_url(): string {
 	return rest_url( 'tailwindscore/v1/search' );
 }
 
 /**
- * Popular searches list for SSR discovery state.
- *
  * @return list<array<string, string>>
  */
 function tailwindscore_search_popular_terms(): array {
@@ -59,17 +54,10 @@ function tailwindscore_search_popular_terms(): array {
 		),
 	);
 
-	/**
-	 * Filter popular searches used by the shell search surface.
-	 *
-	 * @param list<array<string, string>> $items Search items.
-	 */
 	return apply_filters( 'tailwindscore/search/popular_terms', $items );
 }
 
 /**
- * Search categories discovery list.
- *
  * @return list<array<string, string>>
  */
 function tailwindscore_search_featured_categories(): array {
@@ -88,7 +76,7 @@ function tailwindscore_search_featured_categories(): array {
 
 		if ( ! is_wp_error( $terms ) ) {
 			foreach ( $terms as $term ) {
-				$link = get_term_link( $term );
+				$link    = get_term_link( $term );
 				$items[] = array(
 					'label' => $term->name,
 					'url'   => $link instanceof WP_Error ? '' : (string) $link,
@@ -97,17 +85,33 @@ function tailwindscore_search_featured_categories(): array {
 		}
 	}
 
-	/**
-	 * Filter featured categories used by search discovery.
-	 *
-	 * @param list<array<string, string>> $items Category items.
-	 */
 	return apply_filters( 'tailwindscore/search/featured_categories', array_values( array_filter( $items, static fn( array $item ): bool => '' !== ( $item['url'] ?? '' ) ) ) );
 }
 
 /**
- * Shared search feedback copy for runtime states.
- *
+ * @return array<string, string>
+ */
+function tailwindscore_search_copy_text( string $key, string $default = '' ): string {
+	$setting_id = 'ts_surface_' . str_replace( '-', '_', $key );
+	$value      = get_theme_mod( $setting_id, null );
+
+	if ( is_string( $value ) && '' !== trim( $value ) ) {
+		return $value;
+	}
+
+	if ( '' !== $default ) {
+		return $default;
+	}
+
+	$defaults = array(
+		'search-recent-searches-guidance-message' => 'Recent searches remain nearby so returning to a product path feels immediate and quiet.',
+		'search-predictive-empty-message'         => 'Try a broader product name or continue through a collection path.',
+	);
+
+	return $defaults[ $key ] ?? '';
+}
+
+/**
  * @return array<string, string>
  */
 function tailwindscore_search_feedback_copy( string $context ): array {
@@ -125,22 +129,18 @@ function tailwindscore_search_feedback_copy( string $context ): array {
 }
 
 /**
- * Search governed copy.
- *
  * @return array<string, string>
  */
 function tailwindscore_search_surface_copy(): array {
 	return array(
 		'eyebrow'                  => __( 'Discover', 'tailwindscore' ),
 		'title'                    => __( 'Search the collection', 'tailwindscore' ),
-		'recent_searches_guidance' => tailwindscore_content_surface_text( 'search-recent-searches-guidance-message' ),
-		'predictive_empty_message' => tailwindscore_content_surface_text( 'search-predictive-empty-message' ),
+		'recent_searches_guidance' => tailwindscore_search_copy_text( 'search-recent-searches-guidance-message' ),
+		'predictive_empty_message' => tailwindscore_search_copy_text( 'search-predictive-empty-message' ),
 	);
 }
 
 /**
- * Query lightweight predictive search results.
- *
  * @return array{products:list<array<string, string>>,categories:list<array<string, string>>,suggestions:list<array<string, string>>,query:string}
  */
 function tailwindscore_get_predictive_search_results( string $query ): array {
@@ -169,7 +169,7 @@ function tailwindscore_get_predictive_search_results( string $query ): array {
 	);
 
 	foreach ( $products as $product_post ) {
-		$image_url = get_the_post_thumbnail_url( $product_post, 'woocommerce_thumbnail' );
+		$image_url  = get_the_post_thumbnail_url( $product_post, 'woocommerce_thumbnail' );
 		$price_html = '';
 		$category   = '';
 
@@ -243,3 +243,43 @@ function tailwindscore_get_predictive_search_results( string $query ): array {
 
 	return $results;
 }
+
+add_action(
+	'rest_api_init',
+	static function (): void {
+		register_rest_route(
+			'tailwindscore/v1',
+			'/search',
+			array(
+				'methods'             => WP_REST_Server::READABLE,
+				'permission_callback' => '__return_true',
+				'args'                => array(
+					'q' => array(
+						'type'              => 'string',
+						'sanitize_callback' => 'sanitize_text_field',
+						'required'          => false,
+					),
+				),
+				'callback'            => static function ( WP_REST_Request $request ): WP_REST_Response {
+					$query   = (string) $request->get_param( 'q' );
+					$results = tailwindscore_get_predictive_search_results( $query );
+					$html    = tailwindscore_search_render(
+						'predictive-results',
+						array(
+							'query'   => $results['query'],
+							'results' => $results,
+						)
+					);
+
+					return new WP_REST_Response(
+						array(
+							'query'   => $results['query'],
+							'results' => $results,
+							'html'    => $html,
+						)
+					);
+				},
+			)
+		);
+	}
+);

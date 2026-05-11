@@ -37,29 +37,6 @@ function tailwindscore_review_add_class_to_tag( string $html, string $tag, strin
 }
 
 /**
- * Structured props for review surfaces.
- *
- * @return array<string, mixed>
- */
-function tailwindscore_review_surface_props( int $product_id ): array {
-	$product = wc_get_product( $product_id );
-
-	if ( ! $product instanceof WC_Product ) {
-		return array();
-	}
-
-	$aggregate = tailwindscore_adapter_product_rating_aggregate_props( $product );
-
-	return array(
-		'product_id'      => $product_id,
-		'average_rating'  => (float) ( $aggregate['average_rating'] ?? 0 ),
-		'review_count'    => (int) ( $aggregate['review_count'] ?? 0 ),
-		'review_title'    => __( 'Customer reviews', 'tailwindscore' ),
-		'review_intro'    => __( 'Measured notes from customers, arranged with the same quiet hierarchy as the rest of the product story.', 'tailwindscore' ),
-	);
-}
-
-/**
  * Default review form args with WooCommerce-compatible field structure.
  *
  * @return array<string, mixed>
@@ -156,10 +133,9 @@ function tailwindscore_review_form_args(): array {
 function tailwindscore_review_list_item( WP_Comment $comment, array $args, int $depth ): void {
 	unset( $args, $depth );
 
-	$props       = tailwindscore_adapter_review_comment_props( $comment );
-	$author      = isset( $props['author_name'] ) ? (string) $props['author_name'] : '';
+	$author      = (string) $comment->comment_author;
 	$content     = apply_filters( 'comment_text', get_comment_text( $comment ), $comment );
-	$rating      = isset( $props['rating'] ) ? max( 0, min( 5, (int) $props['rating'] ) ) : 0;
+	$rating      = max( 0, min( 5, (int) get_comment_meta( $comment->comment_ID, 'rating', true ) ) );
 	$rating_html = $rating > 0 ? wc_get_rating_html( (float) $rating ) : '';
 	$date        = get_comment_date( wc_date_format(), $comment );
 	$verified    = function_exists( 'wc_review_is_from_verified_owner' ) && wc_review_is_from_verified_owner( $comment->comment_ID );

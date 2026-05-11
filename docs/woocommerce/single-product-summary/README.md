@@ -1,27 +1,15 @@
-# Single product summary — 渐进组件化
+# Single Product Summary
 
-本阶段仅替换 **`woocommerce_single_product_summary`** 内四个安全块：
+当前 single product summary 已不再使用单独的 summary hook 文件、单用途 adapter、或 product-summary 组件目录。
 
-1. Title（5）  
-2. Rating（10）  
-3. Price（10）  
-4. Excerpt（20）  
+## 当前 ownership
 
-**未替换**：`woocommerce_template_single_add_to_cart`（30）、meta、sharing 等。
+- owner: `inc/woocommerce/hooks/single-product-hooks.php`
+- hook 策略：在 `woocommerce_init` 上按原 WooCommerce priority 替换 title / rating / price / excerpt / add-to-cart
+- 渲染方式：直接在 feature hook 中输出
 
-实现：
+## 当前目标
 
-- **Hook 策略**：`inc/woocommerce/hooks/single-product-summary.php` — `woocommerce_init` 上 `remove_action` + 同优先级 `add_action`。  
-- **开关**：`tailwindscore/woocommerce/single-product-summary/use_components`  
-- **适配器**：`inc/woocommerce/adapters/single-product/*.php`  
-- **组件**：`template-parts/components/product-summary/*.php`  
-- **样式**：`src/css/components/product-summary/`  
-
-## 文档索引
-
-| 块 | 文档 |
-|----|------|
-| Title | [title.md](./title.md) |
-| Price | [price.md](./price.md) |
-| Rating | [rating.md](./rating.md) |
-| Excerpt | [excerpt.md](./excerpt.md) |
+- 保持 WooCommerce summary priority 稳定
+- 保持 SSR-first
+- 避免再引入 summary wrapper / adapter / template indirection

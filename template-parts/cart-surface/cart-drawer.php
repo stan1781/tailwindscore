@@ -26,6 +26,7 @@ $payload = wp_parse_args(
 
 $drawer_id = 'ts-cart-drawer';
 $copy      = tailwindscore_cart_surface_copy();
+$overrides = tailwindscore_cart_surface_feedback_overrides();
 ?>
 <div
 	id="<?php echo esc_attr( $drawer_id ); ?>"
@@ -35,7 +36,7 @@ $copy      = tailwindscore_cart_surface_copy();
 	hidden
 >
 	<div class="ts-cart-drawer__backdrop" data-cart-close></div>
-	<aside class="ts-cart-drawer__panel" role="dialog" aria-modal="true" aria-labelledby="ts-cart-drawer-title" data-ts-module="cart-focus">
+	<aside class="ts-cart-drawer__panel" role="dialog" aria-modal="true" aria-labelledby="ts-cart-drawer-title">
 		<div class="ts-cart-drawer__header">
 			<div class="ts-cart-drawer__heading">
 				<p class="ts-cart-drawer__eyebrow"><?php esc_html_e( 'Bag', 'tailwindscore' ); ?></p>
@@ -50,11 +51,21 @@ $copy      = tailwindscore_cart_surface_copy();
 		<div
 			class="ts-cart-drawer__body"
 			data-cart-surface-root
-			data-feedback-validation-title="<?php echo esc_attr( $copy['validation_title'] ?? __( 'Please review your bag', 'tailwindscore' ) ); ?>"
-			data-feedback-loading-message="<?php echo esc_attr( $copy['loading_message'] ?? __( 'Updating bag', 'tailwindscore' ) ); ?>"
-			data-feedback-update-error-message="<?php echo esc_attr( $copy['update_error'] ?? __( 'We could not update the bag just now. Please try again.', 'tailwindscore' ) ); ?>"
-			data-feedback-item-updated-message="<?php echo esc_attr( $copy['item_updated'] ?? __( 'Bag updated', 'tailwindscore' ) ); ?>"
-			data-feedback-item-removed-message="<?php echo esc_attr( $copy['item_removed'] ?? __( 'Removed from bag', 'tailwindscore' ) ); ?>"
+			<?php if ( ! empty( $overrides['validation_title'] ) ) : ?>
+				data-feedback-validation-title="<?php echo esc_attr( $overrides['validation_title'] ); ?>"
+			<?php endif; ?>
+			<?php if ( ! empty( $overrides['loading_message'] ) ) : ?>
+				data-feedback-loading-message="<?php echo esc_attr( $overrides['loading_message'] ); ?>"
+			<?php endif; ?>
+			<?php if ( ! empty( $overrides['update_error'] ) ) : ?>
+				data-feedback-update-error-message="<?php echo esc_attr( $overrides['update_error'] ); ?>"
+			<?php endif; ?>
+			<?php if ( ! empty( $overrides['item_updated'] ) ) : ?>
+				data-feedback-item-updated-message="<?php echo esc_attr( $overrides['item_updated'] ); ?>"
+			<?php endif; ?>
+			<?php if ( ! empty( $overrides['item_removed'] ) ) : ?>
+				data-feedback-item-removed-message="<?php echo esc_attr( $overrides['item_removed'] ); ?>"
+			<?php endif; ?>
 		>
 			<?php tailwindscore_feedback_part( 'validation', array( 'hidden' => true ) ); ?>
 			<?php tailwindscore_feedback_part( 'loading', array( 'hidden' => true, 'message' => $copy['loading_message'] ?? __( 'Updating bag', 'tailwindscore' ) ) ); ?>

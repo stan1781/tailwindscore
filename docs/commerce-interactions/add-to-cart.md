@@ -1,4 +1,4 @@
-# Add to cart module (`commerce-add-to-cart`)
+# Add To Cart Module (`commerce-add-to-cart`)
 
 ## `data-ts-module`
 
@@ -6,16 +6,20 @@
 
 ## PHP
 
-`template-parts/components/commerce/add-to-cart-button.php` — 包裹可加购区域的 SSR 槽位。
+`template-parts/components/commerce/add-to-cart-button.php`
 
-## 职责
+这个组件只负责输出 SSR 宿主与可选 feedback override，不再承担默认语义所有权。
 
-- 在 **表单提交** 时为提交按钮添加 **`ts-btn--loading`** + **`ts-atc-track`** + `aria-busy`。
-- 监听 jQuery **`added_to_cart`** / **`added_to_cart_failed`**，移除 loading。
-- 桥接 **`ts:cart:updated`**（payload 来自 WC fragments）。
-- 12s 超时兜底清除 loading（防止异常挂死）。
+## 当前职责
 
-## 不支持
+- 拦截 `form.cart` / `form.variations_form` 提交
+- 为按钮增加 loading / busy 状态
+- 直接调用 `requestCartSurface()` 走 cart surface REST 端点
+- 成功后应用 cart fragments、打开 cart drawer、显示可见 success toast
+- 失败后写入 validation surface，并显示可见 error toast
 
-- 自建 AJAX 加购或替换 WC `wc-add-to-cart` 脚本。
-- 修改购物车 fragments 内容。
+## 不负责
+
+- 复用 WooCommerce jQuery `added_to_cart` 事件桥
+- 维护独立 cart event bus
+- 替换 WooCommerce 购物车或 variation 原生数据流

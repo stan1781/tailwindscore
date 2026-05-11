@@ -70,10 +70,14 @@ export function mountVariationFeedback(root: HTMLElement): VariationFeedbackHand
 		const isPurchasable = variation?.is_purchasable;
 
 		if (isInStock === false || isPurchasable === false) {
-			setFeedbackValidation(host, 'This option is currently unavailable. Choose another combination.', {
+			setFeedbackValidation(
+				host,
+				host.dataset.feedbackUnavailableMessage ?? 'This option is currently unavailable. Choose another combination.',
+				{
 				title: host.dataset.feedbackValidationTitle ?? '',
 				announce: false,
-			});
+				},
+			);
 			return;
 		}
 
@@ -85,7 +89,7 @@ export function mountVariationFeedback(root: HTMLElement): VariationFeedbackHand
 	};
 
 	const onHide = (): void => {
-		setFeedbackValidation(host, 'This combination is currently unavailable. Choose another option.', {
+		setFeedbackValidation(host, host.dataset.feedbackHiddenMessage ?? 'This combination is currently unavailable. Choose another option.', {
 			title: host.dataset.feedbackValidationTitle ?? '',
 			announce: false,
 		});

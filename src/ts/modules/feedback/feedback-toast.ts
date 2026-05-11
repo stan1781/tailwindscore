@@ -6,6 +6,7 @@ export type FeedbackToastOptions = {
 	message: string;
 	tone?: FeedbackToastTone;
 	duration?: number;
+	announce?: boolean;
 };
 
 const DEFAULT_DISMISS_MS = 4200;
@@ -104,7 +105,9 @@ export function publishToast(options: FeedbackToastOptions): void {
 
 	host.append(toast);
 	queueDismiss(toast, duration);
-	announceFeedback(message, options.tone === 'error' ? 'assertive' : 'polite');
+	if (options.announce !== false) {
+		announceFeedback(message, options.tone === 'error' ? 'assertive' : 'polite');
+	}
 }
 
 export function mountToastRegion(root: HTMLElement): void {

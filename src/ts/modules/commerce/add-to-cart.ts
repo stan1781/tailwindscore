@@ -1,8 +1,16 @@
 /**
  * Intercept simple-product add-to-cart and send it through the cart mutation pipeline.
  */
-import { applyCartFragments, requestCartSurface } from '../cart-surface/cart-state';
+import { applyCartFragments, requestCartSurface } from '../cart/cart-state';
 import { clearFeedbackValidation, publishToast, setFeedbackBusyState, setFeedbackValidation } from '../feedback';
+
+const ADD_TO_CART_FEEDBACK = {
+	validationTitle: 'Please review this selection',
+	loadingMessage: 'Adding to bag',
+	successMessage: 'Added to bag',
+	errorMessage: 'We could not update the bag just now. Please try again.',
+	selectionMessage: 'Select an option before adding to bag.',
+} as const;
 
 function markButtonsPending(form: HTMLElement, pending: boolean): void {
 	const buttons = form.querySelectorAll<HTMLButtonElement>(
@@ -48,7 +56,9 @@ export function mount(root: HTMLElement): void {
 			const isVariationForm = form.classList.contains('variations_form');
 
 			if (isVariationForm && variationId < 1) {
-				setFeedbackValidation(root, root.dataset.feedbackSelectionMessage ?? 'Select an option before adding to bag.');
+				setFeedbackValidation(root, root.dataset.feedbackSelectionMessage ?? ADD_TO_CART_FEEDBACK.selectionMessage, {
+					title: root.dataset.feedbackValidationTitle ?? ADD_TO_CART_FEEDBACK.validationTitle,
+				});
 				return;
 			}
 
@@ -60,7 +70,7 @@ export function mount(root: HTMLElement): void {
 			clearFeedbackValidation(root);
 			markButtonsPending(form, true);
 			setFeedbackBusyState(root, true, {
-				message: root.dataset.feedbackLoadingMessage ?? 'Adding to bag',
+				message: root.dataset.feedbackLoadingMessage ?? ADD_TO_CART_FEEDBACK.loadingMessage,
 			});
 
 			const variation = isVariationForm ? {} as Record<string, string> : undefined;
@@ -88,13 +98,15 @@ export function mount(root: HTMLElement): void {
 					applyCartFragments(drawer, payload);
 					openCartDrawer(drawer);
 					publishToast({
-						message: root.dataset.feedbackSuccessMessage ?? 'Added to bag',
+						message: root.dataset.feedbackSuccessMessage ?? ADD_TO_CART_FEEDBACK.successMessage,
 						tone: 'success',
 					});
 				})
 				.catch(() => {
-					const message = root.dataset.feedbackErrorMessage ?? 'We could not update the bag just now. Please try again.';
-					setFeedbackValidation(root, message);
+					const message = root.dataset.feedbackErrorMessage ?? ADD_TO_CART_FEEDBACK.errorMessage;
+					setFeedbackValidation(root, message, {
+						title: root.dataset.feedbackValidationTitle ?? ADD_TO_CART_FEEDBACK.validationTitle,
+					});
 					publishToast({ message, tone: 'error' });
 				})
 				.finally(() => {

@@ -1,4 +1,4 @@
-import { mountRegisteredModules } from './bootstrap-registry';
+import { mountRegisteredModules } from './module-mounts';
 
 function init(): void {
 	document.documentElement.classList.add('ts-js');

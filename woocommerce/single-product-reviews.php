@@ -15,17 +15,16 @@ if ( ! comments_open() ) {
 	return;
 }
 
-$props      = tailwindscore_review_surface_props( get_the_ID() );
-$reviewers  = $props['review_count'] ?? 0;
-$average    = $props['average_rating'] ?? 0;
+$reviewers  = $product instanceof WC_Product ? (int) $product->get_review_count() : 0;
+$average    = $product instanceof WC_Product ? (float) $product->get_average_rating() : 0.0;
 $empty_copy = tailwindscore_feedback_empty_state_copy( 'reviews' );
 ?>
 <div id="reviews" class="ts-reviews" data-ts-module="account-focus">
 	<header class="ts-reviews__header">
 		<p class="ts-reviews__eyebrow"><?php echo esc_html( $empty_copy['eyebrow'] ?? '' ); ?></p>
 		<div class="ts-reviews__heading">
-			<h2 class="ts-reviews__title"><?php echo esc_html( $props['review_title'] ?? __( 'Customer reviews', 'tailwindscore' ) ); ?></h2>
-			<p class="ts-reviews__intro"><?php echo esc_html( $props['review_intro'] ?? '' ); ?></p>
+			<h2 class="ts-reviews__title"><?php esc_html_e( 'Customer reviews', 'tailwindscore' ); ?></h2>
+			<p class="ts-reviews__intro"><?php esc_html_e( 'Measured notes from customers, arranged with the same quiet hierarchy as the rest of the product story.', 'tailwindscore' ); ?></p>
 		</div>
 		<div class="ts-reviews__summary">
 			<?php if ( wc_review_ratings_enabled() ) : ?>

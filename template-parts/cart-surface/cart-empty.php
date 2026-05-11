@@ -11,12 +11,12 @@ declare(strict_types=1);
 
 defined( 'ABSPATH' ) || exit;
 
-$copy = tailwindscore_feedback_empty_state_copy( 'cart' );
+$copy = tailwindscore_cart_empty_state_copy();
 
 $actions_html = sprintf(
 	'<a class="ts-btn ts-btn--primary" href="%s">%s</a>',
 	esc_url( (string) ( $args['shop_url'] ?? home_url( '/' ) ) ),
-	esc_html__( 'Continue shopping', 'tailwindscore' )
+	esc_html( $copy['action'] ?? __( 'Continue shopping', 'tailwindscore' ) )
 );
 ?>
 <div class="ts-cart-empty">

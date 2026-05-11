@@ -1,60 +1,55 @@
 # TailwindScore AI Entry
 
-This file is the only default entry point for AI-assisted work in TailwindScore documentation.
+This file is the default entry point for AI-assisted work in the Lite reduction phase.
 
 ## Default AI Context Stack
 
-Read these files first and stop unless the task explicitly requires more:
+Read these files first and stop unless the task explicitly needs more:
 
 1. `docs/AI-ENTRY.md`
-2. `docs/phases/current-phase.md`
-3. `docs/ai/system-constitution.md`
-4. `docs/governance/workflow.md`
-5. `docs/architecture/runtime-boundaries.md`
-6. `docs/governance/documentation-rules.md`
+2. `docs/architecture.md`
+3. `docs/commerce-surfaces.md`
+4. `docs/development-rules.md`
+5. `docs/components.md`
 
-Read these only when the current task needs more phase detail:
+## Default Intent
 
-- `docs/phases/active-goals.md`
-- `docs/phases/active-boundaries.md`
-- `docs/phases/completion-status.md`
-- `docs/core/canonical-sources.md`
+Assume TailwindScore is being reduced toward a premium WooCommerce theme with:
+
+- SSR-first rendering
+- WordPress-native and WooCommerce-native architecture
+- progressive enhancement
+- minimal abstraction
+- small runtime ownership
+- small documentation surface
 
 ## Allowed Default Scope
 
-- documentation governance
-- documentation IA
-- active phase management
-- AI workflow rules
-- lifecycle and archive management
-- stable architecture boundaries
-- stability-phase clarification and maintenance
+- architecture reduction
+- runtime simplification
+- WooCommerce surface preservation
+- helper and folder consolidation
+- CSS and TypeScript reduction
+- docs consolidation toward the root-level canonical set
 
 ## Forbidden Default Scope
 
-Do not read by default:
+Do not add by default:
 
-- `docs/archive/`
-- historical specs and plans
-- historical audits
-- deprecated roadmap material
-- frozen topical reference directories
-
-Do not implement by default:
-
-- new commerce modules
-- runtime branching
-- scanner expansion
-- runtime architecture changes
-- new governance abstractions without a blocker
-- large-scale documentation restructuring
+- governance systems
+- scanner capability
+- AI workflow layers
+- registry families
+- lifecycle families
+- new abstraction layers
+- enterprise architecture patterns
 
 ## Escalation Rule
 
-Read beyond the default scope only when one of these is true:
+Read older topical or governance-heavy docs only when one of these is true:
 
-- the current phase file names a specific reference path
-- a documentation blocker cannot be resolved from active docs
-- the user explicitly asks for historical context
+- a current implementation detail cannot be resolved from code or root docs
+- a WooCommerce compatibility detail needs historical context
+- the user explicitly asks for historical or archived material
 
-When escalation happens, cite the extra file path in the work summary.
+When escalation happens, cite the extra path you used.

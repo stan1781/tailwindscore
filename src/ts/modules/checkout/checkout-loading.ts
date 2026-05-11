@@ -1,5 +1,5 @@
 import { setFeedbackBusyState } from '../feedback';
-import { mountRegisteredModulesIn } from '../../bootstrap-registry';
+import { mountCheckoutModulesIn } from '../../module-mounts';
 
 type JQueryish = {
 	(target: string | Element | Document): JQueryCollection;
@@ -36,6 +36,6 @@ export function mount(root: HTMLElement): void {
 	$body.on('updated_checkout.ts-checkout-loading checkout_error.ts-checkout-loading', () => {
 		root.setAttribute('aria-busy', 'false');
 		setFeedbackBusyState(root, false);
-		mountRegisteredModulesIn(root);
+		mountCheckoutModulesIn(root);
 	});
 }

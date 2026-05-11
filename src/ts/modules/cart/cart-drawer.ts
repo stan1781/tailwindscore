@@ -1,6 +1,26 @@
-import { on } from '../../utils/events';
-import { applyCartFragments, requestCartSurface } from './cart-state';
+import { applyCartFragments, CartSurfaceRequestError, requestCartSurface } from './cart-state';
 import { clearFeedbackValidation, publishToast, setFeedbackBusyState, setFeedbackValidation } from '../feedback';
+
+const CART_FEEDBACK = {
+	validationTitle: 'Please review your bag',
+	loadingMessage: 'Updating bag',
+	updateErrorMessage: 'We could not update the bag just now. Please try again.',
+	itemUpdatedMessage: 'Bag updated',
+	itemRemovedMessage: 'Removed from bag',
+} as const;
+
+type FocusSnapshot = {
+	type: 'qty' | 'remove' | 'close';
+	key?: string;
+};
+
+function getFocusable(root: HTMLElement): HTMLElement[] {
+	return Array.from(
+		root.querySelectorAll<HTMLElement>(
+			'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+		),
+	);
+}
 
 function syncTriggers(drawerId: string, open: boolean): void {
 	document.querySelectorAll<HTMLElement>(`[data-cart-trigger="${drawerId}"]`).forEach((trigger) => {
@@ -16,6 +36,66 @@ export function mount(root: HTMLElement): void {
 	}
 
 	let activeTrigger: HTMLElement | null = null;
+	let pendingFocus: FocusSnapshot | null = null;
+
+	const trapFocus = (event: KeyboardEvent): void => {
+		if (event.key !== 'Tab' || !root.classList.contains('is-open')) {
+			return;
+		}
+
+		const panel = root.querySelector<HTMLElement>('.ts-cart-drawer__panel');
+		if (!panel) {
+			return;
+		}
+
+		const focusables = getFocusable(panel);
+		if (focusables.length === 0) {
+			return;
+		}
+
+		const first = focusables[0];
+		const last = focusables[focusables.length - 1];
+		if (!first || !last) {
+			return;
+		}
+
+		const active = document.activeElement;
+		if (event.shiftKey && active === first) {
+			event.preventDefault();
+			last.focus();
+		} else if (!event.shiftKey && active === last) {
+			event.preventDefault();
+			first.focus();
+		}
+	};
+
+	const restoreFocusAfterRefresh = (): void => {
+		const snapshot = pendingFocus;
+		pendingFocus = null;
+
+		if (!snapshot) {
+			return;
+		}
+
+		if (snapshot.type === 'qty' && snapshot.key) {
+			const nextInput = root.querySelector<HTMLElement>(`[data-cart-item-key="${snapshot.key}"] [data-cart-qty-input]`);
+			if (nextInput) {
+				nextInput.focus();
+				return;
+			}
+		}
+
+		if (snapshot.type === 'remove' && snapshot.key) {
+			const nextRemove = root.querySelector<HTMLElement>(`[data-cart-item-key="${snapshot.key}"] [data-cart-remove]`);
+			if (nextRemove) {
+				nextRemove.focus();
+				return;
+			}
+		}
+
+		const fallback = root.querySelector<HTMLElement>('[data-cart-close]') ?? root.querySelector<HTMLElement>('.ts-cart-drawer__panel');
+		fallback?.focus();
+	};
 
 	const open = (trigger?: HTMLElement): void => {
 		activeTrigger = trigger ?? (document.activeElement instanceof HTMLElement ? document.activeElement : null);
@@ -43,14 +123,21 @@ export function mount(root: HTMLElement): void {
 	const refresh = async (): Promise<void> => {
 		const payload = await requestCartSurface(endpointBase);
 		applyCartFragments(root, payload);
+		restoreFocusAfterRefresh();
 	};
 
 	const surfaceRoot = (): HTMLElement => root.querySelector<HTMLElement>('[data-cart-surface-root]') ?? root;
 
-	const mutate = async (path: 'update' | 'remove', body: Record<string, unknown>, successMessage: string): Promise<void> => {
+	const mutate = async (
+		path: 'update' | 'remove',
+		body: Record<string, unknown>,
+		successMessage: string,
+		focusSnapshot?: FocusSnapshot,
+	): Promise<void> => {
 		const scope = surfaceRoot();
+		pendingFocus = focusSnapshot ?? null;
 		clearFeedbackValidation(scope);
-		setFeedbackBusyState(scope, true, { message: scope.dataset.feedbackLoadingMessage ?? 'Updating bag' });
+		setFeedbackBusyState(scope, true, { message: scope.dataset.feedbackLoadingMessage ?? CART_FEEDBACK.loadingMessage });
 
 		try {
 			const payload = await requestCartSurface(`${endpointBase}/${path}`, {
@@ -61,11 +148,18 @@ export function mount(root: HTMLElement): void {
 				body: JSON.stringify(body),
 			});
 			applyCartFragments(root, payload);
-			publishToast({ message: successMessage, tone: 'success' });
-		} catch {
-			const message = scope.dataset.feedbackUpdateErrorMessage ?? 'We could not update the bag just now. Please try again.';
-			setFeedbackValidation(scope, message);
-			publishToast({ message, tone: 'error' });
+			restoreFocusAfterRefresh();
+			publishToast({ message: successMessage, tone: 'success', announce: false });
+		} catch (error) {
+			const message =
+				error instanceof CartSurfaceRequestError && error.responseMessage
+					? error.responseMessage
+					: scope.dataset.feedbackUpdateErrorMessage ?? CART_FEEDBACK.updateErrorMessage;
+			setFeedbackValidation(scope, message, {
+				title: scope.dataset.feedbackValidationTitle ?? CART_FEEDBACK.validationTitle,
+			});
+			publishToast({ message, tone: 'error', announce: false });
+			restoreFocusAfterRefresh();
 		} finally {
 			setFeedbackBusyState(scope, false);
 		}
@@ -109,10 +203,15 @@ export function mount(root: HTMLElement): void {
 			const next = Math.max(0, current + step);
 			input.value = String(next);
 			if (next === 0) {
-				void mutate('remove', { key }, surfaceRoot().dataset.feedbackItemRemovedMessage ?? 'Removed from bag');
+				void mutate('remove', { key }, surfaceRoot().dataset.feedbackItemRemovedMessage ?? CART_FEEDBACK.itemRemovedMessage, {
+					type: 'close',
+				});
 				return;
 			}
-			void mutate('update', { key, quantity: next }, surfaceRoot().dataset.feedbackItemUpdatedMessage ?? 'Bag updated');
+			void mutate('update', { key, quantity: next }, surfaceRoot().dataset.feedbackItemUpdatedMessage ?? CART_FEEDBACK.itemUpdatedMessage, {
+				type: 'qty',
+				key,
+			});
 			return;
 		}
 
@@ -124,7 +223,9 @@ export function mount(root: HTMLElement): void {
 			if (!key) {
 				return;
 			}
-			void mutate('remove', { key }, surfaceRoot().dataset.feedbackItemRemovedMessage ?? 'Removed from bag');
+			void mutate('remove', { key }, surfaceRoot().dataset.feedbackItemRemovedMessage ?? CART_FEEDBACK.itemRemovedMessage, {
+				type: 'close',
+			});
 		}
 	});
 
@@ -141,20 +242,23 @@ export function mount(root: HTMLElement): void {
 		const next = Math.max(0, Number(target.value || '0'));
 		target.value = String(next);
 		if (next === 0) {
-			void mutate('remove', { key }, surfaceRoot().dataset.feedbackItemRemovedMessage ?? 'Removed from bag');
+			void mutate('remove', { key }, surfaceRoot().dataset.feedbackItemRemovedMessage ?? CART_FEEDBACK.itemRemovedMessage, {
+				type: 'close',
+			});
 			return;
 		}
-		void mutate('update', { key, quantity: next }, surfaceRoot().dataset.feedbackItemUpdatedMessage ?? 'Bag updated');
+		void mutate('update', { key, quantity: next }, surfaceRoot().dataset.feedbackItemUpdatedMessage ?? CART_FEEDBACK.itemUpdatedMessage, {
+			type: 'qty',
+			key,
+		});
 	});
 
 	root.addEventListener('keydown', (event) => {
+		trapFocus(event);
+
 		if (event.key === 'Escape') {
 			event.preventDefault();
 			close();
 		}
-	});
-
-	on(document, 'ts:cart:updated', () => {
-		void refresh().catch(() => {});
 	});
 }

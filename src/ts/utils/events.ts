@@ -49,12 +49,6 @@ export type CommerceQtyChangeDetail = {
 	root: HTMLElement;
 };
 
-export type CommerceCartUpdatedDetail = {
-	source: 'wc-jquery' | 'manual';
-	fragments?: Record<string, string>;
-	cartHash?: string;
-};
-
 export type CommerceVariationChangedDetail = {
 	variation: Record<string, unknown> | null;
 	productId: number;
@@ -63,7 +57,6 @@ export type CommerceVariationChangedDetail = {
 
 export type CommerceEventMap = {
 	'ts:qty:change': CommerceQtyChangeDetail;
-	'ts:cart:updated': CommerceCartUpdatedDetail;
 	'ts:variation:changed': CommerceVariationChangedDetail;
 };
 

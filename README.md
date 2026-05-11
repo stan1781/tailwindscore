@@ -1,8 +1,8 @@
 # TailwindScore
 
-TailwindScore is a WordPress theme framework for WooCommerce builds that want classic PHP rendering, a modern front-end toolchain, and a stricter design system.
+TailwindScore is a premium WooCommerce theme built around classic PHP rendering, progressive enhancement, and a lightweight front-end toolchain.
 
-It is built around three ideas:
+It is currently being reduced from a framework-shaped codebase toward a smaller long-term theme architecture built around three ideas:
 
 - PHP SSR first for templates and commerce truth
 - Tailwind token-driven styling for consistent theming
@@ -15,7 +15,7 @@ It is built around three ideas:
 - Tailwind CSS v4 token and component layers
 - Vite build pipeline for CSS, icons, and TypeScript modules
 - Progressive front-end behavior for product, archive, cart, checkout, account, and search surfaces
-- Documentation-first project structure under `docs/`
+- A reduced canonical docs surface under `docs/`
 
 ## Stack
 
@@ -129,12 +129,13 @@ Most of the detailed project thinking lives in [`docs/`](./docs/), including:
 
 ## Contributing
 
-This repository is currently structured like a product framework rather than a generic starter. If you extend it, try to preserve the existing patterns:
+This repository is being simplified toward a maintainable WooCommerce theme. If you extend it, preserve the reduction direction:
 
 - keep PHP responsibilities in `inc/` and `template-parts/`
-- keep styling token-driven
+- keep styling token-driven where it remains useful
 - use TypeScript for enhancement layers, not rendering ownership
-- update docs when architectural rules change
+- reduce abstraction when it does not provide real product value
+- update the root-level docs when architectural rules change
 
 ## License
 
