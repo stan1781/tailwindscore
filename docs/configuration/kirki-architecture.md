@@ -1,50 +1,23 @@
 # Kirki Architecture
 
-TailwindScore uses Kirki as a governed Customizer registration layer, not as a freeform theme designer.
+## Transport Matrix
 
-## Foundation Shape
+| Transport Stage | Input | Output | Authority |
+| --- | --- | --- | --- |
+| Customizer registration | Kirki / Customizer field | governed setting id | local implementation reference only |
+| sanitization | governed setting | whitelisted value | code path |
+| SSR resolver | sanitized value | CSS variable or content output | runtime implementation |
+| preset binding | preset selector | bounded profile | `docs/presets/preset-boundaries.md` |
+| content binding | surface control | registry-backed output | `docs/content-surfaces/content-surface-rules.md` |
 
-The foundation lives in `inc/configuration/kirki/`:
+## Control Family Index
 
-- `bootstrap.php`
-- `panels.php`
-- `sections.php`
-- `fields/`
-- `transport/`
-- `sanitizers/`
-- `presets/`
-- `content-surfaces/`
+| API | Scope | Compatibility Rule |
+| --- | --- | --- |
+| `tailwindscore_register_token_control()` | token profiles | preset-compatible only |
+| `tailwindscore_register_preset_control()` | preset selection | one selector, no template forks |
+| `tailwindscore_register_content_surface_control()` | registry-backed content | localization and SSR-safe only |
 
-Every module is loaded through `inc/bootstrap.php` and resolved on the server.
+## Lifecycle
 
-## Runtime Contract
-
-The configuration pipeline is:
-
-`Kirki / Customizer -> governed setting -> sanitizer -> SSR resolver -> CSS variable or content surface output`
-
-No client-only preview layer is required for correctness.
-
-## Control Families
-
-Only three registration APIs may create fields:
-
-- `tailwindscore_register_token_control()`
-- `tailwindscore_register_preset_control()`
-- `tailwindscore_register_content_surface_control()`
-
-Each control must declare:
-
-- governance owner
-- sanitize callback
-- transport boundary
-- preset compatibility
-- localization strategy
-
-## Preset First
-
-Preset selection is the primary configuration decision.
-
-Token controls are bounded profile selectors that layer on top of the active preset.
-
-Content surface controls only expose registry-backed surfaces already covered by content mood governance.
+This file is implementation reference only. It does not define governance authority.

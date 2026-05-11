@@ -127,6 +127,32 @@ const CONFIGURATION_ALLOWED_KIRKI_ROOT = 'inc/configuration/kirki/';
 const CONFIGURATION_APPROVED_INLINE_STYLE_FILES = new Set(['inc/presets/loader.php']);
 const CONFIGURATION_SCAN_ROOTS = ['functions.php', 'inc'];
 const CONFIGURATION_TRANSPORT_ROOTS = ['inc/configuration', 'inc/presets'];
+const PRESET_RUNTIME_REGISTRY_PATH = 'inc/presets/registry.php';
+const PRESET_METADATA_REGISTRY_PATH = 'inc/presets/metadata/registry.php';
+const CONTENT_MOOD_REGISTRY_PATH = 'inc/content-moods/registry.php';
+const KIRKI_PANELS_PATH = 'inc/configuration/kirki/panels.php';
+const KIRKI_SECTIONS_PATH = 'inc/configuration/kirki/sections.php';
+const PRESET_METADATA_REQUIRED_KEYS = [
+	'visual_identity',
+	'commerce_rhythm',
+	'density_profile',
+	'motion_personality',
+	'mood_family',
+	'shell_language',
+	'content_pacing',
+	'capability_matrix',
+	'governance_boundary',
+	'localization_posture',
+];
+const IA_SECTION_EXPECTATIONS = [
+	{ sectionId: 'tailwindscore_preset_foundation', titleIncludes: 'Design Language' },
+	{ sectionId: 'tailwindscore_token_foundation', titleIncludes: 'Design Language' },
+	{ sectionId: 'tailwindscore_checkout_content', titleIncludes: 'Commerce Experience' },
+	{ sectionId: 'tailwindscore_account_content', titleIncludes: 'Commerce Experience' },
+	{ sectionId: 'tailwindscore_site_shell_content', titleIncludes: 'Content Surfaces' },
+	{ sectionId: 'tailwindscore_search_content', titleIncludes: 'Content Surfaces' },
+];
+const LEGACY_IA_LABELS = ['Colors', 'Typography', 'Header', 'Footer'];
 
 function normalizeWhitespace(value) {
 	return value.replace(/\s+/g, ' ').trim();
@@ -134,6 +160,14 @@ function normalizeWhitespace(value) {
 
 function read(relativePath) {
 	return readFileSync(path.join(ROOT, relativePath), 'utf8');
+}
+
+function readIfExists(relativePath) {
+	if (!existsSync(path.join(ROOT, relativePath))) {
+		return '';
+	}
+
+	return read(relativePath);
 }
 
 function walk(relativePath) {
@@ -161,6 +195,48 @@ function walk(relativePath) {
 
 function unique(values) {
 	return [...new Set(values)];
+}
+
+function extractTopLevelArrayBlocks(content) {
+	const matches = [...content.matchAll(/^\t\t'([a-z0-9\-_]+)'\s*=>\s*array\(/gm)];
+	const blocks = {};
+
+	for (let index = 0; index < matches.length; index += 1) {
+		const match = matches[index];
+		const start = match.index ?? 0;
+		const end = index + 1 < matches.length ? matches[index + 1].index ?? content.length : content.length;
+		blocks[match[1]] = content.slice(start, end);
+	}
+
+	return blocks;
+}
+
+function extractBetween(content, startMarker, endMarker) {
+	const start = content.indexOf(startMarker);
+	if (start < 0) {
+		return '';
+	}
+
+	const end = content.indexOf(endMarker, start);
+	if (end < 0) {
+		return content.slice(start);
+	}
+
+	return content.slice(start, end);
+}
+
+function extractSingleQuotedValue(block, key) {
+	const match = block.match(new RegExp(`'${key}'\\s*=>\\s*'([^']+)'`));
+	return match ? match[1] : '';
+}
+
+function extractStringArray(block, key) {
+	const match = block.match(new RegExp(`'${key}'\\s*=>\\s*array\\(([\\s\\S]*?)\\)\\s*,`, 'm'));
+	if (!match) {
+		return [];
+	}
+
+	return [...match[1].matchAll(/'([^']+)'/g)].map((item) => item[1]);
 }
 
 function compareSeverity(left, right) {
@@ -656,6 +732,224 @@ function collectConfigurationFindings() {
 		}
 	}
 
+	const presetRuntimeContent = readIfExists(PRESET_RUNTIME_REGISTRY_PATH);
+	const presetMetadataContent = readIfExists(PRESET_METADATA_REGISTRY_PATH);
+	const contentMoodContent = readIfExists(CONTENT_MOOD_REGISTRY_PATH);
+	const presetRuntimeBlocks = extractTopLevelArrayBlocks(
+		extractBetween(presetRuntimeContent, '$presets = array(', 'return apply_filters( \'tailwindscore/presets/registry\''),
+	);
+	const presetMetadataBlocks = extractTopLevelArrayBlocks(
+		extractBetween(presetMetadataContent, '$presets = array(', 'return apply_filters( \'tailwindscore/presets/personality_registry\''),
+	);
+	const moodBlocks = extractTopLevelArrayBlocks(
+		extractBetween(contentMoodContent, '$moods = array(', 'return apply_filters( \'tailwindscore/content_moods/registry\''),
+	);
+	const panelContent = readIfExists(KIRKI_PANELS_PATH);
+	const sectionContent = readIfExists(KIRKI_SECTIONS_PATH);
+	const sectionBlocks = extractTopLevelArrayBlocks(sectionContent);
+	const missingPresetMetadata = [];
+	const stalePresetMetadata = [];
+	const presetsMissingLocalizationPosture = [];
+	const presetSurfaceMismatches = [];
+	let alignedPresetCount = 0;
+
+	for (const presetKey of Object.keys(presetRuntimeBlocks)) {
+		const runtimeBlock = presetRuntimeBlocks[presetKey];
+		const metadataBlock = presetMetadataBlocks[presetKey] ?? '';
+
+		if (!metadataBlock) {
+			missingPresetMetadata.push(presetKey);
+			findings.push({
+				severity: 'critical',
+				surface: 'configuration',
+				governanceOwner: 'Preset governance',
+				trustCritical: false,
+				runtimeInline: false,
+				duplicateFallback: false,
+				value: `Preset personality metadata missing for ${presetKey}`,
+				file: PRESET_METADATA_REGISTRY_PATH,
+				line: 1,
+			});
+			continue;
+		}
+
+		let metadataComplete = true;
+
+		for (const requiredKey of PRESET_METADATA_REQUIRED_KEYS) {
+			if (!metadataBlock.includes(`'${requiredKey}'`)) {
+				metadataComplete = false;
+				findings.push({
+					severity: 'warning',
+					surface: 'configuration',
+					governanceOwner: 'Preset governance',
+					trustCritical: false,
+					runtimeInline: false,
+					duplicateFallback: false,
+					value: `Preset personality metadata missing required key ${requiredKey} for ${presetKey}`,
+					file: PRESET_METADATA_REGISTRY_PATH,
+					line: lineAt(readIfExists(PRESET_METADATA_REGISTRY_PATH), presetKey),
+				});
+			}
+		}
+
+		if (!metadataBlock.includes("'template_branching'  => 'prohibited'")) {
+			findings.push({
+				severity: 'critical',
+				surface: 'configuration',
+				governanceOwner: 'Preset governance',
+				trustCritical: false,
+				runtimeInline: false,
+				duplicateFallback: false,
+				value: `Preset governance boundary must prohibit template branching for ${presetKey}`,
+				file: PRESET_METADATA_REGISTRY_PATH,
+				line: lineAt(readIfExists(PRESET_METADATA_REGISTRY_PATH), presetKey),
+			});
+		}
+
+		if (!metadataBlock.includes("'localization_posture'")) {
+			presetsMissingLocalizationPosture.push(presetKey);
+		}
+
+		const moodKey = extractSingleQuotedValue(runtimeBlock, 'mood_key');
+		const runtimeSurfaces = extractStringArray(runtimeBlock, 'supported_surfaces');
+		const moodBlock = moodBlocks[moodKey] ?? '';
+
+		if (!moodBlock) {
+			findings.push({
+				severity: 'critical',
+				surface: 'configuration',
+				governanceOwner: 'Localization governance',
+				trustCritical: false,
+				runtimeInline: false,
+				duplicateFallback: false,
+				value: `Preset ${presetKey} maps to missing content mood ${moodKey || 'unknown'}`,
+				file: PRESET_RUNTIME_REGISTRY_PATH,
+				line: lineAt(readIfExists(PRESET_RUNTIME_REGISTRY_PATH), presetKey),
+			});
+		} else {
+			const moodSurfaces = extractStringArray(moodBlock, 'supported_surfaces');
+			const unsupportedRuntimeSurfaces = runtimeSurfaces.filter((surface) => !moodSurfaces.includes(surface));
+
+			if (unsupportedRuntimeSurfaces.length > 0) {
+				presetSurfaceMismatches.push({
+					presetKey,
+					moodKey,
+					unsupportedRuntimeSurfaces,
+				});
+				findings.push({
+					severity: 'warning',
+					surface: 'configuration',
+					governanceOwner: 'Localization governance',
+					trustCritical: false,
+					runtimeInline: false,
+					duplicateFallback: false,
+					value: `Preset ${presetKey} uses surfaces unsupported by mood ${moodKey}: ${unsupportedRuntimeSurfaces.join(', ')}`,
+					file: PRESET_RUNTIME_REGISTRY_PATH,
+					line: lineAt(readIfExists(PRESET_RUNTIME_REGISTRY_PATH), presetKey),
+				});
+			}
+		}
+
+		if (metadataComplete) {
+			alignedPresetCount += 1;
+		}
+	}
+
+	for (const presetKey of Object.keys(presetMetadataBlocks)) {
+		if (!presetRuntimeBlocks[presetKey]) {
+			stalePresetMetadata.push(presetKey);
+			findings.push({
+				severity: 'warning',
+				surface: 'configuration',
+				governanceOwner: 'Preset governance',
+				trustCritical: false,
+				runtimeInline: false,
+				duplicateFallback: false,
+				value: `Preset personality metadata exists without runtime preset ${presetKey}`,
+				file: PRESET_METADATA_REGISTRY_PATH,
+				line: lineAt(readIfExists(PRESET_METADATA_REGISTRY_PATH), presetKey),
+			});
+		}
+	}
+
+	const panelAligned = panelContent.includes('Commerce Configuration') && panelContent.includes('design language, commerce experience, content surfaces, and governance visibility');
+	if (!panelAligned) {
+		findings.push({
+			severity: 'warning',
+			surface: 'configuration',
+			governanceOwner: 'Theme configuration governance',
+			trustCritical: false,
+			runtimeInline: false,
+			duplicateFallback: false,
+			value: 'Configuration panel language has drifted from governance IA',
+			file: KIRKI_PANELS_PATH,
+			line: 1,
+		});
+	}
+
+	let alignedSections = 0;
+	let invalidGroupingCount = 0;
+
+	for (const expectation of IA_SECTION_EXPECTATIONS) {
+		const block = sectionBlocks[expectation.sectionId] ?? '';
+		if (!block || !block.includes(expectation.titleIncludes)) {
+			invalidGroupingCount += 1;
+			findings.push({
+				severity: 'warning',
+				surface: 'configuration',
+				governanceOwner: 'Theme configuration governance',
+				trustCritical: false,
+				runtimeInline: false,
+				duplicateFallback: false,
+				value: `Admin IA drift detected for ${expectation.sectionId}; expected ${expectation.titleIncludes}`,
+				file: KIRKI_SECTIONS_PATH,
+				line: lineAt(sectionContent, expectation.sectionId),
+			});
+		} else {
+			alignedSections += 1;
+		}
+	}
+
+	for (const legacyLabel of LEGACY_IA_LABELS) {
+		if (panelContent.includes(`'${legacyLabel}'`) || sectionContent.includes(`'${legacyLabel}'`)) {
+			invalidGroupingCount += 1;
+			findings.push({
+				severity: 'warning',
+				surface: 'configuration',
+				governanceOwner: 'Theme configuration governance',
+				trustCritical: false,
+				runtimeInline: false,
+				duplicateFallback: false,
+				value: `Legacy configuration grouping label detected: ${legacyLabel}`,
+				file: panelContent.includes(`'${legacyLabel}'`) ? KIRKI_PANELS_PATH : KIRKI_SECTIONS_PATH,
+				line: panelContent.includes(`'${legacyLabel}'`) ? lineAt(panelContent, legacyLabel) : lineAt(sectionContent, legacyLabel),
+			});
+		}
+	}
+
+	const summary = {
+		presetCompatibility: {
+			runtimePresetCount: Object.keys(presetRuntimeBlocks).length,
+			metadataPresetCount: Object.keys(presetMetadataBlocks).length,
+			alignedPresetCount,
+			missingMetadataPresets: missingPresetMetadata,
+			staleMetadataPresets: stalePresetMetadata,
+			surfaceMismatchCount: presetSurfaceMismatches.length,
+		},
+		localizationCoverage: {
+			presetCount: Object.keys(presetRuntimeBlocks).length,
+			presetsMissingLocalizationPosture,
+			moodMappingsChecked: Object.keys(presetRuntimeBlocks).length,
+			mismatchedMoodMappings: presetSurfaceMismatches.map((item) => item.presetKey),
+		},
+		adminIADrift: {
+			panelAligned,
+			alignedSections,
+			totalSections: IA_SECTION_EXPECTATIONS.length,
+			driftCount: invalidGroupingCount,
+		},
+	};
+
 	return {
 		findings: findings.sort((left, right) => compareSeverity(left.severity, right.severity) || left.file.localeCompare(right.file) || left.line - right.line),
 		coverage: [
@@ -675,6 +969,7 @@ function collectConfigurationFindings() {
 			},
 		],
 		scannedFiles,
+		summary,
 	};
 }
 
@@ -686,6 +981,27 @@ function buildReport() {
 	);
 	const baseline = loadBaseline();
 	const baselineResult = applyBaselineToFindings(combinedFindings, baseline.entries);
+	const governedRows = [...collected.coverage, ...configuration.coverage];
+	const governedSurfaceCoverage = {
+		total: governedRows.length,
+		governed: governedRows.filter((row) => row.status === 'governed').length,
+		mixed: governedRows.filter((row) => row.status === 'mixed').length,
+		unguarded: governedRows.filter((row) => row.status === 'unguarded').length,
+	};
+	const criticalLeakCount = baselineResult.deltaFindings.filter((finding) => finding.severity === 'critical').length;
+	const runtimeAlignmentHealth = {
+		status: configuration.findings.some((finding) => finding.runtimeInline || finding.severity === 'critical') ? 'attention' : 'aligned',
+		runtimeInlineFindings: configuration.findings.filter((finding) => finding.runtimeInline).length,
+		criticalConfigurationFindings: configuration.findings.filter((finding) => finding.severity === 'critical').length,
+	};
+	const governanceDashboard = {
+		governedSurfaceCoverage,
+		criticalLeakCount,
+		presetCompatibility: configuration.summary.presetCompatibility,
+		localizationCoverage: configuration.summary.localizationCoverage,
+		runtimeAlignmentHealth,
+		adminIADrift: configuration.summary.adminIADrift,
+	};
 
 	return {
 		report: {
@@ -699,7 +1015,11 @@ function buildReport() {
 		deltaSeveritySummary: summarizeSeverity(baselineResult.deltaFindings),
 		deltaSummary: summarizeDelta(baselineResult.deltaFindings),
 		baselineSummary: summarizeBaseline(baselineResult.matchedBaseline, baseline.entries, baselineResult.unmatchedBaselineEntries),
-		coverage: [...collected.coverage, ...configuration.coverage],
+		coverage: governedRows,
+		presetCompatibility: configuration.summary.presetCompatibility,
+		localizationCoverage: configuration.summary.localizationCoverage,
+		adminIADrift: configuration.summary.adminIADrift,
+		governanceDashboard,
 		findings: baselineResult.deltaFindings,
 		rawFindings: baselineResult.rawFindings,
 		matchedBaselineFindings: baselineResult.matchedBaseline,

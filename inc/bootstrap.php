@@ -18,6 +18,7 @@ require_once TAILWINDSCORE_PATH . 'inc/configuration/kirki/bootstrap.php';
 require_once TAILWINDSCORE_PATH . 'inc/content-moods/registry.php';
 require_once TAILWINDSCORE_PATH . 'inc/content-surfaces/sanitizers.php';
 require_once TAILWINDSCORE_PATH . 'inc/content-surfaces/registry.php';
+require_once TAILWINDSCORE_PATH . 'inc/presets/metadata/registry.php';
 require_once TAILWINDSCORE_PATH . 'inc/presets/registry.php';
 require_once TAILWINDSCORE_PATH . 'inc/presets/loader.php';
 require_once TAILWINDSCORE_PATH . 'inc/account/helpers.php';

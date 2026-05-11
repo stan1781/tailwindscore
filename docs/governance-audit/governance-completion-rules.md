@@ -1,26 +1,38 @@
 # Governance Completion Rules
 
-A surface family is only considered governance-complete for its current phase when it satisfies all of the following:
+## Completion Criteria Matrix
 
-## Completion Criteria
+| Check | Complete When | Incomplete When |
+| --- | --- | --- |
+| trust leakage | no critical leakage remains | critical trust copy remains hardcoded |
+| SSR/runtime alignment | runtime inherits governed values | runtime bypasses SSR governance |
+| registry-first copy | reassurance/support copy is registry-backed | template-local copy replaces governed path |
+| mood-safe fallback | tonal fallback is active where needed | preset or mood semantics are replaced locally |
+| localization safety | localization-safe output is maintained | wording depends on ad hoc local phrasing |
 
-- no critical trust leakage remains open
-- runtime and SSR output are aligned
-- customer-facing reassurance and support copy are registry-first
-- mood-safe fallback is active where tonal surfaces require fallback
-- localization-safe output is maintained
+## Lifecycle Table
 
-## Completion Notes
+| Lifecycle State | Meaning |
+| --- | --- |
+| in progress | one or more completion checks still fail |
+| operationally complete | all checks pass for the current phase |
+| deferred | known issue remains outside the current reduction scope |
+| archived | historical completion record only |
 
-- `registry-first` does not require every structural label to be governed in the same phase
-- `mood-safe fallback` matters most on reassurance, support, helper, and discovery guidance surfaces
-- `runtime + SSR alignment` means runtime messages must inherit governed values rather than introducing parallel defaults
+## Governance Status Map
 
-## Non-completion Signals
+| Status | Trigger |
+| --- | --- |
+| complete | all completion criteria pass |
+| mixed | partial governance remains |
+| deferred | issue is tracked but out of current scope |
+| non-complete | trust, fallback, or localization path still bypasses governance |
 
-A surface family is not complete if any of the following remains true:
+## Escalation Table
 
-- critical trust copy is still hardcoded
-- runtime behavior uses local fallback strings that bypass SSR governance
-- preset or mood semantics are replaced by template-local copy
-- localization safety depends on ad hoc wording instead of the governed surface pipeline
+| Condition | Escalation Target |
+| --- | --- |
+| trust-critical leakage remains | canonical workflow and active phase |
+| runtime bypass remains | runtime boundaries plus canonical workflow |
+| localization path is ad hoc | localization clarification |
+| duplicate fallback remains | debt tracking or next consolidation pass |

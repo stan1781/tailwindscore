@@ -1,32 +1,57 @@
-# Governance Audit
+# Governance Audit Reference
 
-TailwindScore governance audit exists to support long-term enforcement, not to create more abstract layers.
+## Directory Status
 
-The current documentation set covers:
+| Field | Value |
+| --- | --- |
+| authority status | non-canonical |
+| lifecycle | operational / historical reference |
+| AI default | excluded |
+| migration targets | `docs/governance/`, `docs/reference/`, `docs/archive/` |
 
-- audit strategy
-- enforcement status
-- coverage tracking
-- severity and trust classification
-- language philosophy
-- closure and debt lifecycle
-- automation preparation and detection architecture
-- governance-native development workflow
+## Canonical Redirect
 
-## Documents
+| Concern | Canonical Owner | Governance Audit Role |
+| --- | --- | --- |
+| active governance workflow | `docs/governance/workflow.md` | no authority |
+| documentation rules | `docs/governance/documentation-rules.md` | no authority |
+| documentation health | `docs/governance/documentation-health.md` | no authority |
+| AI entry boundary | `docs/AI-ENTRY.md` | no authority |
+| historical evidence | `docs/archive/` | archive target |
 
-- `audit-strategy.md`
-- `enforcement-report.md`
-- `coverage-matrix.md`
-- `governance-resolution-tracking.md`
-- `governance-debt-tracking.md`
-- `governance-completion-rules.md`
-- `hardcoded-string-detection.md`
-- `fallback-duplication-rules.md`
-- `severity-levels.md`
-- `language-philosophy-enforcement.md`
-- `trust-critical-surfaces.md`
-- `tone-leakage-prevention.md`
-- `automation-foundation.md`
-- `baseline-system.md`
-- `development-workflow.md`
+## Reduction Map
+
+| Legacy Cluster | Files | End State |
+| --- | --- | --- |
+| audit strategy | `audit-strategy.md`, `coverage-matrix.md` | optional reference |
+| historical enforcement | `enforcement-report.md` | archived |
+| governance debt | `governance-debt-tracking.md`, `governance-resolution-tracking.md`, `governance-completion-rules.md` | optional reference |
+| detection and automation | `automation-foundation.md`, `hardcoded-string-detection.md`, `fallback-duplication-rules.md` | secondary reference |
+| trust and language policy | `severity-levels.md`, `language-philosophy-enforcement.md`, `tone-leakage-prevention.md`, `trust-critical-surfaces.md` | secondary reference |
+| workflow overlap | `development-workflow.md` | operational-only redirect |
+| reporting | `baseline-system.md`, `governance-dashboard.md` | operational-only |
+
+## File Classification
+
+| File | Classification | Lifecycle Status |
+| --- | --- | --- |
+| `development-workflow.md` | operational-only | retained as redirect/example index |
+| `governance-completion-rules.md` | optional reference | retained as compact status map |
+| `governance-dashboard.md` | operational-only | retained as reporting contract |
+| `baseline-system.md` | operational-only | retained as reporting support |
+| `audit-strategy.md`, `coverage-matrix.md` | optional reference | retained until archive split phase |
+| `enforcement-report.md` | archive-only | removed from active directory |
+| remaining files | optional reference | secondary audit lookup only |
+
+## Canonical Redirect
+
+- workflow authority: `docs/governance/workflow.md`
+- lifecycle and gate authority: `docs/governance/documentation-rules.md`
+- system health authority: `docs/governance/documentation-health.md`
+- canonical ownership map: `docs/core/canonical-sources.md`
+
+## AI Warning
+
+Do not load `docs/governance-audit/` in the default AI context.
+
+Read this directory only when the canonical source map points to a named file for historical or secondary reference.

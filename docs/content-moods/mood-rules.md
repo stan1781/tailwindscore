@@ -1,21 +1,35 @@
 # Mood Rules
 
-TailwindScore 的 content mood 是 registry-driven mood governance。
+## Mood Ownership Matrix
 
-每个 mood 必须包含：
+| Mood Concern | Required Field / Rule | Canonical Owner |
+| --- | --- | --- |
+| identity | `key`, `label`, `description` | local reference only |
+| supported usage | `supported surfaces` | `docs/content-surfaces/content-surface-rules.md` |
+| tone constraints | `tone rules` | local reference only |
+| fallback | `fallback behavior` | content governance |
+| localization | `localization compatibility` | localization reference |
 
-- `key`
-- `label`
-- `description`
-- `supported surfaces`
-- `tone rules`
-- `fallback behavior`
-- `localization compatibility`
+## Tone Compatibility Map
 
-禁止：
+| Allowed Tone Traits | Prohibited Tone Traits |
+| --- | --- |
+| calm | pushy |
+| assured | slang-heavy |
+| legible across locales | novelty-first |
+| commercially useful without pressure | AI-assistant-like |
+| premium without self-importance | overexcited |
 
-- freeform copy systems
-- AI copy generation
-- uncontrolled marketing language
+## Supported Surface Table
 
-Content mood 的职责是约束 tone，不是开放任意写作入口。
+| Surface Family | Mood Governance Status |
+| --- | --- |
+| announcement language | supported |
+| trust messaging | supported |
+| empty states | supported |
+| support messaging | supported |
+| newsletter prompts | supported |
+| footer messaging | supported |
+| checkout reassurance | supported |
+| account messaging | supported |
+| search guidance | supported |

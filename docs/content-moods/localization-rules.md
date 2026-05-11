@@ -1,26 +1,11 @@
 # Localization Rules
 
-Content mood 必须 localization-safe。
+## Localization Matrix
 
-要求：
-
-- tone survives translation
-- SSR-safe rendering
-- no locale-fragile phrasing
-- no slang-heavy language
-
-## Writing Implications
-
-优先：
-
-- short sentences
-- literal commerce wording
-- globally understandable reassurance
-- low-idiom phrasing
-
-避免：
-
-- puns
-- hype slang
-- region-specific urgency cues
-- AI-like friendliness patterns
+| Requirement | Allowed | Avoid |
+| --- | --- | --- |
+| translation durability | tone survives translation | locale-fragile phrasing |
+| rendering path | SSR-safe wording | client-only tone shifts |
+| wording style | short sentences, literal commerce wording | puns, hype slang |
+| reassurance style | globally understandable reassurance | region-specific urgency cues |
+| voice consistency | low-idiom phrasing | AI-like friendliness patterns |

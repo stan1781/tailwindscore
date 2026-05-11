@@ -1,26 +1,20 @@
 # Preset Mood Mapping
 
-Preset 可以映射 content mood，但不能任意切换文案人格。
+## Preset Mapping Table
 
-允许：
+| Preset | Mood | Allowed Mapping Scope |
+| --- | --- | --- |
+| `minimal-editorial` | `editorial` | supported tone surfaces only |
+| `premium-dtc` | `premium-commerce` | supported tone surfaces only |
+| `soft-luxury` | `assured` | supported tone surfaces only |
+| `modern-lifestyle` | `confident` | supported tone surfaces only |
+| `dark-commerce` | `dramatic` | supported tone surfaces only |
 
-- mapped content mood
-- supported tone surfaces
-- tone intensity
-- commerce language pacing
+## Mapping Rules
 
-禁止：
-
-- arbitrary copy switching
-- unrelated brand personalities
-- inconsistent tone systems
-
-## Current Mapping Direction
-
-- `minimal-editorial` -> `editorial`
-- `premium-dtc` -> `premium-commerce`
-- `soft-luxury` -> `assured`
-- `modern-lifestyle` -> `confident`
-- `dark-commerce` -> `dramatic`
-
-运行时上，preset 只提供 mood mapping；具体 surface fallback 仍通过 content mood registry 统一治理。
+| Allowed | Prohibited |
+| --- | --- |
+| mapped content mood | arbitrary copy switching |
+| supported tone surfaces | unrelated brand personalities |
+| tone intensity | inconsistent tone systems |
+| commerce language pacing | preset-specific copy forks |

@@ -1,6 +1,10 @@
 # Cursor Governance Protocol
 
-Applies to Cursor and any AI-assisted implementation inside TailwindScore.
+This file is a secondary AI reference.
+
+Read `docs/AI-ENTRY.md`, `docs/ai/system-constitution.md`, and `docs/ai/governance-prompt-rules.md` first for the active AI workflow boundary.
+
+Applies to Cursor and any AI-assisted implementation inside TailwindScore once the active documentation boundary has been loaded.
 
 The goal is governance-native generation, not post-hoc governance cleanup.
 

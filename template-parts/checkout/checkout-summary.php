@@ -8,13 +8,15 @@
 declare(strict_types=1);
 
 defined( 'ABSPATH' ) || exit;
+
+$surface_copy = tailwindscore_checkout_surface_copy();
 ?>
 <section class="ts-checkout-summary woocommerce-checkout-review-order-table" data-ts-module="checkout-summary" data-checkout-summary>
 	<p class="ts-checkout-summary__header">
-		<?php esc_html_e( 'Items in your order', 'tailwindscore' ); ?>
+		<?php echo esc_html( $surface_copy['summary_heading'] ?? '' ); ?>
 		<span data-checkout-summary-count aria-hidden="true"><?php echo esc_html( (string) count( WC()->cart->get_cart() ) ); ?></span>
 	</p>
-	<p class="ts-checkout-summary__note"><?php echo esc_html( tailwindscore_checkout_surface_copy()['summary_note'] ?? '' ); ?></p>
+	<p class="ts-checkout-summary__note"><?php echo esc_html( $surface_copy['summary_note'] ?? '' ); ?></p>
 
 	<table class="ts-checkout-summary__table shop_table woocommerce-checkout-review-order-table">
 		<thead>

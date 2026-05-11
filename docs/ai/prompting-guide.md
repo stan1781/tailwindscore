@@ -1,8 +1,10 @@
 # Governance-aware Prompting Guide
 
-Use this guide when prompting Cursor, ChatGPT, or another coding assistant for TailwindScore work.
+This file is a secondary prompt reference.
 
-The goal is prevention-first governance.
+The active prompt contract now starts with `docs/AI-ENTRY.md`, `docs/ai/system-constitution.md`, and `docs/ai/governance-prompt-rules.md`.
+
+Use this guide when you need extra examples after the active AI boundary has been loaded.
 
 ## Base Prompt Template
 

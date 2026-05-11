@@ -15,8 +15,8 @@ defined( 'ABSPATH' ) || exit;
 function tailwindscore_kirki_panels(): array {
 	return array(
 		'tailwindscore_theme_configuration' => array(
-			'title'       => __( 'Theme Configuration', 'tailwindscore' ),
-			'description' => __( 'SSR-first, preset-driven, registry-governed configuration for premium commerce surfaces.', 'tailwindscore' ),
+			'title'       => __( 'Commerce Configuration', 'tailwindscore' ),
+			'description' => __( 'Preset-governed configuration for design language, commerce experience, content surfaces, and governance visibility.', 'tailwindscore' ),
 			'priority'    => 160,
 		),
 	);

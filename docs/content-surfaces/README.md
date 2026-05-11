@@ -1,12 +1,20 @@
 # Content Surfaces
 
-`content surfaces` 是 TailwindScore 对主题文案与结构化内容的统一治理层。
+## Status
 
-它们不是 scattered theme options，也不是插件式设置页。
+Reference directory with one canonical file and frozen supporting narrative.
 
-## Scope
+## Canonical Replacement
 
-统一管理：
+- canonical source for content governance: `docs/content-surfaces/content-surface-rules.md`
+
+## AI Warning
+
+Do not load the whole `docs/content-surfaces/` directory in default AI context.
+
+If content governance is required, read `content-surface-rules.md` first and stop unless more detail is needed.
+
+## Reference Scope
 
 - announcement content
 - trust messaging
@@ -22,5 +30,3 @@
 - runtime registry: `inc/content-surfaces/registry.php`
 - sanitizer layer: `inc/content-surfaces/sanitizers.php`
 - governance rules: `content-surface-rules.md`
-
-任何新文案设置都应先判断它是不是一个 content surface。

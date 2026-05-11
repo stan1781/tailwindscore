@@ -1,44 +1,23 @@
 # Kirki Governance
 
-Kirki is allowed only as a thin governed adapter.
+## Governance Boundary Table
 
-## Required Rules
+| Rule Area | Allowed | Prohibited |
+| --- | --- | --- |
+| field registration | TailwindScore governance APIs | direct freeform Kirki field usage outside governed area |
+| control scope | token, preset, content surface | arbitrary visual controls, giant settings trees |
+| transport | SSR-aligned server path | client-only transport |
 
-All Kirki fields must be registered through the TailwindScore governance APIs.
+## Ownership Declaration
 
-Direct usage such as:
+| Field Owner | Meaning |
+| --- | --- |
+| `design_tokens` | bounded token profiles |
+| `preset_governance` | preset selection and compatibility |
+| `content_surfaces` | registry-backed messaging surfaces |
 
-- `Kirki::add_field()`
-- `new \Kirki\Field\...`
+## SSR Alignment Index
 
-is prohibited outside `inc/configuration/kirki/`.
-
-## Boundary Rules
-
-- No giant settings file
-- No arbitrary visual controls
-- No raw color pickers
-- No spacing sliders
-- No radius sliders
-- No preset-specific templates
-- No client-only transport
-
-## Ownership Rules
-
-Every field must name its governance owner:
-
-- `design_tokens`
-- `preset_governance`
-- `content_surfaces`
-
-If a field cannot be assigned to one of those layers, it should not ship.
-
-## SSR Alignment
-
-Kirki values must resolve through the same SSR path used by non-Customizer requests.
-
-That means:
-
-- presets resolve through `inc/presets/loader.php`
-- token overrides emit only whitelisted `--ts-*` variables
-- content surfaces resolve through `inc/content-surfaces/registry.php`
+- presets -> `inc/presets/loader.php`
+- token overrides -> whitelisted `--ts-*` variables
+- content surfaces -> `inc/content-surfaces/registry.php`

@@ -12,6 +12,7 @@ declare(strict_types=1);
 defined( 'ABSPATH' ) || exit;
 
 $copy     = tailwindscore_feedback_empty_state_copy( 'checkout-unavailable' );
+$surface  = tailwindscore_checkout_surface_copy();
 $headline = is_string( $args['headline'] ?? null ) ? $args['headline'] : ( $copy['title'] ?? '' );
 $message  = is_string( $args['message'] ?? null ) ? $args['message'] : ( $copy['message'] ?? '' );
 $cta_url  = function_exists( 'wc_get_cart_url' ) ? wc_get_cart_url() : home_url( '/cart/' );
@@ -23,6 +24,6 @@ $cta_url  = function_exists( 'wc_get_cart_url' ) ? wc_get_cart_url() : home_url(
 		<p class="ts-checkout-shell__intro"><?php echo esc_html( $message ); ?></p>
 	</header>
 	<div>
-		<a class="ts-btn ts-btn--primary" href="<?php echo esc_url( $cta_url ); ?>"><?php esc_html_e( 'Return to bag', 'tailwindscore' ); ?></a>
+		<a class="ts-btn ts-btn--primary" href="<?php echo esc_url( $cta_url ); ?>"><?php echo esc_html( $surface['empty_cta_label'] ?? '' ); ?></a>
 	</div>
 </section>
