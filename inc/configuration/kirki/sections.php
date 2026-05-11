@@ -32,23 +32,11 @@ function tailwindscore_kirki_sections(): array {
 			'panel'       => 'tailwindscore_theme_configuration',
 			'priority'    => 30,
 		),
-		'tailwindscore_checkout_content'  => array(
-			'title'       => __( 'Commerce Experience - Checkout Guidance', 'tailwindscore' ),
-			'description' => __( 'Registry-backed reassurance surfaces for purchase-critical moments, resolved SSR-first for the active preset.', 'tailwindscore' ),
-			'panel'       => 'tailwindscore_theme_configuration',
-			'priority'    => 40,
-		),
 		'tailwindscore_account_content'   => array(
 			'title'       => __( 'Commerce Experience - Account Guidance', 'tailwindscore' ),
 			'description' => __( 'Post-purchase surfaces remain mood-aware, localization-safe, and aligned with governed commerce tone.', 'tailwindscore' ),
 			'panel'       => 'tailwindscore_theme_configuration',
 			'priority'    => 50,
-		),
-		'tailwindscore_search_content'    => array(
-			'title'       => __( 'Content Surfaces - Discovery Guidance', 'tailwindscore' ),
-			'description' => __( 'Discovery guidance remains SSR-safe, preset-compatible, and consistent with active content mood governance.', 'tailwindscore' ),
-			'panel'       => 'tailwindscore_theme_configuration',
-			'priority'    => 60,
 		),
 	);
 }

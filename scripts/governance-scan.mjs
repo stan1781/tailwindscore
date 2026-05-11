@@ -147,10 +147,8 @@ const PRESET_METADATA_REQUIRED_KEYS = [
 const IA_SECTION_EXPECTATIONS = [
 	{ sectionId: 'tailwindscore_preset_foundation', titleIncludes: 'Design Language' },
 	{ sectionId: 'tailwindscore_token_foundation', titleIncludes: 'Design Language' },
-	{ sectionId: 'tailwindscore_checkout_content', titleIncludes: 'Commerce Experience' },
 	{ sectionId: 'tailwindscore_account_content', titleIncludes: 'Commerce Experience' },
 	{ sectionId: 'tailwindscore_site_shell_content', titleIncludes: 'Content Surfaces' },
-	{ sectionId: 'tailwindscore_search_content', titleIncludes: 'Content Surfaces' },
 ];
 const LEGACY_IA_LABELS = ['Colors', 'Typography', 'Header', 'Footer'];
 
