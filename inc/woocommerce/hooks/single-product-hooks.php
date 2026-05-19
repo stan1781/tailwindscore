@@ -172,7 +172,7 @@ function tailwindscore_render_single_product_summary_add_to_cart(): void {
  * Open the summary lead stack: title, rating, and price.
  */
 function tailwindscore_pdp_commerce_open_summary_lead(): void {
-	if ( ! apply_filters( 'tailwindscore/pdp/commerce-experience', true ) ) {
+	if ( ! tailwindscore_pdp_commerce_experience() ) {
 		return;
 	}
 
@@ -183,7 +183,7 @@ function tailwindscore_pdp_commerce_open_summary_lead(): void {
  * Close the summary lead stack before the excerpt.
  */
 function tailwindscore_pdp_commerce_close_summary_lead(): void {
-	if ( ! apply_filters( 'tailwindscore/pdp/commerce-experience', true ) ) {
+	if ( ! tailwindscore_pdp_commerce_experience() ) {
 		return;
 	}
 
@@ -194,7 +194,7 @@ function tailwindscore_pdp_commerce_close_summary_lead(): void {
  * Open the purchase region around add-to-cart output.
  */
 function tailwindscore_pdp_commerce_open_purchase_region(): void {
-	if ( ! apply_filters( 'tailwindscore/pdp/commerce-experience', true ) ) {
+	if ( ! tailwindscore_pdp_commerce_experience() ) {
 		return;
 	}
 
@@ -205,7 +205,7 @@ function tailwindscore_pdp_commerce_open_purchase_region(): void {
  * Close the purchase region after add-to-cart output.
  */
 function tailwindscore_pdp_commerce_close_purchase_region(): void {
-	if ( ! apply_filters( 'tailwindscore/pdp/commerce-experience', true ) ) {
+	if ( ! tailwindscore_pdp_commerce_experience() ) {
 		return;
 	}
 
@@ -348,7 +348,7 @@ function tailwindscore_product_gallery_runtime_props( $product ): array {
 add_filter(
 	'tailwindscore/pdp/sticky-summary-column',
 	static function ( bool $enabled ): bool {
-		if ( ! apply_filters( 'tailwindscore/pdp/commerce-experience', true ) ) {
+		if ( ! tailwindscore_pdp_commerce_experience() ) {
 			return $enabled;
 		}
 
@@ -408,7 +408,7 @@ add_action(
 add_action(
 	'woocommerce_init',
 	static function (): void {
-		if ( ! apply_filters( 'tailwindscore/pdp/use-section-layout', true ) ) {
+		if ( ! tailwindscore_pdp_use_section_layout() ) {
 			return;
 		}
 
@@ -426,7 +426,7 @@ add_action(
 add_action(
 	'woocommerce_init',
 	static function (): void {
-		if ( ! apply_filters( 'tailwindscore/pdp/commerce-experience', true ) ) {
+		if ( ! tailwindscore_pdp_commerce_experience() ) {
 			return;
 		}
 

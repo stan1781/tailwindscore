@@ -88,16 +88,13 @@ function tailwindscore_cart_surface_endpoint_url(): string {
 }
 
 function tailwindscore_cart_surface_override( string $key ): ?string {
-	$setting_id = 'ts_surface_' . str_replace( '-', '_', $key );
-	$value      = get_theme_mod( $setting_id, null );
+	$value = tailwindscore_content_surface_text( $key );
 
 	return is_string( $value ) && '' !== trim( $value ) ? $value : null;
 }
 
 function tailwindscore_cart_copy_text( string $key, string $default = '' ): string {
-	$override = tailwindscore_cart_surface_override( $key );
-
-	return null !== $override ? $override : $default;
+	return tailwindscore_content_surface_text( $key, $default );
 }
 
 function tailwindscore_cart_rest_error_message( string $key ): string {

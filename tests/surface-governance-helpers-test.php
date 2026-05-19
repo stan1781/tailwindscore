@@ -33,6 +33,10 @@ function add_filter( string $hook, $callback, int $priority = 10, int $accepted_
 	unset( $hook, $callback, $priority, $accepted_args );
 }
 
+function add_action( string $hook, $callback, int $priority = 10, int $accepted_args = 1 ): void {
+	unset( $hook, $callback, $priority, $accepted_args );
+}
+
 function get_option( string $name, $default = null ) {
 	unset( $name );
 	return $default;
@@ -77,14 +81,12 @@ function tailwindscore_adapter_product_rating_aggregate_props( WC_Product $produ
 	);
 }
 
-require_once __DIR__ . '/../inc/checkout/helpers.php';
-require_once __DIR__ . '/../inc/account/helpers.php';
-require_once __DIR__ . '/../inc/search/helpers.php';
-require_once __DIR__ . '/../inc/woocommerce/hooks/review-experience.php';
+require_once __DIR__ . '/../inc/woocommerce/checkout.php';
+require_once __DIR__ . '/../inc/woocommerce/account.php';
+require_once __DIR__ . '/../inc/woocommerce/search.php';
 
 $checkout_copy = tailwindscore_checkout_surface_copy();
 $search_copy   = tailwindscore_search_surface_copy();
-$review_copy   = tailwindscore_review_surface_copy();
 
 $GLOBALS['ts_test_endpoint'] = 'dashboard';
 
@@ -101,9 +103,8 @@ $account_copy                = tailwindscore_account_surface_copy();
 
 $required = array(
 	'checkout' => array( $checkout_copy, array( 'empty_cta_label', 'summary_heading' ) ),
-	'account'  => array( $account_copy, array( 'secondary_action_label', 'empty_address_message' ) ),
-	'search'   => array( $search_copy, array( 'default_title', 'search_placeholder' ) ),
-	'reviews'  => array( $review_copy, array( 'review_title', 'form_intro', 'cookies_consent_label' ) ),
+	'account'  => array( $account_copy, array( 'eyebrow', 'title', 'intro' ) ),
+	'search'   => array( $search_copy, array( 'eyebrow', 'title', 'recent_searches_guidance', 'predictive_empty_message' ) ),
 );
 
 foreach ( $required as $family => $definition ) {

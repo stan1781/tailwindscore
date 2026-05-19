@@ -58,14 +58,7 @@ function tailwindscore_account_current_endpoint(): string {
  * @return array{eyebrow:string,title:string,intro:string}
  */
 function tailwindscore_account_copy_text( string $key, string $default = '' ): string {
-	$setting_id = 'ts_surface_' . str_replace( '-', '_', $key );
-	$value      = get_theme_mod( $setting_id, null );
-
-	if ( is_string( $value ) && '' !== trim( $value ) ) {
-		return $value;
-	}
-
-	return $default;
+	return tailwindscore_content_surface_text( $key, $default );
 }
 
 /**

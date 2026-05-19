@@ -16,6 +16,8 @@ require_once __DIR__ . '/panels.php';
 require_once __DIR__ . '/sections.php';
 require_once __DIR__ . '/presets/registry.php';
 require_once __DIR__ . '/presets/controls.php';
+require_once __DIR__ . '/behaviors/registry.php';
+require_once __DIR__ . '/behaviors/controls.php';
 require_once __DIR__ . '/content-surfaces/registry.php';
 require_once __DIR__ . '/content-surfaces/controls.php';
 require_once __DIR__ . '/fields/token-controls.php';
@@ -32,6 +34,7 @@ function tailwindscore_kirki_register_foundation_controls(): void {
 
 	tailwindscore_kirki_register_preset_controls();
 	tailwindscore_kirki_register_token_controls();
+	tailwindscore_kirki_register_behavior_controls();
 	tailwindscore_kirki_register_content_surface_controls();
 
 	$registered = true;

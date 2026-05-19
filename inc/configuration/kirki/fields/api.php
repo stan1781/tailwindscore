@@ -41,6 +41,7 @@ function tailwindscore_kirki_control_store(): array {
 	static $store = array(
 		'token'           => array(),
 		'preset'          => array(),
+		'behavior'        => array(),
 		'content_surface' => array(),
 	);
 
@@ -175,6 +176,23 @@ function tailwindscore_register_preset_control( array $args ): void {
 
 	$store             = tailwindscore_kirki_get_control_store();
 	$store['preset'][] = $normalized;
+	tailwindscore_kirki_set_control_store( $store );
+}
+
+/**
+ * Register a governed behavior control.
+ *
+ * @param array<string, mixed> $args Behavior control definition.
+ */
+function tailwindscore_register_behavior_control( array $args ): void {
+	$normalized = tailwindscore_kirki_normalize_control_args( 'behavior', $args );
+
+	if ( array() === $normalized ) {
+		return;
+	}
+
+	$store               = tailwindscore_kirki_get_control_store();
+	$store['behavior'][] = $normalized;
 	tailwindscore_kirki_set_control_store( $store );
 }
 

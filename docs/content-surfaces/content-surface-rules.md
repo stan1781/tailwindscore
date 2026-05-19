@@ -1,6 +1,6 @@
 # Content Surface Rules
 
-TailwindScore uses a registry-first content surface model instead of scattered text options.
+TailwindScore uses a registry-first content surface model instead of scattered text options or Kirki-authored copy fields.
 
 ## 1. Required Surface Contract
 
@@ -23,6 +23,7 @@ The registry exists to:
 - prevent the same meaning from appearing in multiple editing paths
 - give SSR, runtime, and docs one canonical key
 - keep customization transport separate from content governance
+- keep template copy authority in PHP registry definitions
 
 ## 3. Surface Types
 
@@ -55,7 +56,7 @@ Customization entries should describe:
 - section
 - control type
 
-They are transport metadata, not UI architecture.
+They are transport metadata, not UI architecture or the source of truth for copy.
 
 ## 6. Empty State Governance
 
@@ -82,3 +83,4 @@ When implementing a new customer-facing surface:
 - decide whether runtime will consume the same value through SSR
 - do not duplicate fallback logic in template and runtime
 - do not add trust or support copy locally when a governed family already exists
+- do not introduce new Kirki copy controls when a registry key can own the language

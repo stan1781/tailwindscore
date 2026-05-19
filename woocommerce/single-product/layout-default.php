@@ -12,15 +12,15 @@ declare(strict_types=1);
 
 defined( 'ABSPATH' ) || exit;
 
-$use_section_layout = apply_filters( 'tailwindscore/pdp/use-section-layout', true );
+$use_section_layout = tailwindscore_pdp_use_section_layout();
 
 $grid_classes = array( 'ts-pdp__grid', 'ts-pdp__grid--split' );
 
-if ( apply_filters( 'tailwindscore/pdp/sticky-gallery-column', true ) ) {
+if ( tailwindscore_pdp_sticky_gallery_column() ) {
 	$grid_classes[] = 'ts-pdp__grid--sticky-gallery';
 }
 
-if ( apply_filters( 'tailwindscore/pdp/sticky-summary-column', false ) ) {
+if ( tailwindscore_pdp_sticky_summary_column() ) {
 	$grid_classes[] = 'ts-pdp__grid--sticky-summary';
 }
 

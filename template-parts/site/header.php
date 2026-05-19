@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 defined( 'ABSPATH' ) || exit;
 
-$is_sticky      = (bool) apply_filters( 'tailwindscore/site_shell/header/is_sticky', true );
-$is_transparent = (bool) apply_filters( 'tailwindscore/site_shell/header/is_transparent', is_front_page() );
+$is_sticky      = tailwindscore_site_header_is_sticky();
+$is_transparent = tailwindscore_site_header_is_transparent( is_front_page() );
 $header_classes = array( 'ts-site-header' );
 
 if ( $is_sticky ) {

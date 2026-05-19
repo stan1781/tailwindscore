@@ -24,7 +24,7 @@ if ( post_password_required() ) {
 
 do_action( 'woocommerce_before_single_product' );
 
-$use_section_layout = apply_filters( 'tailwindscore/pdp/use-section-layout', true );
+$use_section_layout = tailwindscore_pdp_use_section_layout();
 
 ?>
 <div id="product-<?php the_ID(); ?>" <?php wc_product_class( 'ts-pdp', $product ); ?>>

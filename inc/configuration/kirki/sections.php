@@ -26,17 +26,23 @@ function tailwindscore_kirki_sections(): array {
 			'panel'       => 'tailwindscore_theme_configuration',
 			'priority'    => 20,
 		),
-		'tailwindscore_site_shell_content' => array(
-			'title'       => __( 'Content Surfaces - Site Shell Language', 'tailwindscore' ),
-			'description' => __( 'Governed announcement, footer, and support surfaces aligned to the active commerce personality.', 'tailwindscore' ),
+		'tailwindscore_commerce_behavior_foundation' => array(
+			'title'       => __( 'Commerce Experience - Template Behaviors', 'tailwindscore' ),
+			'description' => __( 'Bounded PDP and site shell runtime behaviors. Use these controls for feature posture, not copy authoring.', 'tailwindscore' ),
 			'panel'       => 'tailwindscore_theme_configuration',
 			'priority'    => 30,
 		),
+		'tailwindscore_site_shell_content' => array(
+			'title'       => __( 'Content Surfaces - Site Shell Language', 'tailwindscore' ),
+			'description' => __( 'Registry-owned content surfaces are documented here for governance visibility. Copy authority remains in PHP surface definitions.', 'tailwindscore' ),
+			'panel'       => 'tailwindscore_theme_configuration',
+			'priority'    => 40,
+		),
 		'tailwindscore_account_content'   => array(
 			'title'       => __( 'Commerce Experience - Account Guidance', 'tailwindscore' ),
-			'description' => __( 'Post-purchase surfaces remain mood-aware, localization-safe, and aligned with governed commerce tone.', 'tailwindscore' ),
+			'description' => __( 'Account content surfaces remain registry-first and localization-safe. Kirki no longer authors this copy family.', 'tailwindscore' ),
 			'panel'       => 'tailwindscore_theme_configuration',
-			'priority'    => 50,
+			'priority'    => 60,
 		),
 	);
 }

@@ -92,23 +92,14 @@ function tailwindscore_search_featured_categories(): array {
  * @return array<string, string>
  */
 function tailwindscore_search_copy_text( string $key, string $default = '' ): string {
-	$setting_id = 'ts_surface_' . str_replace( '-', '_', $key );
-	$value      = get_theme_mod( $setting_id, null );
-
-	if ( is_string( $value ) && '' !== trim( $value ) ) {
-		return $value;
-	}
-
-	if ( '' !== $default ) {
-		return $default;
-	}
-
 	$defaults = array(
 		'search-recent-searches-guidance-message' => 'Recent searches remain nearby so returning to a product path feels immediate and quiet.',
 		'search-predictive-empty-message'         => 'Try a broader product name or continue through a collection path.',
 	);
 
-	return $defaults[ $key ] ?? '';
+	$fallback = '' !== $default ? $default : ( $defaults[ $key ] ?? '' );
+
+	return tailwindscore_content_surface_text( $key, $fallback );
 }
 
 /**

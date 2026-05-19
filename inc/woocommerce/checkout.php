@@ -41,14 +41,9 @@ function tailwindscore_checkout_copy_text( string $key, string $default = '' ): 
 		'checkout-loading-message'           => 'Updating checkout',
 	);
 
-	$setting_id = 'ts_surface_' . str_replace( '-', '_', $key );
-	$value      = get_theme_mod( $setting_id, null );
+	$fallback = '' !== $default ? $default : ( $defaults[ $key ] ?? '' );
 
-	if ( is_string( $value ) && '' !== trim( $value ) ) {
-		return $value;
-	}
-
-	return $default !== '' ? $default : ( $defaults[ $key ] ?? '' );
+	return tailwindscore_content_surface_text( $key, $fallback );
 }
 
 /**
