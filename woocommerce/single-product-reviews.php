@@ -18,13 +18,14 @@ if ( ! comments_open() ) {
 $reviewers  = $product instanceof WC_Product ? (int) $product->get_review_count() : 0;
 $average    = $product instanceof WC_Product ? (float) $product->get_average_rating() : 0.0;
 $empty_copy = tailwindscore_feedback_empty_state_copy( 'reviews' );
+$review_copy = tailwindscore_review_surface_copy();
 ?>
 <div id="reviews" class="ts-reviews" data-ts-module="account-focus">
 	<header class="ts-reviews__header">
 		<p class="ts-reviews__eyebrow"><?php echo esc_html( $empty_copy['eyebrow'] ?? '' ); ?></p>
 		<div class="ts-reviews__heading">
-			<h2 class="ts-reviews__title"><?php esc_html_e( 'Customer reviews', 'tailwindscore' ); ?></h2>
-			<p class="ts-reviews__intro"><?php esc_html_e( 'Measured notes from customers, arranged with the same quiet hierarchy as the rest of the product story.', 'tailwindscore' ); ?></p>
+			<h2 class="ts-reviews__title"><?php echo esc_html( (string) ( $review_copy['title'] ?? '' ) ); ?></h2>
+			<p class="ts-reviews__intro"><?php echo esc_html( (string) ( $review_copy['intro'] ?? '' ) ); ?></p>
 		</div>
 		<div class="ts-reviews__summary">
 			<?php if ( wc_review_ratings_enabled() ) : ?>
@@ -75,7 +76,7 @@ $empty_copy = tailwindscore_feedback_empty_state_copy( 'reviews' );
 				</ol>
 
 				<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : ?>
-					<nav class="ts-reviews__pagination" aria-label="<?php esc_attr_e( 'Reviews pagination', 'tailwindscore' ); ?>">
+					<nav class="ts-reviews__pagination" aria-label="<?php echo esc_attr( (string) ( $review_copy['pagination_label'] ?? '' ) ); ?>">
 						<?php paginate_comments_links(); ?>
 					</nav>
 				<?php endif; ?>
@@ -106,10 +107,10 @@ $empty_copy = tailwindscore_feedback_empty_state_copy( 'reviews' );
 						'empty-state',
 						array(
 							'icon_name'    => 'user',
-							'eyebrow'      => __( 'Review access', 'tailwindscore' ),
-							'title'        => __( 'Purchase required to review', 'tailwindscore' ),
-							'message'      => __( 'Only customers who have purchased this item can leave a review, which keeps the conversation grounded in ownership.', 'tailwindscore' ),
-							'actions_html' => ! is_user_logged_in() ? sprintf( '<a class="ts-btn ts-btn--secondary ts-btn--sm" href="%s">%s</a>', esc_url( wc_get_page_permalink( 'myaccount' ) ), esc_html__( 'Sign in', 'tailwindscore' ) ) : '',
+							'eyebrow'      => $review_copy['access_eyebrow'] ?? '',
+							'title'        => $review_copy['access_title'] ?? '',
+							'message'      => $review_copy['access_message'] ?? '',
+							'actions_html' => ! is_user_logged_in() ? sprintf( '<a class="ts-btn ts-btn--secondary ts-btn--sm" href="%s">%s</a>', esc_url( wc_get_page_permalink( 'myaccount' ) ), esc_html( (string) ( $review_copy['access_sign_in_label'] ?? '' ) ) ) : '',
 						)
 					);
 					?>

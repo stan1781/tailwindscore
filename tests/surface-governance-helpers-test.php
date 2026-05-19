@@ -62,6 +62,10 @@ function wc_review_ratings_enabled(): bool {
 	return false;
 }
 
+function wc_review_ratings_required(): bool {
+	return false;
+}
+
 function wp_get_current_commenter(): array {
 	return array();
 }
@@ -83,9 +87,14 @@ function tailwindscore_adapter_product_rating_aggregate_props( WC_Product $produ
 
 require_once __DIR__ . '/../inc/woocommerce/checkout.php';
 require_once __DIR__ . '/../inc/woocommerce/account.php';
+require_once __DIR__ . '/../inc/woocommerce/cart.php';
+require_once __DIR__ . '/../inc/woocommerce/hooks/review-experience.php';
 require_once __DIR__ . '/../inc/woocommerce/search.php';
 
 $checkout_copy = tailwindscore_checkout_surface_copy();
+$cart_copy     = function_exists( 'tailwindscore_cart_summary_copy' ) ? tailwindscore_cart_summary_copy() : array();
+$account_order_detail_copy = function_exists( 'tailwindscore_account_order_detail_copy' ) ? tailwindscore_account_order_detail_copy() : array();
+$reviews_copy  = function_exists( 'tailwindscore_review_surface_copy' ) ? tailwindscore_review_surface_copy() : array();
 $search_copy   = tailwindscore_search_surface_copy();
 
 $GLOBALS['ts_test_endpoint'] = 'dashboard';
@@ -102,7 +111,10 @@ $GLOBALS['ts_test_endpoint'] = 'edit-account';
 $account_copy                = tailwindscore_account_surface_copy();
 
 $required = array(
-	'checkout' => array( $checkout_copy, array( 'empty_cta_label', 'summary_heading' ) ),
+	'checkout' => array( $checkout_copy, array( 'empty_cta_label', 'summary_heading', 'payment_unavailable_message', 'payment_billing_required_message', 'payment_not_needed_message', 'noscript_update_message', 'update_totals_label' ) ),
+	'cart'     => array( $cart_copy, array( 'subtotal_label', 'summary_note', 'checkout_label', 'view_cart_label' ) ),
+	'account-order-detail' => array( $account_order_detail_copy, array( 'items_heading', 'quantity_format', 'delivery_heading', 'shipping_method_label', 'no_shipping_method', 'shipping_address_label', 'no_shipping_address', 'payment_heading', 'payment_method_label', 'payment_method_pending', 'billing_address_label', 'no_billing_address' ) ),
+	'reviews'  => array( $reviews_copy, array( 'title', 'intro', 'pagination_label', 'access_eyebrow', 'access_title', 'access_message', 'access_sign_in_label', 'form_title', 'form_title_reply_to', 'form_intro', 'form_submit_label', 'form_rating_label', 'form_rating_label_optional', 'form_rating_placeholder', 'form_rating_option_5', 'form_rating_option_4', 'form_rating_option_3', 'form_rating_option_2', 'form_rating_option_1', 'form_review_label', 'form_name_label', 'form_email_label', 'cookies_consent', 'verified_owner_label' ) ),
 	'account'  => array( $account_copy, array( 'eyebrow', 'title', 'intro' ) ),
 	'search'   => array( $search_copy, array( 'eyebrow', 'title', 'recent_searches_guidance', 'predictive_empty_message' ) ),
 );

@@ -53,7 +53,10 @@ $copy               = tailwindscore_checkout_surface_copy();
 				}
 			} else {
 				echo '<li>';
-				wc_print_notice( apply_filters( 'woocommerce_no_available_payment_methods_message', WC()->customer->get_billing_country() ? esc_html( tailwindscore_content_surface_text( 'support-message', __( 'No payment methods are available for this order. Please review your details or contact us for help.', 'tailwindscore' ) ) ) : esc_html( __( 'Enter your billing details to view available payment methods.', 'tailwindscore' ) ) ), 'notice' );
+				$message = WC()->customer->get_billing_country()
+					? (string) ( $copy['payment_unavailable_message'] ?? '' )
+					: (string) ( $copy['payment_billing_required_message'] ?? '' );
+				wc_print_notice( apply_filters( 'woocommerce_no_available_payment_methods_message', esc_html( $message ) ), 'notice' );
 				echo '</li>';
 			}
 			?>
@@ -61,19 +64,19 @@ $copy               = tailwindscore_checkout_surface_copy();
 	<?php endif; ?>
 
 	<?php if ( ! WC()->cart || ! WC()->cart->needs_payment() ) : ?>
-		<p class="ts-checkout-payment__empty"><?php esc_html_e( 'No payment is needed for this order.', 'tailwindscore' ); ?></p>
+		<p class="ts-checkout-payment__empty"><?php echo esc_html( (string) ( $copy['payment_not_needed_message'] ?? '' ) ); ?></p>
 	<?php endif; ?>
 
 	<div class="form-row place-order">
 		<noscript>
 			<?php
 			printf(
-				esc_html__( 'Because your browser does not support JavaScript, totals may update only after you confirm with the %s button.', 'tailwindscore' ),
-				esc_html__( 'Update totals', 'tailwindscore' )
+				esc_html( (string) ( $copy['noscript_update_message'] ?? '' ) ),
+				esc_html( (string) ( $copy['update_totals_label'] ?? '' ) )
 			);
 			?>
 			<br />
-			<button type="submit" class="button alt" name="woocommerce_checkout_update_totals" value="<?php esc_attr_e( 'Update totals', 'tailwindscore' ); ?>"><?php esc_html_e( 'Update totals', 'tailwindscore' ); ?></button>
+			<button type="submit" class="button alt" name="woocommerce_checkout_update_totals" value="<?php echo esc_attr( (string) ( $copy['update_totals_label'] ?? '' ) ); ?>"><?php echo esc_html( (string) ( $copy['update_totals_label'] ?? '' ) ); ?></button>
 		</noscript>
 
 		<?php wc_get_template( 'checkout/terms.php' ); ?>

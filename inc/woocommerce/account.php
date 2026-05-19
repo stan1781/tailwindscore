@@ -132,6 +132,26 @@ function tailwindscore_account_recovery_copy(): array {
 }
 
 /**
+ * @return array<string, string>
+ */
+function tailwindscore_account_order_detail_copy(): array {
+	return array(
+		'items_heading'         => tailwindscore_account_surface_text( 'account-order-detail-items-heading', __( 'Items', 'tailwindscore' ) ),
+		'quantity_format'       => tailwindscore_account_surface_text( 'account-order-detail-quantity-format', __( 'Quantity %d', 'tailwindscore' ) ),
+		'delivery_heading'      => tailwindscore_account_surface_text( 'account-order-detail-delivery-heading', __( 'Delivery', 'tailwindscore' ) ),
+		'shipping_method_label' => tailwindscore_account_surface_text( 'account-order-detail-shipping-method-label', __( 'Shipping method', 'tailwindscore' ) ),
+		'no_shipping_method'    => tailwindscore_account_surface_text( 'account-order-detail-no-shipping-method', __( 'No shipping required', 'tailwindscore' ) ),
+		'shipping_address_label' => tailwindscore_account_surface_text( 'account-order-detail-shipping-address-label', __( 'Shipping address', 'tailwindscore' ) ),
+		'no_shipping_address'   => tailwindscore_account_surface_text( 'account-order-detail-no-shipping-address', __( 'No shipping address provided.', 'tailwindscore' ) ),
+		'payment_heading'       => tailwindscore_account_surface_text( 'account-order-detail-payment-heading', __( 'Payment', 'tailwindscore' ) ),
+		'payment_method_label'  => tailwindscore_account_surface_text( 'account-order-detail-payment-method-label', __( 'Method', 'tailwindscore' ) ),
+		'payment_method_pending' => tailwindscore_account_surface_text( 'account-order-detail-payment-method-pending', __( 'To be confirmed', 'tailwindscore' ) ),
+		'billing_address_label' => tailwindscore_account_surface_text( 'account-order-detail-billing-address-label', __( 'Billing address', 'tailwindscore' ) ),
+		'no_billing_address'    => tailwindscore_account_surface_text( 'account-order-detail-no-billing-address', __( 'No billing address provided.', 'tailwindscore' ) ),
+	);
+}
+
+/**
  * @return array<int, array<string, string>>
  */
 function tailwindscore_account_dashboard_cards(): array {

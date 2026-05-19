@@ -97,6 +97,18 @@ function tailwindscore_cart_copy_text( string $key, string $default = '' ): stri
 	return tailwindscore_content_surface_text( $key, $default );
 }
 
+/**
+ * @return array<string, string>
+ */
+function tailwindscore_cart_summary_copy(): array {
+	return array(
+		'subtotal_label' => tailwindscore_cart_copy_text( 'cart-summary-subtotal-label', __( 'Subtotal', 'tailwindscore' ) ),
+		'summary_note'   => tailwindscore_cart_copy_text( 'cart-summary-note', __( 'Shipping and taxes calculated at checkout.', 'tailwindscore' ) ),
+		'checkout_label' => tailwindscore_cart_copy_text( 'cart-summary-checkout-label', __( 'Checkout', 'tailwindscore' ) ),
+		'view_cart_label' => tailwindscore_cart_copy_text( 'cart-summary-view-cart-label', __( 'View cart', 'tailwindscore' ) ),
+	);
+}
+
 function tailwindscore_cart_rest_error_message( string $key ): string {
 	$messages = array(
 		'cart_unavailable'   => tailwindscore_cart_copy_text( 'cart-drawer-update-error-message', __( 'We could not update the bag just now. Please try again.', 'tailwindscore' ) ),
@@ -263,6 +275,7 @@ function tailwindscore_cart_surface_payload(): array {
 		'cart_url'      => (string) $cart_url,
 		'checkout_url'  => (string) $checkout_url,
 		'shop_url'      => (string) $shop_url,
+		'summary_copy'  => tailwindscore_cart_summary_copy(),
 		'is_empty'      => 0 === $count,
 	);
 }

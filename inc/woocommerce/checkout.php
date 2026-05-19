@@ -37,8 +37,13 @@ function tailwindscore_checkout_copy_text( string $key, string $default = '' ): 
 		'checkout-payment-guidance-message'  => 'Choose a payment method and complete the order with one clear confirmation.',
 		'checkout-mobile-summary-message'    => 'Shipping, taxes, and discounts stay visible before purchase completion.',
 		'checkout-validation-title'          => 'Please review your checkout details',
-		'checkout-validation-summary-message'=> 'Please review the highlighted checkout details.',
+		'checkout-validation-summary-message' => 'Please review the highlighted checkout details.',
 		'checkout-loading-message'           => 'Updating checkout',
+		'checkout-payment-unavailable-message' => 'No payment methods are available for this order. Please review your details or contact us for help.',
+		'checkout-payment-billing-required-message' => 'Enter your billing details to view available payment methods.',
+		'checkout-payment-not-needed-message' => 'No payment is needed for this order.',
+		'checkout-noscript-update-message'   => 'Because your browser does not support JavaScript, totals may update only after you confirm with the %s button.',
+		'checkout-update-totals-label'       => 'Update totals',
 	);
 
 	$fallback = '' !== $default ? $default : ( $defaults[ $key ] ?? '' );
@@ -62,6 +67,11 @@ function tailwindscore_checkout_surface_copy(): array {
 		'review_intro'       => tailwindscore_checkout_copy_text( 'checkout-payment-guidance-message' ),
 		'summary_note'       => tailwindscore_checkout_copy_text( 'checkout-mobile-summary-message' ),
 		'payment_intro'      => tailwindscore_checkout_copy_text( 'checkout-payment-guidance-message' ),
+		'payment_unavailable_message' => tailwindscore_checkout_copy_text( 'checkout-payment-unavailable-message' ),
+		'payment_billing_required_message' => tailwindscore_checkout_copy_text( 'checkout-payment-billing-required-message' ),
+		'payment_not_needed_message' => tailwindscore_checkout_copy_text( 'checkout-payment-not-needed-message' ),
+		'noscript_update_message' => tailwindscore_checkout_copy_text( 'checkout-noscript-update-message' ),
+		'update_totals_label' => tailwindscore_checkout_copy_text( 'checkout-update-totals-label' ),
 		'validation_title'   => tailwindscore_checkout_copy_text( 'checkout-validation-title' ),
 		'validation_summary' => tailwindscore_checkout_copy_text( 'checkout-validation-summary-message' ),
 		'loading_message'    => tailwindscore_checkout_copy_text( 'checkout-loading-message' ),

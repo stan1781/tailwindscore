@@ -12,13 +12,7 @@ Use when tone-bearing copy still sits outside the registry path.
 
 Current items:
 
-- `template-parts/cart-surface/cart-summary.php`
-- `template-parts/checkout/checkout-payment.php`
-
-Why debt exists:
-
-- the main trust-critical path is already enforced
-- the remaining lines are secondary helper copy, not active critical leakage
+- none in the current checkout/cart pass
 
 Removal strategy:
 
@@ -30,11 +24,11 @@ Use when customer-facing copy still relies on inline output and has only partial
 
 Current items:
 
-- `woocommerce/single-product-reviews.php`
+- none in the current reviews pass
 
 Why debt exists:
 
-- review access messaging is known but outside the current closure scope
+- review access and form messaging now resolve through the registry path; revisit only if a new review helper surface reintroduces inline governed copy
 
 Removal strategy:
 
@@ -46,11 +40,11 @@ Use when a runtime-connected surface still depends on local copy for part of its
 
 Current items:
 
-- `template-parts/cart-surface/cart-summary.php`
+- none in the current checkout/cart pass
 
 Why debt exists:
 
-- cart drawer trust language is now governed, but summary note and actions are still local
+- cart drawer trust language is now governed; revisit this class only when another runtime-connected local helper surface appears
 
 Removal strategy:
 
@@ -62,11 +56,11 @@ Use when acceptable wording exists in more than one place and has not yet been c
 
 Current items:
 
-- `template-parts/account/order-detail.php`
+- none in the current account order-detail pass
 
 Why debt exists:
 
-- fallback wording is stable enough for now, but it is not centrally governed
+- fallback wording for this surface is now centrally governed; revisit this class only when another account helper fallback remains outside the registry path
 
 Removal strategy:
 
