@@ -319,11 +319,20 @@ function tailwindscore_cart_surface_fragments(): array {
  */
 function tailwindscore_cart_surface_copy(): array {
 	return array(
-		'validation_title' => tailwindscore_cart_copy_text( 'cart-drawer-validation-title', __( 'Please review your bag', 'tailwindscore' ) ),
-		'loading_message'  => tailwindscore_cart_copy_text( 'cart-drawer-loading-message', __( 'Updating bag', 'tailwindscore' ) ),
-		'update_error'     => tailwindscore_cart_copy_text( 'cart-drawer-update-error-message', __( 'We could not update the bag just now. Please try again.', 'tailwindscore' ) ),
-		'item_updated'     => tailwindscore_cart_copy_text( 'cart-drawer-item-updated-message', __( 'Bag updated', 'tailwindscore' ) ),
-		'item_removed'     => tailwindscore_cart_copy_text( 'cart-drawer-item-removed-message', __( 'Removed from bag', 'tailwindscore' ) ),
+		'line_item_subtotal_label' => tailwindscore_cart_copy_text( 'cart-line-item-subtotal-label', __( 'Subtotal', 'tailwindscore' ) ),
+		'validation_title'         => tailwindscore_cart_copy_text( 'add-to-cart-validation-title', __( 'Please review this selection', 'tailwindscore' ) ),
+		'loading_message'          => tailwindscore_cart_copy_text( 'cart-drawer-loading-message', __( 'Updating bag', 'tailwindscore' ) ),
+		'update_error'             => tailwindscore_cart_copy_text( 'cart-drawer-update-error-message', __( 'We could not update the bag just now. Please try again.', 'tailwindscore' ) ),
+		'item_updated'             => tailwindscore_cart_copy_text( 'cart-drawer-item-updated-message', __( 'Bag updated', 'tailwindscore' ) ),
+		'item_removed'             => tailwindscore_cart_copy_text( 'cart-drawer-item-removed-message', __( 'Removed from bag', 'tailwindscore' ) ),
+	);
+}
+
+function tailwindscore_cart_add_to_cart_feedback_overrides(): array {
+	$copy = tailwindscore_cart_surface_copy();
+
+	return array(
+		'validation_title' => (string) ( $copy['validation_title'] ?? '' ),
 	);
 }
 
@@ -409,6 +418,25 @@ add_action(
 		exit;
 	},
 	99
+);
+
+add_action(
+	'wp_enqueue_scripts',
+	static function (): void {
+		$overrides = tailwindscore_cart_add_to_cart_feedback_overrides();
+		$title     = trim( (string) ( $overrides['validation_title'] ?? '' ) );
+
+		if ( '' === $title ) {
+			return;
+		}
+
+		wp_add_inline_script(
+			'tailwindscore-config',
+			'document.documentElement.dataset.feedbackAddToCartValidationTitle=' . wp_json_encode( $title ) . ';',
+			'after'
+		);
+	},
+	30
 );
 
 add_action(

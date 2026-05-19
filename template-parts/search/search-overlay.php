@@ -25,8 +25,8 @@ $copy       = tailwindscore_search_surface_copy();
 	<section class="ts-search-surface__panel" role="dialog" aria-modal="true" aria-labelledby="ts-search-surface-title" data-ts-module="search-focus">
 		<div class="ts-search-surface__header">
 			<div class="ts-search-surface__heading">
-				<p class="ts-search-surface__eyebrow"><?php echo esc_html( $copy['eyebrow'] ?? __( 'Discover', 'tailwindscore' ) ); ?></p>
-				<h2 id="ts-search-surface-title" class="ts-search-surface__title"><?php echo esc_html( $copy['title'] ?? __( 'Search the collection', 'tailwindscore' ) ); ?></h2>
+				<p class="ts-search-surface__eyebrow"><?php echo esc_html( (string) ( $copy['eyebrow'] ?? '' ) ); ?></p>
+				<h2 id="ts-search-surface-title" class="ts-search-surface__title"><?php echo esc_html( (string) ( $copy['title'] ?? '' ) ); ?></h2>
 			</div>
 
 			<button class="ts-search-surface__close ts-icon-button ts-icon-button--utility" type="button" data-search-close>
@@ -42,7 +42,7 @@ $copy       = tailwindscore_search_surface_copy();
 					<span class="ts-search-form__icon ts-commerce-icon ts-commerce-icon--utility" aria-hidden="true">
 						<?php echo tailwindscore_icon( 'search', array( 'class' => 'ts-icon--utility' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					</span>
-					<input id="ts-search-field" class="ts-search-form__input" type="search" name="s" placeholder="<?php esc_attr_e( 'Search products, categories, stories', 'tailwindscore' ); ?>" autocomplete="off" data-search-input>
+					<input id="ts-search-field" class="ts-search-form__input" type="search" name="s" placeholder="<?php echo esc_attr( (string) ( $copy['overlay_placeholder'] ?? '' ) ); ?>" autocomplete="off" data-search-input>
 					<input type="hidden" name="post_type" value="product">
 				</div>
 			</form>

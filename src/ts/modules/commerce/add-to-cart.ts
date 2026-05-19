@@ -5,12 +5,15 @@ import { applyCartFragments, requestCartSurface } from '../cart/cart-state';
 import { clearFeedbackValidation, publishToast, setFeedbackBusyState, setFeedbackValidation } from '../feedback';
 
 const ADD_TO_CART_FEEDBACK = {
-	validationTitle: 'Please review this selection',
 	loadingMessage: 'Adding to bag',
 	successMessage: 'Added to bag',
 	errorMessage: 'We could not update the bag just now. Please try again.',
 	selectionMessage: 'Select an option before adding to bag.',
 } as const;
+
+function resolveValidationTitle(root: HTMLElement): string {
+	return root.dataset.feedbackValidationTitle ?? document.documentElement.dataset.feedbackAddToCartValidationTitle ?? '';
+}
 
 function markButtonsPending(form: HTMLElement, pending: boolean): void {
 	const buttons = form.querySelectorAll<HTMLButtonElement>(
@@ -57,7 +60,7 @@ export function mount(root: HTMLElement): void {
 
 			if (isVariationForm && variationId < 1) {
 				setFeedbackValidation(root, root.dataset.feedbackSelectionMessage ?? ADD_TO_CART_FEEDBACK.selectionMessage, {
-					title: root.dataset.feedbackValidationTitle ?? ADD_TO_CART_FEEDBACK.validationTitle,
+					title: resolveValidationTitle(root),
 				});
 				return;
 			}
@@ -105,7 +108,7 @@ export function mount(root: HTMLElement): void {
 				.catch(() => {
 					const message = root.dataset.feedbackErrorMessage ?? ADD_TO_CART_FEEDBACK.errorMessage;
 					setFeedbackValidation(root, message, {
-						title: root.dataset.feedbackValidationTitle ?? ADD_TO_CART_FEEDBACK.validationTitle,
+						title: resolveValidationTitle(root),
 					});
 					publishToast({ message, tone: 'error' });
 				})

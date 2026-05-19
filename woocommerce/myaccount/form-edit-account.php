@@ -9,13 +9,14 @@ declare(strict_types=1);
 
 defined( 'ABSPATH' ) || exit;
 
-$user = wp_get_current_user();
+$user          = wp_get_current_user();
+$account_copy  = tailwindscore_account_template_copy();
 ?>
 <section class="ts-account-panel ts-account-details">
 	<form class="ts-account-form" action="" method="post">
 		<div class="ts-account-form__header">
 			<h2 class="ts-account-form__title"><?php esc_html_e( 'Personal details', 'tailwindscore' ); ?></h2>
-			<p class="ts-account-form__intro"><?php esc_html_e( 'Keep your customer profile current without leaving the post-purchase flow.', 'tailwindscore' ); ?></p>
+			<p class="ts-account-form__intro"><?php echo esc_html( $account_copy['edit_account_intro'] ); ?></p>
 		</div>
 
 		<div class="ts-account-form__grid ts-account-form__grid--two-up">

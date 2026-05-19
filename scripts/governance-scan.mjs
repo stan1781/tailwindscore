@@ -1,5 +1,6 @@
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 const ROOT = process.cwd();
 const REPORT_DATE = new Date().toISOString().slice(0, 10);
@@ -45,7 +46,7 @@ const SCAN_TARGETS = [
 		trustCritical: false,
 		runtimeCritical: false,
 		roots: ['woocommerce/single-product-reviews.php', 'inc/woocommerce/hooks/review-experience.php'],
-		registrySignals: ['tailwindscore_feedback_empty_state_copy', 'empty-state-reviews-'],
+		registrySignals: ['tailwindscore_feedback_empty_state_copy', 'empty-state-reviews-', 'tailwindscore_content_surface_text'],
 	},
 	{
 		name: 'archive',
@@ -294,6 +295,10 @@ function extractPhpLiterals(content) {
 	}
 
 	return literals;
+}
+
+function isGovernedFallbackLine(line) {
+	return line.includes('tailwindscore_content_surface_text(');
 }
 
 function extractTsLiterals(content) {
@@ -560,7 +565,15 @@ function collectFindings() {
 	const scannedFiles = [];
 
 	for (const surface of SCAN_TARGETS) {
-		const filePaths = unique(surface.roots.flatMap((root) => walk(root)));
+		const filePaths = unique(
+			surface.roots.flatMap((root) => {
+				if (!existsSync(path.join(ROOT, root))) {
+					return [];
+				}
+
+				return walk(root);
+			}),
+		);
 		const surfaceFiles = [];
 		const surfaceFindings = [];
 
@@ -582,6 +595,11 @@ function collectFindings() {
 			for (const literal of unique(literals).filter(isCustomerFacingLiteral)) {
 				const lineNumber = lineAt(content, literal);
 				const line = content.split('\n')[lineNumber - 1] ?? '';
+
+				if (kind === 'php' && isGovernedFallbackLine(line)) {
+					continue;
+				}
+
 				const classification = classifyLiteral(literal, {
 					kind,
 					line,
@@ -1067,12 +1085,16 @@ function printConsoleReport(report, options) {
 	}
 }
 
-const jsonOnly = process.argv.includes('--json');
-const allFindings = process.argv.includes('--all-findings');
-const report = buildReport();
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+	const jsonOnly = process.argv.includes('--json');
+	const allFindings = process.argv.includes('--all-findings');
+	const report = buildReport();
 
-if (jsonOnly) {
-	console.log(JSON.stringify(report, null, 2));
-} else {
-	printConsoleReport(report, { allFindings });
+	if (jsonOnly) {
+		console.log(JSON.stringify(report, null, 2));
+	} else {
+		printConsoleReport(report, { allFindings });
+	}
 }
+
+export { buildReport };

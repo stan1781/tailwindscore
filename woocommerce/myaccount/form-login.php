@@ -11,6 +11,7 @@ defined( 'ABSPATH' ) || exit;
 
 $registration_enabled = 'yes' === get_option( 'woocommerce_enable_myaccount_registration' );
 $account_intro        = tailwindscore_account_surface_text( 'account-login-reassurance-message' );
+$account_copy         = tailwindscore_account_template_copy();
 $support_message      = tailwindscore_account_surface_text( 'support-message' );
 ?>
 <section class="ts-account-auth" data-ts-module="account-focus">
@@ -42,7 +43,7 @@ $support_message      = tailwindscore_account_surface_text( 'support-message' );
 				<p class="ts-account-auth__remember">
 					<label class="woocommerce-form__label woocommerce-form__label-for-checkbox woocommerce-form-login__rememberme ts-choice">
 						<input class="woocommerce-form__input woocommerce-form__input-checkbox ts-checkbox" name="rememberme" type="checkbox" id="rememberme" value="forever" />
-						<span class="ts-choice__label"><?php esc_html_e( 'Keep me signed in', 'tailwindscore' ); ?></span>
+						<span class="ts-choice__label"><?php echo esc_html( $account_copy['login_remember_label'] ); ?></span>
 					</label>
 				</p>
 

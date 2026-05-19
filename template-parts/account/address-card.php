@@ -18,7 +18,8 @@ $defaults = array(
 	'action_label' => '',
 );
 
-$args = wp_parse_args( (array) ( $args ?? array() ), $defaults );
+$args         = wp_parse_args( (array) ( $args ?? array() ), $defaults );
+$account_copy = tailwindscore_account_template_copy();
 ?>
 <article class="ts-address-card">
 	<div class="ts-address-card__body">
@@ -27,7 +28,7 @@ $args = wp_parse_args( (array) ( $args ?? array() ), $defaults );
 			<?php if ( '' !== trim( (string) $args['description'] ) ) : ?>
 				<?php echo wp_kses_post( wpautop( (string) $args['description'] ) ); ?>
 			<?php else : ?>
-				<p><?php esc_html_e( 'No address saved yet.', 'tailwindscore' ); ?></p>
+				<p><?php echo esc_html( $account_copy['address_empty_message'] ); ?></p>
 			<?php endif; ?>
 		</div>
 	</div>

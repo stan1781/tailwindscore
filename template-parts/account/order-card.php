@@ -22,6 +22,7 @@ $order_date   = $order->get_date_created();
 $detail_id    = 'ts-order-detail-' . $order->get_id();
 $actions      = wc_get_account_orders_actions( $order );
 $quick_detail = tailwindscore_account_surface_text( 'order-quick-detail-label', __( 'Quick detail', 'tailwindscore' ) );
+$account_copy = tailwindscore_account_template_copy();
 ob_start();
 tailwindscore_account_part( 'order-detail', array( 'order' => $order ) );
 $detail_html = trim( (string) ob_get_clean() );
@@ -44,8 +45,7 @@ $detail_html = trim( (string) ob_get_clean() );
 			<p class="ts-account-order-card__meta">
 				<?php
 				printf(
-					/* translators: 1: date, 2: item count, 3: total */
-					esc_html__( '%1$s · %2$s · %3$s', 'tailwindscore' ),
+					esc_html( $account_copy['order_card_meta_format'] ),
 					esc_html( $order_date ? wc_format_datetime( $order_date ) : __( 'Recent order', 'tailwindscore' ) ),
 					esc_html( $order->get_item_count() . ' ' . _n( 'item', 'items', $order->get_item_count(), 'tailwindscore' ) ),
 					wp_strip_all_tags( $order->get_formatted_order_total() )

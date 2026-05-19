@@ -96,7 +96,7 @@ function tailwindscore_account_surface_copy(): array {
 		'edit-account'  => array(
 			'eyebrow' => __( 'Account details', 'tailwindscore' ),
 			'title'   => __( 'Personal details', 'tailwindscore' ),
-			'intro'   => __( 'Update your name, email, or password in a single uninterrupted form surface.', 'tailwindscore' ),
+			'intro'   => tailwindscore_account_copy_text( 'account-edit-account-intro', __( 'Keep your customer profile current without leaving the post-purchase flow.', 'tailwindscore' ) ),
 		),
 		'lost-password' => array(
 			'eyebrow' => __( 'Account access', 'tailwindscore' ),
@@ -128,6 +128,60 @@ function tailwindscore_account_recovery_copy(): array {
 		'caption' => tailwindscore_account_surface_text( 'account-recovery-caption' ),
 		'reset'   => tailwindscore_account_surface_text( 'account-reset-message' ),
 		'support' => tailwindscore_account_surface_text( 'account-reset-support-message' ),
+	);
+}
+
+/**
+ * @return array<string, string>
+ */
+function tailwindscore_account_order_card_meta_format_default(): string {
+	return __( '%1$s · %2$s · %3$s', 'tailwindscore' );
+}
+
+/**
+ * Normalize the governed order card meta format before it reaches printf.
+ */
+function tailwindscore_account_normalize_order_card_meta_format( string $format ): string {
+	$format = trim( $format );
+
+	if ( '' === $format ) {
+		return tailwindscore_account_order_card_meta_format_default();
+	}
+
+	if (
+		1 !== substr_count( $format, '%1$s' ) ||
+		1 !== substr_count( $format, '%2$s' ) ||
+		1 !== substr_count( $format, '%3$s' )
+	) {
+		return tailwindscore_account_order_card_meta_format_default();
+	}
+
+	$remaining = str_replace(
+		array( '%1$s', '%2$s', '%3$s' ),
+		'',
+		$format
+	);
+
+	if ( false !== strpos( $remaining, '%' ) ) {
+		return tailwindscore_account_order_card_meta_format_default();
+	}
+
+	return $format;
+}
+
+/**
+ * @return array<string, string>
+ */
+function tailwindscore_account_template_copy(): array {
+	return array(
+		'edit_account_intro'       => tailwindscore_account_surface_text( 'account-edit-account-intro', __( 'Keep your customer profile current without leaving the post-purchase flow.', 'tailwindscore' ) ),
+		'login_remember_label'     => tailwindscore_account_surface_text( 'account-login-remember-label', __( 'Keep me signed in', 'tailwindscore' ) ),
+		'reset_new_password_label' => tailwindscore_account_surface_text( 'account-reset-new-password-label', __( 'New password', 'tailwindscore' ) ),
+		'reset_confirm_label'      => tailwindscore_account_surface_text( 'account-reset-confirm-password-label', __( 'Confirm password', 'tailwindscore' ) ),
+		'reset_submit_label'       => tailwindscore_account_surface_text( 'account-reset-submit-label', __( 'Save new password', 'tailwindscore' ) ),
+		'view_order_back_label'    => tailwindscore_account_surface_text( 'account-view-order-back-label', __( 'Back to orders', 'tailwindscore' ) ),
+		'address_empty_message'    => tailwindscore_account_surface_text( 'account-address-empty-message', __( 'No address saved yet.', 'tailwindscore' ) ),
+		'order_card_meta_format'   => tailwindscore_account_normalize_order_card_meta_format( tailwindscore_account_surface_text( 'account-order-card-meta-format', tailwindscore_account_order_card_meta_format_default() ) ),
 	);
 }
 

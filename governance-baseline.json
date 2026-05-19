@@ -1,25 +1,8 @@
 {
   "version": 1,
-  "updated": "2026-05-10",
+  "updated": "2026-05-19",
   "stage": "Sustainable Governance Baseline System",
   "entries": [
-    {
-      "id": "checkout-compatibility-payment-notices",
-      "surface": "checkout",
-      "severity": "critical",
-      "file": "template-parts/checkout/checkout-payment.php",
-      "matchValues": [
-        "No payment methods are available for this order. Please review your details or contact us for help.",
-        "Enter your billing details to view available payment methods.",
-        "No payment is needed for this order.",
-        "Because your browser does not support JavaScript, totals may update only after you confirm with the %s button."
-      ],
-      "rationale": "WooCommerce checkout compatibility still requires local helper copy around payment availability, no-payment handling, and noscript flow. This debt is documented and intentionally kept out of delta noise until checkout compatibility consolidation.",
-      "status": "deferred",
-      "owner": "Checkout surfaces",
-      "plannedResolutionStage": "Checkout compatibility consolidation",
-      "allowanceType": "third-party-compatibility"
-    },
     {
       "id": "checkout-shell-structural-guidance",
       "surface": "checkout",
@@ -92,80 +75,6 @@
       "allowanceType": "temporary-migration"
     },
     {
-      "id": "cart-summary-note-inline",
-      "surface": "cart",
-      "severity": "critical",
-      "file": "template-parts/cart-surface/cart-summary.php",
-      "matchValues": [
-        "Shipping and taxes calculated at checkout."
-      ],
-      "rationale": "Cart summary helper copy is known trust-adjacent debt outside the governed cart drawer family. It remains visible as baseline debt but should not be reported as a fresh regression every scan.",
-      "status": "deferred",
-      "owner": "Cart surfaces",
-      "plannedResolutionStage": "Cart summary governance consolidation",
-      "allowanceType": "legacy-surface"
-    },
-    {
-      "id": "cart-drawer-ssr-fallbacks",
-      "surface": "cart",
-      "severity": "critical",
-      "file": "template-parts/cart-surface/cart-drawer.php",
-      "matchValues": [
-        "Please review your bag",
-        "We could not update the bag just now. Please try again.",
-        "Removed from bag"
-      ],
-      "rationale": "Drawer runtime is already registry-driven, but SSR still carries duplicate fallback literals for resilience. Keep this documented until the surface family completes fallback deduplication.",
-      "status": "accepted",
-      "owner": "Cart surfaces",
-      "plannedResolutionStage": "Cart runtime fallback cleanup",
-      "allowanceType": "temporary-migration"
-    },
-    {
-      "id": "cart-governed-helper-duplicates",
-      "surface": "cart",
-      "severity": "critical",
-      "file": "inc/cart-surface/helpers.php",
-      "matchValues": [
-        "Please review your bag",
-        "We could not update the bag just now. Please try again.",
-        "Removed from bag"
-      ],
-      "rationale": "The cart helper layer still mirrors governed drawer strings locally as a resilience fallback. This is tracked duplicate-fallback debt and should stay quiet until fallback cleanup begins.",
-      "status": "accepted",
-      "owner": "Cart surfaces",
-      "plannedResolutionStage": "Cart runtime fallback cleanup",
-      "allowanceType": "temporary-migration"
-    },
-    {
-      "id": "cart-runtime-inline-errors",
-      "surface": "cart",
-      "severity": "critical",
-      "file": "src/ts/modules/cart-surface/cart-drawer.ts",
-      "matchValues": [
-        "We could not update the bag just now. Please try again."
-      ],
-      "rationale": "Cart drawer runtime still keeps a local fallback for error recovery even though SSR data attributes provide the governed string. This is temporary migration debt and must stay removable.",
-      "status": "deferred",
-      "owner": "Cart surfaces",
-      "plannedResolutionStage": "Runtime fallback removal",
-      "allowanceType": "temporary-migration"
-    },
-    {
-      "id": "cart-runtime-secondary-messages",
-      "surface": "cart",
-      "severity": "warning",
-      "file": "src/ts/modules/cart-surface/cart-drawer.ts",
-      "matchValues": [
-        "Removed from bag"
-      ],
-      "rationale": "Secondary runtime cart messages still exist inline even after the governed error path landed. They are documented migration debt and should not appear as fresh delta on every run.",
-      "status": "deferred",
-      "owner": "Cart surfaces",
-      "plannedResolutionStage": "Runtime fallback removal",
-      "allowanceType": "temporary-migration"
-    },
-    {
       "id": "cart-add-to-cart-runtime-inline-errors",
       "surface": "cart",
       "severity": "critical",
@@ -222,39 +131,6 @@
       "allowanceType": "temporary-migration"
     },
     {
-      "id": "account-helper-duplicate-fallback",
-      "surface": "account",
-      "severity": "critical",
-      "file": "inc/account/helpers.php",
-      "matchValues": [
-        "Reset password",
-        "Keep billing and shipping destinations ready for a faster checkout."
-      ],
-      "rationale": "Account helper fallbacks still mix structural and trust-adjacent language inline. Keep them explicitly documented so later account consolidation can remove them without ambiguity.",
-      "status": "deferred",
-      "owner": "Account surfaces",
-      "plannedResolutionStage": "Account surface consolidation",
-      "allowanceType": "legacy-surface"
-    },
-    {
-      "id": "account-helper-legacy-copy",
-      "surface": "account",
-      "severity": "warning",
-      "file": "inc/account/helpers.php",
-      "matchValues": [
-        "Manage billing and shipping destinations with spacious, touch-safe forms and restrained utility language.",
-        "Update your name, email, or password in a single uninterrupted form surface.",
-        "Restore access with the same clear rhythm as the rest of the customer account experience.",
-        "Review recent purchases, delivery progress, and order details.",
-        "Update name, email, and password in one simple account form."
-      ],
-      "rationale": "Account helper prose still contains known legacy copy outside the final registry path. It is stable enough for baseline treatment but remains scheduled debt.",
-      "status": "deferred",
-      "owner": "Account surfaces",
-      "plannedResolutionStage": "Account surface consolidation",
-      "allowanceType": "legacy-surface"
-    },
-    {
       "id": "account-recovery-structural-actions",
       "surface": "account",
       "severity": "critical",
@@ -269,24 +145,6 @@
       "owner": "Account surfaces",
       "plannedResolutionStage": "Account label normalization",
       "allowanceType": "temporary-exception"
-    },
-    {
-      "id": "account-order-detail-legacy-fallbacks",
-      "surface": "account",
-      "severity": "warning",
-      "file": "template-parts/account/order-detail.php",
-      "matchValues": [
-        "Shipping method",
-        "No shipping required",
-        "Shipping address",
-        "No shipping address provided.",
-        "To be confirmed"
-      ],
-      "rationale": "Order-detail fallbacks are already documented deferred debt. They stay in the baseline until the next account consolidation pass rather than reappearing as fresh governance noise.",
-      "status": "deferred",
-      "owner": "Account surfaces",
-      "plannedResolutionStage": "Account consolidation follow-up",
-      "allowanceType": "legacy-surface"
     },
     {
       "id": "account-password-form-labels",
@@ -347,36 +205,6 @@
       "owner": "Account surfaces",
       "plannedResolutionStage": "Account label normalization",
       "allowanceType": "temporary-exception"
-    },
-    {
-      "id": "review-access-legacy-copy",
-      "surface": "reviews",
-      "severity": "warning",
-      "file": "woocommerce/single-product-reviews.php",
-      "matchValues": [
-        "Purchase required to review",
-        "Only customers who have purchased this item can leave a review, which keeps the conversation grounded in ownership."
-      ],
-      "rationale": "Review access messaging is a known deferred surface outside the current trust-critical closure path. It remains reviewable debt, not a hidden exclusion.",
-      "status": "deferred",
-      "owner": "Review surfaces",
-      "plannedResolutionStage": "Review governance phase",
-      "allowanceType": "legacy-surface"
-    },
-    {
-      "id": "review-experience-legacy-intro",
-      "surface": "reviews",
-      "severity": "warning",
-      "file": "inc/woocommerce/hooks/review-experience.php",
-      "matchValues": [
-        "Customer reviews",
-        "Measured notes from customers, arranged with the same quiet hierarchy as the rest of the product story."
-      ],
-      "rationale": "Review-experience helper copy is outside the current governance closure. It is deferred baseline debt, not an untracked leak.",
-      "status": "deferred",
-      "owner": "Review surfaces",
-      "plannedResolutionStage": "Review governance phase",
-      "allowanceType": "legacy-surface"
     },
     {
       "id": "search-structural-retry-labels",

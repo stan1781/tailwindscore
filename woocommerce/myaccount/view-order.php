@@ -16,7 +16,7 @@ if ( ! $order instanceof WC_Order ) {
 }
 
 $created_at = $order->get_date_created();
-$back_label = tailwindscore_account_surface_text( 'view-order-back-label', __( 'Back to orders', 'tailwindscore' ) );
+$account_copy = tailwindscore_account_template_copy();
 ?>
 <section class="ts-account-panel ts-account-order-view">
 	<div class="ts-account-order-card ts-account-order-card--static">
@@ -36,7 +36,7 @@ $back_label = tailwindscore_account_surface_text( 'view-order-back-label', __( '
 			</div>
 			<div class="ts-account-order-card__actions">
 				<a class="ts-btn ts-btn--secondary ts-btn--sm" href="<?php echo esc_url( wc_get_account_endpoint_url( 'orders' ) ); ?>">
-					<?php echo esc_html( $back_label ); ?>
+					<?php echo esc_html( $account_copy['view_order_back_label'] ); ?>
 				</a>
 			</div>
 		</div>

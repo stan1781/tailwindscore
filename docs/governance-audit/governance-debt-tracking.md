@@ -24,15 +24,15 @@ Use when customer-facing copy still relies on inline output and has only partial
 
 Current items:
 
-- none in the current reviews pass
+- none after Phase 1 closure
 
 Why debt exists:
 
-- review access and form messaging now resolve through the registry path; revisit only if a new review helper surface reintroduces inline governed copy
+- resolved review helper debt was removed from the baseline once scanner output and regression coverage confirmed the governed path
 
 Removal strategy:
 
-- add review-surface registry support before the review governance phase closes
+- re-open this class only if a new review or helper surface reintroduces customer-facing inline governed copy
 
 ### Runtime copy debt
 
@@ -40,15 +40,19 @@ Use when a runtime-connected surface still depends on local copy for part of its
 
 Current items:
 
-- none in the current checkout/cart pass
+- checkout loading and validation runtime bridges
+- checkout field-level validation runtime messages
+- add-to-cart runtime error fallback
+- add-to-cart variation-selection message
 
 Why debt exists:
 
-- cart drawer trust language is now governed; revisit this class only when another runtime-connected local helper surface appears
+- these messages still live in runtime code paths where the SSR bridge is incomplete or intentionally local for now
+- they remain baseline-tracked so a later runtime cleanup can remove them deliberately instead of rediscovering them as scan noise
 
 Removal strategy:
 
-- extend the current cart surface family without creating a new runtime branch
+- finish the runtime fallback-removal work in checkout and cart without creating another copy surface
 
 ### Duplicate fallback debt
 
@@ -56,15 +60,17 @@ Use when acceptable wording exists in more than one place and has not yet been c
 
 Current items:
 
-- none in the current account order-detail pass
+- account auth registration support copy
+- account address guidance fallback around the governed surface
 
 Why debt exists:
 
-- fallback wording for this surface is now centrally governed; revisit this class only when another account helper fallback remains outside the registry path
+- most stale helper and review baseline entries were removed once the scanner stopped emitting those findings and the regression test locked that behavior in
+- the remaining account items are still live helper/fallback debt in the current baseline and need a later consolidation pass
 
 Removal strategy:
 
-- converge order-detail helper copy into the account surface registry during the next account consolidation pass
+- remove the remaining account helper/fallback entries during account auth and address-surface consolidation
 
 ### Temporary exception debt
 
@@ -72,15 +78,15 @@ Use when low-risk structural labels remain inline by decision rather than omissi
 
 Current items:
 
-- cart drawer structural labels
-- account recovery form labels and submit controls
-- search IA labels
-- archive helper labels
+- checkout shell labels
+- account recovery, password, auth, and address structural labels
+- search retry and trigger labels
 
 Why debt exists:
 
 - these strings are structural UI language, not trust-tonal messaging
 - normalizing them now would widen scope beyond closure work
+- Phase 1 intentionally closed trust and helper-copy leaks first, leaving only low-risk label exceptions in this class
 
 Removal strategy:
 
@@ -105,3 +111,9 @@ Use these working meanings:
 - `accepted debt`: present in baseline with `accepted` status
 - `deferred debt`: present in baseline with `deferred` status
 - `resolved issue`: baseline candidate no longer appearing in scan output and ready for removal
+
+## Phase 1 Result
+
+Phase 1 closed the fresh governance delta across search, account, cart, and checkout.
+
+The baseline now keeps live runtime debt, a narrow remaining account helper/fallback remainder, and structural-label exceptions that still matter to the scanner. Stale helper and review baseline entries were removed once scan output, template tests, and scanner regression coverage all agreed they were resolved.

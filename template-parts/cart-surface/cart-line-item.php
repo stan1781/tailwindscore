@@ -10,6 +10,8 @@
 declare(strict_types=1);
 
 defined( 'ABSPATH' ) || exit;
+
+$copy = tailwindscore_cart_surface_copy();
 ?>
 <article class="ts-cart-line-item" data-cart-item-key="<?php echo esc_attr( (string) ( $args['key'] ?? '' ) ); ?>">
 	<a class="ts-cart-line-item__media" href="<?php echo esc_url( (string) ( $args['url'] ?? '#' ) ); ?>">
@@ -57,7 +59,7 @@ defined( 'ABSPATH' ) || exit;
 			</div>
 			<div class="ts-cart-line-item__meta">
 				<div class="ts-cart-line-item__subtotal-block">
-					<span class="ts-cart-line-item__subtotal-label"><?php esc_html_e( 'Subtotal', 'tailwindscore' ); ?></span>
+					<span class="ts-cart-line-item__subtotal-label"><?php echo esc_html( (string) ( $copy['line_item_subtotal_label'] ?? '' ) ); ?></span>
 					<span class="ts-cart-line-item__subtotal"><?php echo wp_kses_post( (string) ( $args['subtotal'] ?? '' ) ); ?></span>
 				</div>
 				<a class="ts-cart-line-item__remove" href="<?php echo esc_url( (string) ( $args['remove_url'] ?? '#' ) ); ?>" data-cart-remove><?php esc_html_e( 'Remove', 'tailwindscore' ); ?></a>

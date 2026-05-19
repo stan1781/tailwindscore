@@ -57,9 +57,11 @@ function tailwindscore_checkout_copy_text( string $key, string $default = '' ): 
 function tailwindscore_checkout_surface_copy(): array {
 	return array(
 		'eyebrow'            => __( 'Secure purchase', 'tailwindscore' ),
-		'title'              => __( 'Checkout', 'tailwindscore' ),
+		'title'              => tailwindscore_checkout_copy_text( 'checkout-layout-title', __( 'Checkout', 'tailwindscore' ) ),
+		'layout_title'       => tailwindscore_checkout_copy_text( 'checkout-layout-title', __( 'Checkout', 'tailwindscore' ) ),
 		'empty_cta_label'    => tailwindscore_checkout_copy_text( 'checkout-empty-action-label' ),
 		'summary_heading'    => tailwindscore_checkout_copy_text( 'checkout-summary-heading' ),
+		'summary_subtotal'   => tailwindscore_checkout_copy_text( 'checkout-summary-subtotal-label', __( 'Subtotal', 'tailwindscore' ) ),
 		'support_items'      => array(
 			__( 'Secure payment methods', 'tailwindscore' ),
 			tailwindscore_checkout_copy_text( 'support-message' ),

@@ -22,7 +22,7 @@ $surface_copy = tailwindscore_checkout_surface_copy();
 		<thead>
 			<tr>
 				<th class="product-name"><?php esc_html_e( 'Product', 'tailwindscore' ); ?></th>
-				<th class="product-total"><?php esc_html_e( 'Subtotal', 'tailwindscore' ); ?></th>
+				<th class="product-total"><?php echo esc_html( (string) ( $surface_copy['summary_subtotal'] ?? '' ) ); ?></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -56,7 +56,7 @@ $surface_copy = tailwindscore_checkout_surface_copy();
 		</tbody>
 		<tfoot>
 			<tr class="cart-subtotal">
-				<th><?php esc_html_e( 'Subtotal', 'tailwindscore' ); ?></th>
+				<th><?php echo esc_html( (string) ( $surface_copy['summary_subtotal'] ?? '' ) ); ?></th>
 				<td><?php wc_cart_totals_subtotal_html(); ?></td>
 			</tr>
 

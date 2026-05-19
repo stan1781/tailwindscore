@@ -95,6 +95,12 @@ function tailwindscore_search_copy_text( string $key, string $default = '' ): st
 	$defaults = array(
 		'search-recent-searches-guidance-message' => 'Recent searches remain nearby so returning to a product path feels immediate and quiet.',
 		'search-predictive-empty-message'         => 'Try a broader product name or continue through a collection path.',
+		'search-loading-eyebrow'                  => 'Search',
+		'search-loading-title'                    => 'Looking through the collection',
+		'search-loading-message'                  => 'A concise set of matching pieces and collection paths is being prepared.',
+		'search-suggested-searches-heading'       => 'Suggested searches',
+		'search-browse-collections-heading'       => 'Browse collections',
+		'search-recent-searches-heading'          => 'Recent searches',
 	);
 
 	$fallback = '' !== $default ? $default : ( $defaults[ $key ] ?? '' );
@@ -108,9 +114,9 @@ function tailwindscore_search_copy_text( string $key, string $default = '' ): st
 function tailwindscore_search_feedback_copy( string $context ): array {
 	$states = array(
 		'loading'     => array(
-			'eyebrow' => __( 'Search', 'tailwindscore' ),
-			'title'   => __( 'Looking through the collection', 'tailwindscore' ),
-			'message' => __( 'A concise set of matching pieces and collection paths is being prepared.', 'tailwindscore' ),
+			'eyebrow' => tailwindscore_search_copy_text( 'search-loading-eyebrow' ),
+			'title'   => tailwindscore_search_copy_text( 'search-loading-title' ),
+			'message' => tailwindscore_search_copy_text( 'search-loading-message' ),
 		),
 		'unavailable' => tailwindscore_feedback_empty_state_copy( 'search-unavailable' ),
 		'empty'       => tailwindscore_feedback_empty_state_copy( 'search-results' ),
@@ -124,10 +130,15 @@ function tailwindscore_search_feedback_copy( string $context ): array {
  */
 function tailwindscore_search_surface_copy(): array {
 	return array(
-		'eyebrow'                  => __( 'Discover', 'tailwindscore' ),
-		'title'                    => __( 'Search the collection', 'tailwindscore' ),
+		'eyebrow'                  => tailwindscore_content_surface_text( 'search-eyebrow', __( 'Discover', 'tailwindscore' ) ),
+		'title'                    => tailwindscore_content_surface_text( 'search-title', __( 'Search the collection', 'tailwindscore' ) ),
 		'recent_searches_guidance' => tailwindscore_search_copy_text( 'search-recent-searches-guidance-message' ),
 		'predictive_empty_message' => tailwindscore_search_copy_text( 'search-predictive-empty-message' ),
+		'default_state_title'      => tailwindscore_content_surface_text( 'search-default-state-title', __( 'Begin with a piece, a material, or a collection', 'tailwindscore' ) ),
+		'suggested_searches_heading' => tailwindscore_search_copy_text( 'search-suggested-searches-heading' ),
+		'browse_collections_heading' => tailwindscore_search_copy_text( 'search-browse-collections-heading' ),
+		'recent_searches_heading'    => tailwindscore_search_copy_text( 'search-recent-searches-heading' ),
+		'overlay_placeholder'      => tailwindscore_content_surface_text( 'search-overlay-placeholder', __( 'Search products, categories, stories', 'tailwindscore' ) ),
 	);
 }
 
